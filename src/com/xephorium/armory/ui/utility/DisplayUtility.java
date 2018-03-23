@@ -1,8 +1,8 @@
-package com.xephorium.armory.java.ui;
+package com.xephorium.armory.ui.utility;
 
 import java.awt.*;
 
-public class ViewUtility {
+public class DisplayUtility {
 
     public static int getWindowStartX(int windowWidth) {
         return (getScreenWidth()/2) - (windowWidth /2);

@@ -1,6 +1,6 @@
-package com.xephorium.armory.java;
+package com.xephorium.armory;
 
-import com.xephorium.armory.java.ui.ArmoryWindow;
+import com.xephorium.armory.ui.ArmoryWindow;
 
 public class Main {
 
