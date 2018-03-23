@@ -47,19 +47,19 @@ class InstallationBrowsePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void setValidInstallationDirectory(String directory) {
-        directoryTextField.setText(directory);
+        directoryTextField.setText(" " + directory);
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_FOUND.getImage());
         this.repaint();
     }
 
     public void setInvalidInstallationDirectory() {
-        directoryTextField.setText("Choose an installation directory...");
+        directoryTextField.setText(" Choose an installation directory...");
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_INVALID.getImage());
         this.repaint();
     }
 
     public void clearInstallationDirectory() {
-        directoryTextField.setText("Choose an installation directory...");
+        directoryTextField.setText(" Choose an installation directory...");
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_UNKNOWN.getImage());
         this.repaint();
     }

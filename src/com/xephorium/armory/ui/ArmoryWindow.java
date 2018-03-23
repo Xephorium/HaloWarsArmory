@@ -1,14 +1,16 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.utility.DialogFactory;
+import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelListener;
+import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
-public class ArmoryWindow implements InstallationBrowsePanelListener {
+public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryChooserListener {
 
 
     /*--- Variables ---*/
@@ -19,13 +21,14 @@ public class ArmoryWindow implements InstallationBrowsePanelListener {
 
     private JFrame frame;
     private InstallationBrowsePanel installationBrowsePanel;
+    private DirectoryChooser directoryChooser;
 
 
     /*--- Constructor(s) ---*/
 
     public ArmoryWindow() {
 
-        initializePanels();
+        initializeViewClasses();
         assembleWindowFrame();
     }
 
@@ -39,10 +42,11 @@ public class ArmoryWindow implements InstallationBrowsePanelListener {
 
     /*--- Private Methods --*/
 
-    private void initializePanels() {
+    private void initializeViewClasses() {
 
         frame = new JFrame(WINDOW_TITLE);
         installationBrowsePanel = new InstallationBrowsePanel(this);
+        directoryChooser = new DirectoryChooser(this);
     }
 
     private void assembleWindowFrame() {
@@ -64,13 +68,17 @@ public class ArmoryWindow implements InstallationBrowsePanelListener {
 
     @Override
     public void handleBrowseButtonClick() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int returnValue = fileChooser.showDialog(null, "Select");
+        directoryChooser.displayChooser();
+    }
 
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            installationBrowsePanel.setValidInstallationDirectory(selectedFile.getAbsolutePath());
+    @Override
+    public void handleDirectorySelection(String directory) {
+        if (true /* Valid Halo Wars Installation */) {
+            installationBrowsePanel.setValidInstallationDirectory(directory);
+            DialogFactory.createGameFoundDialog(frame);
+        } else {
+            installationBrowsePanel.setInvalidInstallationDirectory();
+            DialogFactory.createGameNotFoundDialog(frame);
         }
     }
 }
