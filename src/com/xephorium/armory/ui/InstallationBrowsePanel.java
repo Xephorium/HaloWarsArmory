@@ -53,13 +53,13 @@ class InstallationBrowsePanel extends JPanel {
     }
 
     public void setInvalidInstallationDirectory() {
-        directoryTextField.setText(" Choose an installation directory...");
+        directoryTextField.setText(" Choose Halo Wars installation folder...");
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_INVALID.getImage());
         this.repaint();
     }
 
     public void clearInstallationDirectory() {
-        directoryTextField.setText(" Choose an installation directory...");
+        directoryTextField.setText(" Choose Halo Wars installation folder...");
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_UNKNOWN.getImage());
         this.repaint();
     }

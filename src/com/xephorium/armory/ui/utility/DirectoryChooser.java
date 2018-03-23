@@ -15,6 +15,7 @@ public class DirectoryChooser extends JFileChooser {
 
     public DirectoryChooser(DirectoryChooserListener listener) {
         this.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        this.setDialogTitle("Halo Wars Installation Folder");
         this.listener = listener;
     }
 
