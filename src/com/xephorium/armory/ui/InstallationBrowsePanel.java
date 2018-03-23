@@ -74,7 +74,7 @@ class InstallationBrowsePanel extends JPanel {
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL,
                 ArmoryDimension.PANEL_PADDING/2,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
-        this.setBackground(ArmoryColor.WHITE);
+        this.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
     }
 
     private JLabel createInstallationIconLabel(ImageIcon imageIcon) {
