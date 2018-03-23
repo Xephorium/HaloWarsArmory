@@ -8,6 +8,7 @@ import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelLi
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 
@@ -22,6 +23,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
 
     private JFrame frame;
     private InstallationBrowsePanel installationBrowsePanel;
+    private ColorProfilePanel colorProfilePanel;
     private DirectoryChooser directoryChooser;
 
 
@@ -56,6 +58,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
 
         frame = new JFrame(WINDOW_TITLE);
         installationBrowsePanel = new InstallationBrowsePanel(this);
+        colorProfilePanel = new ColorProfilePanel();
         directoryChooser = new DirectoryChooser(this);
     }
 
@@ -67,8 +70,9 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
         frame.setResizable(false);
 
         JPanel panel = new JPanel();
-        panel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        panel.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
         frame.add(panel, BorderLayout.CENTER);
+        frame.add(colorProfilePanel, BorderLayout.EAST);
 
         frame.add(installationBrowsePanel, BorderLayout.PAGE_START);
     }
