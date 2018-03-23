@@ -51,7 +51,7 @@ public class ArmoryWindow {
         installDirectoryPanel.setBackground(new Color(255, 255, 255));
 
 
-        ImageIcon imageIcon = new ImageIcon("src\\com\\xephorium\\armory\\res\\icon\\iconCheckmark.png", "Checkmark Icon");
+        ImageIcon imageIcon = new ImageIcon("src\\com\\xephorium\\armory\\res\\icon\\iconDirectoryUnknown.png", "Checkmark Icon");
         JLabel installIconLabel = new JLabel("", imageIcon, JLabel.CENTER);
 
         JTextField installDirectoryField = new JTextField();
