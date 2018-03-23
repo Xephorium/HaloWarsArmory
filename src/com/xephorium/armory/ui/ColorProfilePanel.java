@@ -22,8 +22,8 @@ public class ColorProfilePanel extends JPanel {
     private void initializePanelAttributes() {
         this.setLayout(new GridLayout(2, 1, 0, ArmoryDimension.PANEL_PADDING));
         this.setBorder(new EmptyBorder(
-                ArmoryDimension.WINDOW_PADDING_VERTICAL/2,
-                ArmoryDimension.WINDOW_PADDING_HORIZONTAL/2,
+                ArmoryDimension.PANEL_PADDING/2,
+                ArmoryDimension.PANEL_PADDING/2,
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
         this.setPreferredSize(new Dimension(ArmoryDimension.COLOR_PROFILE_PANEL_WIDTH, 0));

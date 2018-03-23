@@ -1,14 +1,13 @@
 package com.xephorium.armory.ui;
 
-import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
+import com.xephorium.armory.ui.utility.FactionConfigurationPanel;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 
@@ -19,11 +18,12 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
 
     private final int WINDOW_HEIGHT = 500;
     private final int WINDOW_WIDTH = 700;
-    private final String WINDOW_TITLE = "  Armory";
+    private final String WINDOW_TITLE = "  Halo Wars Armory";
 
     private JFrame frame;
     private InstallationBrowsePanel installationBrowsePanel;
     private ColorProfilePanel colorProfilePanel;
+    private FactionConfigurationPanel factionConfigurationPanel;
     private DirectoryChooser directoryChooser;
 
 
@@ -59,6 +59,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
         frame = new JFrame(WINDOW_TITLE);
         installationBrowsePanel = new InstallationBrowsePanel(this);
         colorProfilePanel = new ColorProfilePanel();
+        factionConfigurationPanel = new FactionConfigurationPanel();
         directoryChooser = new DirectoryChooser(this);
     }
 
@@ -69,10 +70,8 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
-        frame.add(panel, BorderLayout.CENTER);
         frame.add(colorProfilePanel, BorderLayout.EAST);
+        frame.add(factionConfigurationPanel, BorderLayout.CENTER);
 
         frame.add(installationBrowsePanel, BorderLayout.PAGE_START);
     }
