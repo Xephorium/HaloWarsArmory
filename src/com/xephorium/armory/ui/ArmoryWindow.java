@@ -6,6 +6,7 @@ import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelLi
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class ArmoryWindow implements InstallationBrowsePanelListener {
 
@@ -14,16 +15,18 @@ public class ArmoryWindow implements InstallationBrowsePanelListener {
 
     private final int WINDOW_HEIGHT = 500;
     private final int WINDOW_WIDTH = 700;
-
     private final String WINDOW_TITLE = "  Armory";
 
-    private JFrame frame = new JFrame(WINDOW_TITLE);
+    private JFrame frame;
+    private InstallationBrowsePanel installationBrowsePanel;
 
 
     /*--- Constructor(s) ---*/
 
     public ArmoryWindow() {
-        initializeUserInterface();
+
+        initializePanels();
+        assembleWindowFrame();
     }
 
 
@@ -36,7 +39,13 @@ public class ArmoryWindow implements InstallationBrowsePanelListener {
 
     /*--- Private Methods --*/
 
-    private void initializeUserInterface() {
+    private void initializePanels() {
+
+        frame = new JFrame(WINDOW_TITLE);
+        installationBrowsePanel = new InstallationBrowsePanel(this);
+    }
+
+    private void assembleWindowFrame() {
 
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setLocation(DisplayUtility.getWindowStartX(WINDOW_WIDTH), DisplayUtility.getWindowStartY(WINDOW_HEIGHT));
@@ -47,7 +56,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener {
         panel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
         frame.add(panel, BorderLayout.CENTER);
 
-        frame.add(new InstallationBrowsePanel(this), BorderLayout.PAGE_START);
+        frame.add(installationBrowsePanel, BorderLayout.PAGE_START);
     }
 
 
@@ -55,6 +64,13 @@ public class ArmoryWindow implements InstallationBrowsePanelListener {
 
     @Override
     public void handleBrowseButtonClick() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = fileChooser.showDialog(null, "Select");
 
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            installationBrowsePanel.setValidInstallationDirectory(selectedFile.getAbsolutePath());
+        }
     }
 }

@@ -18,7 +18,7 @@ class InstallationBrowsePanel extends JPanel {
 
     private InstallationBrowsePanelListener listener;
 
-    private JLabel iconLabel;
+    private ImageIcon imageIcon;
     private JTextField directoryTextField;
     private JButton browseButton;
 
@@ -30,13 +30,13 @@ class InstallationBrowsePanel extends JPanel {
         initializePanelAttributes();
 
         this.listener = listener;
-        iconLabel = createInstallationIconLabel(ArmoryImage.ICON_INSTALLATION_UNKNOWN);
+        imageIcon = ArmoryImage.ICON_INSTALLATION_UNKNOWN;
         directoryTextField = createInstallationDirectoryTextField();
         browseButton = createInstallationBrowseButton();
 
         clearInstallationDirectory();
 
-        this.add(iconLabel);
+        this.add(createInstallationIconLabel(imageIcon));
         this.add(new Box.Filler(new Dimension(10, 0), new Dimension(10, 0), new Dimension(10, 0)));
         this.add(directoryTextField);
         this.add(new Box.Filler(new Dimension(10, 0), new Dimension(10, 0), new Dimension(10, 0)));
@@ -48,17 +48,20 @@ class InstallationBrowsePanel extends JPanel {
 
     public void setValidInstallationDirectory(String directory) {
         directoryTextField.setText(directory);
-        iconLabel = createInstallationIconLabel(ArmoryImage.ICON_INSTALLATION_INVALID);
+        imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_FOUND.getImage());
+        this.repaint();
     }
 
     public void setInvalidInstallationDirectory() {
         directoryTextField.setText("Choose an installation directory...");
-        iconLabel = createInstallationIconLabel(ArmoryImage.ICON_INSTALLATION_INVALID);
+        imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_INVALID.getImage());
+        this.repaint();
     }
 
     public void clearInstallationDirectory() {
         directoryTextField.setText("Choose an installation directory...");
-        iconLabel = createInstallationIconLabel(ArmoryImage.ICON_INSTALLATION_UNKNOWN);
+        imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_UNKNOWN.getImage());
+        this.repaint();
     }
 
 
