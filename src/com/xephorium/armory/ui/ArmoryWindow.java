@@ -8,6 +8,7 @@ import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelLi
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 
 import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 
 public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryChooserListener {
@@ -28,6 +29,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
 
     public ArmoryWindow() {
 
+        setGlobalLookAndFeel();
         initializeViewClasses();
         assembleWindowFrame();
     }
@@ -41,6 +43,14 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
 
 
     /*--- Private Methods --*/
+
+    private void setGlobalLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        } catch (Exception e) {
+            // A Whole Lot of Nothin'
+        }
+    }
 
     private void initializeViewClasses() {
 
