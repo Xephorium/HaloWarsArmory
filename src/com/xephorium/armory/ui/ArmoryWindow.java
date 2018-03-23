@@ -2,11 +2,12 @@ package com.xephorium.armory.ui;
 
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.utility.DisplayUtility;
+import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelListener;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ArmoryWindow {
+public class ArmoryWindow implements InstallationBrowsePanelListener {
 
 
     /*--- Variables ---*/
@@ -46,6 +47,14 @@ public class ArmoryWindow {
         panel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
         frame.add(panel, BorderLayout.CENTER);
 
-        frame.add(new InstallationBrowsePanel(), BorderLayout.PAGE_START);
+        frame.add(new InstallationBrowsePanel(this), BorderLayout.PAGE_START);
+    }
+
+
+    /*--- Interface Methods ---*/
+
+    @Override
+    public void handleBrowseButtonClick() {
+
     }
 }
