@@ -1,5 +1,6 @@
 package com.xephorium.armory.ui;
 
+import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
@@ -16,7 +17,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
     /*--- Variables ---*/
 
     private final int WINDOW_HEIGHT = 500;
-    private final int WINDOW_WIDTH = 700;
+    private final int WINDOW_WIDTH = 665;
     private final String WINDOW_TITLE = "  Halo Wars Armory";
 
     private JFrame frame;
@@ -47,7 +48,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
 
     private void setGlobalLookAndFeel() {
         try {
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+            UIManager.setLookAndFeel(new WindowsLookAndFeel());
         } catch (Exception e) {
             // A Whole Lot of Nothin'
         }

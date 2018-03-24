@@ -83,7 +83,8 @@ class InstallationBrowsePanel extends JPanel {
 
     private JTextField createInstallationDirectoryTextField() {
         JTextField textField = new JTextField();
-        textField.setEditable(false);
+        textField.setEnabled(false);
+        textField.setBackground(Color.WHITE);
         textField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

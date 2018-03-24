@@ -27,12 +27,15 @@ public class ColorProfilePanel extends JPanel {
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
         this.setPreferredSize(new Dimension(ArmoryDimension.COLOR_PROFILE_PANEL_WIDTH, 0));
+        this.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
 
         JPanel topPanel = new JPanel();
-        topPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        topPanel.setBackground(Color.WHITE);
+        topPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR));
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        bottomPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR));
 
         this.add(topPanel);
         this.add(bottomPanel);

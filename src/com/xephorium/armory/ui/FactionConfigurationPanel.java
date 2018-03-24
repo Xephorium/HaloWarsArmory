@@ -14,22 +14,41 @@ public class FactionConfigurationPanel extends JPanel {
 
     public FactionConfigurationPanel() {
         initializePanelAttributes();
+        createTabbedPane();
     }
 
 
     /*--- Private Methods ---*/
 
     private void initializePanelAttributes() {
-        this.setLayout(new GridLayout(1, 1, 0, 0));
+        this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(
-                ArmoryDimension.PANEL_PADDING/2,
+                ArmoryDimension.PANEL_PADDING/2 - 3,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL,
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
-                ArmoryDimension.PANEL_PADDING/2));
+                ArmoryDimension.PANEL_PADDING/2 - 2));
+        this.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
+    }
 
-        JPanel tabPanel = new JPanel();
-        tabPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+    private void createTabbedPane() {
 
-        this.add(tabPanel);
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        JPanel unscPanel = new JPanel();
+        JPanel covenantPanel = new JPanel();
+        unscPanel.setBackground(Color.WHITE);
+        covenantPanel.setBackground(Color.WHITE);
+
+        JLabel unscLabel = new JLabel("UNSC");
+        JLabel covenantLabel = new JLabel("Covenant");
+        unscLabel.setBorder(new EmptyBorder(4, 10, 3, 10));
+        covenantLabel.setBorder(new EmptyBorder(4, 3, 3, 3));
+
+        tabbedPane.addTab("UNSC", unscPanel);
+        tabbedPane.addTab("Covenant", covenantPanel);
+        tabbedPane.setTabComponentAt(0, unscLabel);
+        tabbedPane.setTabComponentAt(1, covenantLabel);
+
+        this.add(tabbedPane, BorderLayout.CENTER);
     }
 }
