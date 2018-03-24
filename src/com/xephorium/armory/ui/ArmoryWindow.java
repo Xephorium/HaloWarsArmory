@@ -5,7 +5,6 @@ import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
-import com.xephorium.armory.ui.utility.FactionConfigurationPanel;
 
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;

@@ -1,4 +1,4 @@
-package com.xephorium.armory.ui.utility;
+package com.xephorium.armory.ui;
 
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
