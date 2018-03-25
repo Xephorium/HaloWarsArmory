@@ -81,6 +81,16 @@ public class FactionConfigurationPanel extends JPanel {
 
         for (int x = 0; x < 6; x++) {
 
+            JPanel playerPanel = new JPanel();
+            playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
+            playerPanel.setBorder(new EmptyBorder(0, 0, playerSeparationPadding, 0));
+            playerPanel.setBackground(Color.WHITE);
+            playerPanel.add(new JLabel("Player " + (x + 1)));
+            playerPanel.add(new Box.Filler(
+                    new Dimension(nameLabelPadding, 0),
+                    new Dimension(nameLabelPadding, 0),
+                    new Dimension(nameLabelPadding, 0)));
+
             final int playerNumber = x + 1;
             JComboBox comboBox = new JComboBox(colorProfileList);
             comboBox.setSelectedIndex(0);
@@ -91,17 +101,6 @@ public class FactionConfigurationPanel extends JPanel {
                 }
             });
             unscComboBoxes[x] = comboBox;
-
-
-            JPanel playerPanel = new JPanel();
-            playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
-            playerPanel.setBorder(new EmptyBorder(0, 0, playerSeparationPadding, 0));
-            playerPanel.setBackground(Color.WHITE);
-            playerPanel.add(new JLabel("Player " + (x + 1)));
-            playerPanel.add(new Box.Filler(
-                    new Dimension(nameLabelPadding, 0),
-                    new Dimension(nameLabelPadding, 0),
-                    new Dimension(nameLabelPadding, 0)));
             playerPanel.add(comboBox);
 
             playerListPanel.add(playerPanel);
