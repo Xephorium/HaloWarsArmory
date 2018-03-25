@@ -45,10 +45,6 @@ public class ArmoryWindow implements
         frame.setVisible(true);
     }
 
-    public Container getContentPane() {
-        return frame.getContentPane();
-    }
-
 
     /*--- Private Methods --*/
 
@@ -78,7 +74,6 @@ public class ArmoryWindow implements
 
         frame.add(colorProfilePanel, BorderLayout.EAST);
         frame.add(factionConfigurationPanel, BorderLayout.CENTER);
-
         frame.add(installationBrowsePanel, BorderLayout.PAGE_START);
     }
 
@@ -102,12 +97,32 @@ public class ArmoryWindow implements
     }
 
     @Override
-    public void handleUNSCPlayerProfileUpdated(int playerNumber, String profileName) {
-        // TODO - Update UNSC Player Profile
+    public void handleUNSCPlayerUpdate(int playerNumber, String profileName) {
+        // TODO - Update UNSC Player
     }
 
     @Override
-    public void handleCovenantPlayerProfileUpdated(int playerNumber, String profileName) {
-        // TODO - Update Covenant Player Profile
+    public void handleCovenantPlayerUpdate(int playerNumber, String profileName) {
+        // TODO - Update Covenant Player
+    }
+
+    @Override
+    public void handleUNSCConfigurationReset() {
+        // TODO - Reset UNSC Configuration
+    }
+
+    @Override
+    public void handleCovenantConfigurationReset() {
+        // TODO - Reset Covenant Configuration
+    }
+
+    @Override
+    public void handleUNSCConfigurationSave() {
+        // TODO - Save UNSC Configuration
+    }
+
+    @Override
+    public void handleCovenantConfigurationSave() {
+        // TODO - Save Covenant Configuration
     }
 }
