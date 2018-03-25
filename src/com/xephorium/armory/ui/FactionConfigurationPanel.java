@@ -5,6 +5,7 @@ import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import javafx.scene.layout.Pane;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
@@ -72,7 +73,7 @@ public class FactionConfigurationPanel extends JPanel {
 
         String[] colorProfileList = {"Snow & Ice", "Burnt Oak", "Forest Green", "Gunmetal Gray"};
         int nameLabelPadding = 10;
-        int playerSeparationPadding = 13;
+        int playerSeparationPadding = 15;
 
         JPanel playerListPanel = new JPanel();
         playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
@@ -110,8 +111,33 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private JPanel createUNSCFactionPanel() {
+
+        int iconDimension = 100;
+
         JPanel factionPanel = new JPanel();
-        factionPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        factionPanel.setBackground(Color.WHITE);
+
+        JPanel resetButtonPanel = new JPanel();
+        resetButtonPanel.setBackground(Color.WHITE);
+        JButton resetButton = new JButton("Reset");
+        resetButtonPanel.add(resetButton, BorderLayout.SOUTH);
+
+        JPanel iconPanel = new JPanel(new GridLayout(1, 1));
+        iconPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        iconPanel.add(new Box.Filler(
+                new Dimension(iconDimension,iconDimension),
+                new Dimension(iconDimension,iconDimension),
+                new Dimension(iconDimension,iconDimension)));
+
+        JPanel saveButtonPanel = new JPanel();
+        saveButtonPanel.setBackground(Color.WHITE);
+        JButton saveButton = new JButton("Save");
+        saveButtonPanel.add(saveButton, BorderLayout.SOUTH);
+
+        factionPanel.add(resetButtonPanel, BorderLayout.WEST);
+        factionPanel.add(iconPanel, BorderLayout.CENTER);
+        factionPanel.add(saveButtonPanel, BorderLayout.EAST);
+
         return factionPanel;
     }
 
