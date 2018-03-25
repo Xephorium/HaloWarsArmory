@@ -11,7 +11,7 @@ public class DialogFactory {
                 "No Halo Wars installation found.",
                 "Game Not Found",
                 JOptionPane.ERROR_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_INVALID);
+                ArmoryImage.ICON_INSTALLATION_INVALID_DIALOG);
     }
 
     public static void createGameFoundDialog(JFrame frame) {
@@ -19,6 +19,6 @@ public class DialogFactory {
                 "Installation found!",
                 "Game Found",
                 JOptionPane.INFORMATION_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_FOUND);
+                ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
     }
 }
