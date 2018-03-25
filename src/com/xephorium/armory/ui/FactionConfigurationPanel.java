@@ -10,8 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_FACTION_COVENANT;
-import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_FACTION_UNSC;
+import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_COVENANT;
+import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_UNSC;
 
 public class FactionConfigurationPanel extends JPanel {
 
@@ -186,7 +186,7 @@ public class FactionConfigurationPanel extends JPanel {
 
         JPanel iconPanel = new JPanel(new GridLayout(1, 1));
         iconPanel.setBackground(Color.WHITE);
-        iconPanel.add(new JLabel("", faction == Faction.UNSC ? ICON_FACTION_UNSC : ICON_FACTION_COVENANT, JLabel.CENTER));
+        iconPanel.add(new JLabel("", faction == Faction.UNSC ? ICON_UNSC : ICON_COVENANT, JLabel.CENTER));
         return iconPanel;
     }
 
