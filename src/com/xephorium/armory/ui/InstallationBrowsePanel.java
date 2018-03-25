@@ -26,10 +26,10 @@ class InstallationBrowsePanel extends JPanel {
     /*--- Constructor ---*/
 
     InstallationBrowsePanel(InstallationBrowsePanelListener listener) {
+        this.listener = listener;
 
         initializePanelAttributes();
 
-        this.listener = listener;
         imageIcon = ArmoryImage.ICON_INSTALLATION_UNKNOWN;
         directoryTextField = createInstallationDirectoryTextField();
         browseButton = createInstallationBrowseButton();

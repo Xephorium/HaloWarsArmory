@@ -5,11 +5,15 @@ import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
+import com.xephorium.armory.ui.FactionConfigurationPanel.FactionConfigurationPanelListener;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryChooserListener {
+public class ArmoryWindow implements
+        InstallationBrowsePanelListener,
+        DirectoryChooserListener,
+        FactionConfigurationPanelListener {
 
 
     /*--- Variables ---*/
@@ -41,6 +45,10 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
         frame.setVisible(true);
     }
 
+    public Container getContentPane() {
+        return frame.getContentPane();
+    }
+
 
     /*--- Private Methods --*/
 
@@ -57,7 +65,7 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
         frame = new JFrame(WINDOW_TITLE);
         installationBrowsePanel = new InstallationBrowsePanel(this);
         colorProfilePanel = new ColorProfilePanel();
-        factionConfigurationPanel = new FactionConfigurationPanel();
+        factionConfigurationPanel = new FactionConfigurationPanel(this);
         directoryChooser = new DirectoryChooser(this);
     }
 
@@ -91,5 +99,15 @@ public class ArmoryWindow implements InstallationBrowsePanelListener, DirectoryC
             installationBrowsePanel.setInvalidInstallationDirectory();
             DialogFactory.createGameNotFoundDialog(frame);
         }
+    }
+
+    @Override
+    public void handleUNSCPlayerProfileUpdated(int playerNumber, String profileName) {
+        // TODO - Update UNSC Player Profile
+    }
+
+    @Override
+    public void handleCovenantPlayerProfileUpdated(int playerNumber, String profileName) {
+        // TODO - Update Covenant Player Profile
     }
 }

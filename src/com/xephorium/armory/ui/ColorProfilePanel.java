@@ -31,11 +31,11 @@ public class ColorProfilePanel extends JPanel {
 
         JPanel topPanel = new JPanel();
         topPanel.setBackground(Color.WHITE);
-        topPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR));
+        topPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
-        bottomPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR));
+        bottomPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
 
         this.add(topPanel);
         this.add(bottomPanel);
