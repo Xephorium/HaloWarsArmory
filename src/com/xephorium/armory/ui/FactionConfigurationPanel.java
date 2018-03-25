@@ -72,12 +72,12 @@ public class FactionConfigurationPanel extends JPanel {
 
         String[] colorProfileList = {"Snow & Ice", "Burnt Oak", "Forest Green", "Gunmetal Gray"};
         int nameLabelPadding = 10;
-        int playerSeparationPadding = 10;
+        int playerSeparationPadding = 13;
 
         JPanel playerListPanel = new JPanel();
         playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
         playerListPanel.setBackground(Color.WHITE);
-        playerListPanel.setBorder(new EmptyBorder(15, 15, 10, 15));
+        playerListPanel.setBorder(new EmptyBorder(15, 15, 0, 15));
 
         for (int x = 0; x < 6; x++) {
 
