@@ -14,6 +14,9 @@ public class ColorProfilePanel extends JPanel {
 
     public ColorProfilePanel() {
         initializePanelAttributes();
+
+        this.add(createProfileEditPanel());
+        this.add(createProfilePreviewPanel());
     }
 
 
@@ -28,16 +31,19 @@ public class ColorProfilePanel extends JPanel {
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
         this.setPreferredSize(new Dimension(ArmoryDimension.COLOR_PROFILE_PANEL_WIDTH, 0));
         this.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
+    }
 
-        JPanel topPanel = new JPanel();
-        topPanel.setBackground(Color.WHITE);
-        topPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
+    private JPanel createProfileEditPanel() {
+        JPanel profileEditPanel = new JPanel();
+        profileEditPanel.setBackground(Color.WHITE);
+        profileEditPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
+        return profileEditPanel;
+    }
 
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
-        bottomPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
-
-        this.add(topPanel);
-        this.add(bottomPanel);
+    private JPanel createProfilePreviewPanel() {
+        JPanel profilePreviewPanel = new JPanel();
+        profilePreviewPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        profilePreviewPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
+        return profilePreviewPanel;
     }
 }
