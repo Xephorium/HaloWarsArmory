@@ -33,7 +33,7 @@ public class ColorChooser extends JDialog {
         initializeDialogAttributes();
         this.add(createCustomColorChooserPanel(Color.WHITE));
     }
-    
+
 
     /*--- Public Methods ---*/
 
@@ -83,7 +83,7 @@ public class ColorChooser extends JDialog {
         });
         AbstractColorChooserPanel[] panels = javaColorChooser.getChooserPanels();
         for (AbstractColorChooserPanel javaPanel : panels) {
-            if (javaPanel.getDisplayName().equals("HSL")) {
+            if (javaPanel.getDisplayName().equals("HSV")) {
                 javaColorChooserPanel = javaPanel;
                 javaColorChooserPanel.setBorder(new EmptyBorder(15,15,0,15));
             }
