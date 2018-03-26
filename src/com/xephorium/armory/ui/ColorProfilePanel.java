@@ -38,11 +38,11 @@ public class ColorProfilePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public String getCurrentProfileName() {
-        return this.profileNameTextField.getText();
+        return this.profileNameTextField.getText().substring(1, this.profileNameTextField.getText().length());
     }
 
     public void setCurrentProfileName(String name) {
-        this.profileNameTextField.setText(name);
+        this.profileNameTextField.setText(" " + name);
     }
 
     public Color getCurrentProfileColor(ColorType colorType) {
