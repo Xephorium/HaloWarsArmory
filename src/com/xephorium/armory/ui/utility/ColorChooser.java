@@ -33,6 +33,7 @@ public class ColorChooser extends JDialog {
         initializeDialogAttributes();
         this.add(createCustomColorChooserPanel(Color.WHITE));
     }
+    
 
     /*--- Public Methods ---*/
 
