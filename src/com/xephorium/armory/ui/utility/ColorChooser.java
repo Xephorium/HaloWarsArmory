@@ -16,8 +16,8 @@ public class ColorChooser extends JDialog {
 
     /*--- Variables ---*/
 
-    private static final int WINDOW_HEIGHT = 250;
-    private static final int WINDOW_WIDTH = 440;
+    private static final int WINDOW_HEIGHT = 255;
+    private static final int WINDOW_WIDTH = 460;
 
     private ColorChooserListener listener;
     private JLabel redLabel;
@@ -110,7 +110,7 @@ public class ColorChooser extends JDialog {
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-        bottomPanel.setBorder(new EmptyBorder(0, 12, 10, 12));
+        bottomPanel.setBorder(new EmptyBorder(0, 22, 25, 22));
         bottomPanel.add(redGreenBlueVerticalPanel);
         bottomPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(selectButton);
