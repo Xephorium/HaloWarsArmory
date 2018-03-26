@@ -1,5 +1,7 @@
 package com.xephorium.armory.ui.utility;
 
+import com.xephorium.armory.ui.resource.color.ArmoryColor;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -20,6 +22,7 @@ public class ColorChooser extends JDialog {
     private static final int WINDOW_WIDTH = 460;
 
     private ColorChooserListener listener;
+    private JPanel previewPanel;
     private JLabel redLabel;
     private JLabel greenLabel;
     private JLabel blueLabel;
@@ -79,6 +82,7 @@ public class ColorChooser extends JDialog {
                 redLabel.setText("Red: " + javaColorChooser.getSelectionModel().getSelectedColor().getRed() + ", ");
                 greenLabel.setText("Green: " + javaColorChooser.getSelectionModel().getSelectedColor().getGreen() + ", ");
                 blueLabel.setText("Blue: " + javaColorChooser.getSelectionModel().getSelectedColor().getBlue());
+                previewPanel.setBackground(javaColorChooser.getSelectionModel().getSelectedColor());
             }
         });
         AbstractColorChooserPanel[] panels = javaColorChooser.getChooserPanels();
@@ -89,6 +93,11 @@ public class ColorChooser extends JDialog {
             }
         }
 
+        JPanel selectPanel = new JPanel();
+        selectPanel.setLayout(new BoxLayout(selectPanel,BoxLayout.X_AXIS));
+        previewPanel = new JPanel();
+        previewPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
+        previewPanel.setBackground(color);
         JButton selectButton = new JButton("Select");
         selectButton.addActionListener(new ActionListener() {
             @Override
@@ -97,6 +106,11 @@ public class ColorChooser extends JDialog {
                 dispose();
             }
         });
+        previewPanel.setPreferredSize(new Dimension(143, selectButton.getHeight()));
+        selectPanel.add(previewPanel);
+        Dimension dim = new Dimension(10,5);
+        selectPanel.add(new Box.Filler(dim, dim, dim));
+        selectPanel.add(selectButton);
 
         JPanel redGreenBlueVerticalPanel = new JPanel(new BorderLayout());
         JPanel redGreenBluePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -113,7 +127,7 @@ public class ColorChooser extends JDialog {
         bottomPanel.setBorder(new EmptyBorder(0, 22, 25, 22));
         bottomPanel.add(redGreenBlueVerticalPanel);
         bottomPanel.add(Box.createHorizontalGlue());
-        bottomPanel.add(selectButton);
+        bottomPanel.add(selectPanel);
 
         JPanel customColorChooserPanel = new JPanel(new BorderLayout());
         customColorChooserPanel.add(javaColorChooserPanel, BorderLayout.CENTER);
