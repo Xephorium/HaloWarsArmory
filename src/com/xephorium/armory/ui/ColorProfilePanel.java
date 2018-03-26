@@ -167,7 +167,7 @@ public class ColorProfilePanel extends JPanel {
         return new CustomMouseListener(new MouseClickListener() {
             @Override
             public void onMouseClick() {
-                listener.handleProfileColorClick(colorType);
+                listener.handleProfileColorClick(colorType, getCurrentProfileColor(colorType));
             }
         });
     }
@@ -184,7 +184,7 @@ public class ColorProfilePanel extends JPanel {
 
     interface ColorProfilePanelListener {
 
-        void handleProfileColorClick(ColorType colorType);
+        void handleProfileColorClick(ColorType colorType, Color currentColor);
 
         void handleProfileSaveClick();
     }

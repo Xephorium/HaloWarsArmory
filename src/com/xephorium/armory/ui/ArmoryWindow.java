@@ -1,6 +1,7 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Profile.ColorType;
+import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
@@ -11,7 +12,6 @@ import com.xephorium.armory.ui.ColorProfilePanel.ColorProfilePanelListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class ArmoryWindow implements
         InstallationBrowsePanelListener,
@@ -131,13 +131,18 @@ public class ArmoryWindow implements
     }
 
     @Override
-    public void handleProfileColorClick(ColorType colorType) {
-        // TODO - Open Color Chooser Dialog
-        Random random = new Random();
-        colorProfilePanel.setCurrentProfileColor(colorType, new Color(
-                random.nextInt(256),
-                random.nextInt(256),
-                random.nextInt(256)));
+    public void handleProfileColorClick(ColorType colorType, Color currentColor) {
+        DialogFactory.createColorChooserDialog(currentColor,new ColorChooser.ColorChooserListener() {
+            @Override
+            public void onColorSelected(Color color) {
+                colorProfilePanel.setCurrentProfileColor(colorType, color);
+            }
+
+            @Override
+            public void onDialogClose() {
+                // Do Nothing
+            }
+        });
     }
 
     @Override
