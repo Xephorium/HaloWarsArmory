@@ -121,7 +121,8 @@ public class ColorProfilePanel extends JPanel {
         profileSettingsPanel.setBackground(Color.WHITE);
 
         profileNameTextField = new JTextField();
-        profileNameTextField.setText("Sample Profile");
+        profileNameTextField.setBackground(Color.WHITE);
+        profileNameTextField.setText("Profile Name");
 
         JPanel profileColorsPanel = new JPanel(new GridLayout(ColorType.values().length, 1));
         profileColorsPanel.setBorder(new EmptyBorder(5,0,5,0));
