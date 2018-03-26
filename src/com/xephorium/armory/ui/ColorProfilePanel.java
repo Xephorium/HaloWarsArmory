@@ -6,6 +6,7 @@ import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.utility.CustomMouseListener;
 import com.xephorium.armory.ui.utility.CustomMouseListener.MouseClickListener;
+import com.xephorium.armory.ui.utility.StringUtility;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -38,11 +39,11 @@ public class ColorProfilePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public String getCurrentProfileName() {
-        return this.profileNameTextField.getText().substring(1, this.profileNameTextField.getText().length());
+        return StringUtility.removeLeadingSpace(this.profileNameTextField.getText());
     }
 
     public void setCurrentProfileName(String name) {
-        this.profileNameTextField.setText(" " + name);
+        this.profileNameTextField.setText(StringUtility.addLeadingSpace(name));
     }
 
     public Color getCurrentProfileColor(ColorType colorType) {
@@ -122,7 +123,7 @@ public class ColorProfilePanel extends JPanel {
 
         profileNameTextField = new JTextField();
         profileNameTextField.setBackground(Color.WHITE);
-        profileNameTextField.setText(" Profile Name");
+        setCurrentProfileName("Profile Name");
 
         JPanel profileColorsPanel = new JPanel(new GridLayout(ColorType.values().length, 1));
         profileColorsPanel.setBorder(new EmptyBorder(5,0,5,0));
