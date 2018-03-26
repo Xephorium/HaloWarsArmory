@@ -1,19 +1,23 @@
 package com.xephorium.armory.ui;
 
+import com.xephorium.armory.model.Profile.ColorType;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 import com.xephorium.armory.ui.FactionConfigurationPanel.FactionConfigurationPanelListener;
+import com.xephorium.armory.ui.ColorProfilePanel.ColorProfilePanelListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class ArmoryWindow implements
         InstallationBrowsePanelListener,
         DirectoryChooserListener,
-        FactionConfigurationPanelListener {
+        FactionConfigurationPanelListener,
+        ColorProfilePanelListener {
 
 
     /*--- Variables ---*/
@@ -24,8 +28,8 @@ public class ArmoryWindow implements
 
     private JFrame frame;
     private InstallationBrowsePanel installationBrowsePanel;
-    private ColorProfilePanel colorProfilePanel;
     private FactionConfigurationPanel factionConfigurationPanel;
+    private ColorProfilePanel colorProfilePanel;
     private DirectoryChooser directoryChooser;
 
 
@@ -60,8 +64,8 @@ public class ArmoryWindow implements
 
         frame = new JFrame(WINDOW_TITLE);
         installationBrowsePanel = new InstallationBrowsePanel(this);
-        colorProfilePanel = new ColorProfilePanel();
         factionConfigurationPanel = new FactionConfigurationPanel(this);
+        colorProfilePanel = new ColorProfilePanel(this);
         directoryChooser = new DirectoryChooser(this);
     }
 
@@ -124,5 +128,15 @@ public class ArmoryWindow implements
     @Override
     public void handleCovenantConfigurationSave() {
         // TODO - Save Covenant Configuration
+    }
+
+    @Override
+    public void onProfileColorClick(ColorType colorType) {
+        // TODO - Open Color Chooser Dialog
+        Random random = new Random();
+        colorProfilePanel.setProfileColor(colorType, new Color(
+                random.nextInt(256),
+                random.nextInt(256),
+                random.nextInt(256)));
     }
 }

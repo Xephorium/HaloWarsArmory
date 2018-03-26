@@ -1,28 +1,47 @@
 package com.xephorium.armory.ui;
 
+import com.xephorium.armory.model.Profile.ColorType;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
-import com.xephorium.armory.ui.resource.image.ArmoryImage;
+import com.xephorium.armory.ui.utility.CustomMouseListener;
+import com.xephorium.armory.ui.utility.CustomMouseListener.MouseClickListener;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
-import java.util.concurrent.Flow;
 
 public class ColorProfilePanel extends JPanel {
 
 
+    /*--- Variables ---*/
+
+    private ColorProfilePanelListener listener;
+    private JTextField profileNameTextField;
+    private JPanel[] profileColorPanels = new JPanel[ColorType.values().length];
+
+
     /*--- Constructor ---*/
 
-    public ColorProfilePanel() {
+    public ColorProfilePanel(ColorProfilePanelListener listener) {
+        this.listener = listener;
+
         initializePanelAttributes();
 
         this.add(createProfileEditPanel());
         this.add(createProfilePreviewPanel());
     }
+
+
+    /*--- Public Methods ---*/
+
+    public Color getProfileColor(ColorType colorType) {
+        return profileColorPanels[colorType.getIndex()].getBackground();
+    }
+
+    public void setProfileColor(ColorType colorType, Color color) {
+        profileColorPanels[colorType.getIndex()].setBackground(color);
+    }
+
 
 
     /*--- Private Methods ---*/
@@ -63,17 +82,15 @@ public class ColorProfilePanel extends JPanel {
         JPanel profileSettingsPanel = new JPanel(new BorderLayout());
         profileSettingsPanel.setPreferredSize(new Dimension(120, 0));
 
-        JTextField profileNameTextField = new JTextField();
+        profileNameTextField = new JTextField();
         profileNameTextField.setText("Sample Profile");
 
-        JPanel profileColorsPanel = new JPanel(new GridLayout(5, 1));
+        JPanel profileColorsPanel = new JPanel(new GridLayout(ColorType.values().length, 1));
         profileColorsPanel.setBorder(new EmptyBorder(5,0,5,0));
         profileColorsPanel.setBackground(Color.WHITE);
-        profileColorsPanel.add(createColorListItem("Units"));
-        profileColorsPanel.add(createColorListItem("Corpses"));
-        profileColorsPanel.add(createColorListItem("Selector"));
-        profileColorsPanel.add(createColorListItem("Minimap"));
-        profileColorsPanel.add(createColorListItem("HUD"));
+        for (ColorType colorType :ColorType.values()) {
+            profileColorsPanel.add(createColorListItem(colorType));
+        }
 
         JButton profileSaveButton = new JButton("Save");
 
@@ -84,23 +101,33 @@ public class ColorProfilePanel extends JPanel {
         return profileSettingsPanel;
     }
 
-    private JPanel createColorListItem(String colorType) {
+    private JPanel createColorListItem(ColorType colorType) {
 
         JPanel colorListItem = new JPanel(new BorderLayout());
+        colorListItem.addMouseListener(createColorListItemMouseListener(colorType));
         colorListItem.setBackground(Color.WHITE);
 
         JPanel colorPreviewPanel = new JPanel(new GridBagLayout());
         colorPreviewPanel.setBackground(Color.WHITE);
-        JPanel colorPreviewBox = new JPanel();
-        colorPreviewBox.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
-        colorPreviewBox.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
-        colorPreviewBox.setPreferredSize(new Dimension(15, 15));
-        colorPreviewPanel.add(colorPreviewBox, new GridBagConstraints());
+        profileColorPanels[colorType.getIndex()] = new JPanel();
+        profileColorPanels[colorType.getIndex()].setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
+        profileColorPanels[colorType.getIndex()].setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        profileColorPanels[colorType.getIndex()].setPreferredSize(new Dimension(15, 15));
+        colorPreviewPanel.add(profileColorPanels[colorType.getIndex()], new GridBagConstraints());
 
-        colorListItem.add(new JLabel(colorType), BorderLayout.CENTER);
+        colorListItem.add(new JLabel(colorType.getDisplayName()), BorderLayout.CENTER);
         colorListItem.add(colorPreviewPanel, BorderLayout.LINE_END);
 
         return colorListItem;
+    }
+
+    private CustomMouseListener createColorListItemMouseListener(ColorType colorType) {
+        return new CustomMouseListener(new MouseClickListener() {
+            @Override
+            public void onMouseClick() {
+                listener.onProfileColorClick(colorType);
+            }
+        });
     }
 
     private JPanel createProfilePreviewPanel() {
@@ -108,5 +135,13 @@ public class ColorProfilePanel extends JPanel {
         profilePreviewPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
         profilePreviewPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
         return profilePreviewPanel;
+    }
+
+
+    /*--- Listener Interface ---*/
+
+    interface ColorProfilePanelListener {
+
+        void onProfileColorClick(ColorType colorType);
     }
 }
