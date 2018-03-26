@@ -131,12 +131,17 @@ public class ArmoryWindow implements
     }
 
     @Override
-    public void onProfileColorClick(ColorType colorType) {
+    public void handleProfileColorClick(ColorType colorType) {
         // TODO - Open Color Chooser Dialog
         Random random = new Random();
-        colorProfilePanel.setProfileColor(colorType, new Color(
+        colorProfilePanel.setCurrentProfileColor(colorType, new Color(
                 random.nextInt(256),
                 random.nextInt(256),
                 random.nextInt(256)));
+    }
+
+    @Override
+    public void handleProfileSaveClick() {
+        // TODO - Save Selected Profile
     }
 }

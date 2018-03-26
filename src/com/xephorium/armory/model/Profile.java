@@ -48,6 +48,14 @@ public class Profile {
         this.colors[colorType.getIndex()] = color;
     }
 
+    public Color[] getColors() {
+        return this.colors;
+    }
+
+    public void setColors(Color[] colors) {
+        this.colors = colors;
+    }
+
 
     /*--- ColorType Enum ---*/
 
