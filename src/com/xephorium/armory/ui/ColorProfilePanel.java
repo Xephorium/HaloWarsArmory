@@ -1,7 +1,7 @@
 package com.xephorium.armory.ui;
 
-import com.xephorium.armory.model.Profile;
-import com.xephorium.armory.model.Profile.ColorType;
+import com.xephorium.armory.model.ColorProfile;
+import com.xephorium.armory.model.ColorProfile.ColorType;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
@@ -27,7 +27,7 @@ public class ColorProfilePanel extends JPanel {
     private JPanel[] profileColorPanels = new JPanel[ColorType.values().length];
     private JList profileListPanel;
 
-    private Profile[] profiles;
+    private ColorProfile[] colorProfileList;
 
     /*--- Constructor ---*/
 
@@ -73,25 +73,25 @@ public class ColorProfilePanel extends JPanel {
         }
     }
 
-    public Profile getWorkingProfile() {
-        Profile workingProfile = new Profile();
-        workingProfile.setName(getWorkingProfileName());
-        workingProfile.setColors(getWorkingProfileColors());
-        return workingProfile;
+    public ColorProfile getWorkingProfile() {
+        ColorProfile workingColorProfile = new ColorProfile();
+        workingColorProfile.setName(getWorkingProfileName());
+        workingColorProfile.setColors(getWorkingProfileColors());
+        return workingColorProfile;
     }
 
-    public void setWorkingProfile(Profile profile) {
-        setWorkingProfileName(profile.getName());
-        setWorkingProfileColors(profile.getColors());
+    public void setWorkingProfile(ColorProfile colorProfile) {
+        setWorkingProfileName(colorProfile.getName());
+        setWorkingProfileColors(colorProfile.getColors());
     }
 
-    public void setProfiles(Profile[] profiles) {
-        this.profiles = profiles;
+    public void setColorProfileList(ColorProfile[] colorProfileList) {
+        this.colorProfileList = colorProfileList;
         updateProfileBrowsePanel();
     }
 
-    public Profile[] getProfiles() {
-        return this.profiles;
+    public ColorProfile[] getColorProfileList() {
+        return this.colorProfileList;
     }
 
 
@@ -171,9 +171,9 @@ public class ColorProfilePanel extends JPanel {
     }
 
     private void updateProfileBrowsePanel() {
-        String[] profileNames = new String[profiles.length];
-        for (int x = 0; x < profiles.length; x++) {
-            profileNames[x] = profiles[x].getName();
+        String[] profileNames = new String[colorProfileList.length];
+        for (int x = 0; x < colorProfileList.length; x++) {
+            profileNames[x] = colorProfileList[x].getName();
         }
         profileListPanel.setListData(profileNames);
         profileListPanel.setSelectedIndex(0);
@@ -191,7 +191,7 @@ public class ColorProfilePanel extends JPanel {
         profileNameTextField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK),
                 new EmptyBorder(3,2,3,2)));
-        setWorkingProfileName("Profile Name");
+        setWorkingProfileName("ColorProfile Name");
 
         JPanel profileColorsPanel = new JPanel(new GridLayout(ColorType.values().length, 1));
         profileColorsPanel.setBorder(new EmptyBorder(5,0,5,0));
@@ -252,8 +252,8 @@ public class ColorProfilePanel extends JPanel {
     }
 
     private void selectProfileByIndex(int index) {
-        setWorkingProfileName(profiles[index].getName());
-        setWorkingProfileColors(profiles[index].getColors());
+        setWorkingProfileName(colorProfileList[index].getName());
+        setWorkingProfileColors(colorProfileList[index].getColors());
     }
 
 

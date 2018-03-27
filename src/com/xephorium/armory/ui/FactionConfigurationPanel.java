@@ -1,7 +1,7 @@
 package com.xephorium.armory.ui;
 
+import com.xephorium.armory.model.ColorProfile;
 import com.xephorium.armory.model.Faction;
-import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
@@ -46,11 +46,11 @@ public class FactionConfigurationPanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public void updateProfiles(Profile[] profiles) {
+    public void updateProfiles(ColorProfile[] colorProfileList) {
 
-        String[] newProfileNames = new String[profiles.length];
-        for (int x = 0; x < profiles.length; x++) {
-            newProfileNames[x] = profiles[x].getName();
+        String[] newProfileNames = new String[colorProfileList.length];
+        for (int x = 0; x < colorProfileList.length; x++) {
+            newProfileNames[x] = colorProfileList[x].getName();
         }
 
         updateUNSCComboBoxes(newProfileNames);

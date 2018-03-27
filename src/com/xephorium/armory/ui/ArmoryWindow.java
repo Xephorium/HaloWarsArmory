@@ -1,8 +1,8 @@
 package com.xephorium.armory.ui;
 
-import com.xephorium.armory.model.Profile;
-import com.xephorium.armory.model.Profile.ColorType;
-import com.xephorium.armory.repository.MockProfileRepository;
+import com.xephorium.armory.model.ColorProfile;
+import com.xephorium.armory.model.ColorProfile.ColorType;
+import com.xephorium.armory.repository.MockColorProfileRepository;
 import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
@@ -43,10 +43,10 @@ public class ArmoryWindow implements
         initializeViewClasses();
         assembleWindowFrame();
 
-        Profile[] profileList = MockProfileRepository.getProfileList();
+        ColorProfile[] colorProfileList = MockColorProfileRepository.getProfileList();
 
-        factionConfigurationPanel.updateProfiles(profileList);
-        colorProfilePanel.setProfiles(profileList);
+        factionConfigurationPanel.updateProfiles(colorProfileList);
+        colorProfilePanel.setColorProfileList(colorProfileList);
     }
 
 
@@ -154,6 +154,6 @@ public class ArmoryWindow implements
 
     @Override
     public void handleProfileSaveClick() {
-        // TODO - Save Selected Profile
+        // TODO - Save Selected ColorProfile
     }
 }

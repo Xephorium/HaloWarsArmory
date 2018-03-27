@@ -4,7 +4,7 @@ import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import java.awt.*;
 
-public class Profile {
+public class ColorProfile {
 
 
     /*--- Variables ---*/
@@ -15,21 +15,21 @@ public class Profile {
 
     /*--- Constructor(s) ---*/
 
-    public Profile() {
-        this.name = "New Color Profile";
+    public ColorProfile() {
+        this.name = "New Color ColorProfile";
         for (int x = 0; x < colors.length; x++) {
             this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
         }
     }
 
-    public Profile(String name) {
+    public ColorProfile(String name) {
         this.name = name;
         for (int x = 0; x < colors.length; x++) {
             this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
         }
     }
 
-    public Profile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+    public ColorProfile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
         this.name = name;
         this.setColor(ColorType.UNIT, unitColor);
         this.setColor(ColorType.CORPSE, corpseColor);
