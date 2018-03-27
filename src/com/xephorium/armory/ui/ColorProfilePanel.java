@@ -4,6 +4,7 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.Profile.ColorType;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
+import com.xephorium.armory.ui.resource.font.ArmoryFont;
 import com.xephorium.armory.ui.utility.CustomMouseListener;
 import com.xephorium.armory.ui.utility.CustomMouseListener.MouseClickListener;
 import com.xephorium.armory.ui.utility.StringUtility;
@@ -126,7 +127,11 @@ public class ColorProfilePanel extends JPanel {
     private JPanel createProfileBrowsePanel() {
 
         JPanel profileBrowsePanel = new JPanel(new BorderLayout());
-        profileBrowsePanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
+        profileBrowsePanel.setBackground(Color.WHITE);
+
+        JLabel profileListHeaderLabel = new JLabel("Color Profiles");
+        profileListHeaderLabel.setFont(ArmoryFont.LARGE);
+        profileListHeaderLabel.setBorder(new EmptyBorder(0,0,5,5));
 
         profileListPanel = new JList();
         profileListPanel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -139,8 +144,10 @@ public class ColorProfilePanel extends JPanel {
                 }
             }
         });
+        JScrollPane profileListScroller = new JScrollPane(profileListPanel);
 
-        profileBrowsePanel.add(profileListPanel, BorderLayout.CENTER);
+        profileBrowsePanel.add(profileListHeaderLabel, BorderLayout.PAGE_START);
+        profileBrowsePanel.add(profileListScroller, BorderLayout.CENTER);
 
         return profileBrowsePanel;
     }
