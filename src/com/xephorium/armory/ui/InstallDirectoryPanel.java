@@ -1,5 +1,6 @@
 package com.xephorium.armory.ui;
 
+import com.sun.jdi.LocalVariable;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
@@ -22,7 +23,6 @@ class InstallDirectoryPanel extends JPanel {
 
     private ImageIcon imageIcon;
     private JTextField directoryTextField;
-    private JButton browseButton;
 
 
     /*--- Constructor ---*/
@@ -34,7 +34,6 @@ class InstallDirectoryPanel extends JPanel {
 
         imageIcon = ArmoryImage.ICON_INSTALLATION_UNKNOWN;
         directoryTextField = createDirectoryTextField();
-        browseButton = createBrowseButton();
 
         setDefaultInstallDirectory();
 
@@ -44,7 +43,7 @@ class InstallDirectoryPanel extends JPanel {
         this.add(new Box.Filler(padding, padding, padding));
         this.add(directoryTextField);
         this.add(new Box.Filler(padding, padding, padding));
-        this.add(browseButton);
+        this.add(createBrowseButton());
     }
 
 
