@@ -1,6 +1,5 @@
 package com.xephorium.armory.ui.utility;
 
-import com.sun.jndi.ldap.ext.StartTlsResponseImpl;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import javax.swing.*;
