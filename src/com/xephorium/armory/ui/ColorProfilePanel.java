@@ -131,10 +131,13 @@ public class ColorProfilePanel extends JPanel {
 
         JLabel profileListHeaderLabel = new JLabel("Color Profiles");
         profileListHeaderLabel.setBorder(new EmptyBorder(0,0,5,0));
+        profileListHeaderLabel.setFont(ArmoryFont.NORMAL_BOLD);
 
         profileListPanel = new JList();
         profileListPanel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         profileListPanel.setLayoutOrientation(JList.VERTICAL);
+        profileListPanel.setSelectionBackground(ArmoryColor.PROFILE_LIST_SELECTION_COLOR);
+        profileListPanel.setSelectionForeground(Color.BLACK);
         profileListPanel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -144,6 +147,7 @@ public class ColorProfilePanel extends JPanel {
             }
         });
         JScrollPane profileListScroller = new JScrollPane(profileListPanel);
+        profileListScroller.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
 
         JPanel profileBrowseEditPanel = new JPanel();
         profileBrowseEditPanel.setLayout(new BorderLayout());
@@ -184,6 +188,9 @@ public class ColorProfilePanel extends JPanel {
 
         profileNameTextField = new JTextField();
         profileNameTextField.setBackground(Color.WHITE);
+        profileNameTextField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK),
+                new EmptyBorder(3,2,3,2)));
         setWorkingProfileName("Profile Name");
 
         JPanel profileColorsPanel = new JPanel(new GridLayout(ColorType.values().length, 1));

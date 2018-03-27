@@ -4,6 +4,7 @@ import com.xephorium.armory.model.Faction;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
+import com.xephorium.armory.ui.resource.font.ArmoryFont;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -114,6 +115,7 @@ public class FactionConfigurationPanel extends JPanel {
         unscPanel.add(createFactionPanel(Faction.UNSC), BorderLayout.CENTER);
 
         JLabel unscLabel = new JLabel("UNSC");
+        unscLabel.setFont(ArmoryFont.NORMAL_BOLD);
         unscLabel.setHorizontalAlignment(JLabel.CENTER);
         unscLabel.setBorder(new EmptyBorder(4, 10, 3, 10));
 
@@ -128,6 +130,7 @@ public class FactionConfigurationPanel extends JPanel {
         covenantPanel.add(createFactionPanel(Faction.COVENANT), BorderLayout.CENTER);
 
         JLabel covenantLabel = new JLabel("Covenant");
+        covenantLabel.setFont(ArmoryFont.NORMAL_BOLD);
         covenantLabel.setHorizontalAlignment(JLabel.CENTER);
         covenantLabel.setBorder(new EmptyBorder(4, 3, 3, 3));
 
