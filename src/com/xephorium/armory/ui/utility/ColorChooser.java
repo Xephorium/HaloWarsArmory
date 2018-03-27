@@ -18,14 +18,16 @@ public class ColorChooser extends JDialog {
 
     /*--- Variables ---*/
 
-    private static final int WINDOW_HEIGHT = 255;
-    private static final int WINDOW_WIDTH = 460;
+    private static final int WINDOW_INITIAL_HEIGHT = 255;
+    private static final int WINDOW_INITIAL_WIDTH = 460;
 
     private ColorChooserListener listener;
+    private JPanel javaColorChooserPanel;
     private JPanel previewPanel;
     private JLabel redLabel;
     private JLabel greenLabel;
     private JLabel blueLabel;
+    private JButton selectButton;
 
 
     /*--- Constructor ---*/
@@ -35,6 +37,8 @@ public class ColorChooser extends JDialog {
 
         initializeDialogAttributes();
         this.add(createCustomColorChooserPanel(Color.WHITE));
+
+        //this.setSize(javaColorChooserPanel.getWidth() + 30, javaColorChooserPanel.getHeight() + 40);
     }
 
 
@@ -43,11 +47,15 @@ public class ColorChooser extends JDialog {
     public void showDialog() {
         this.add(createCustomColorChooserPanel(Color.WHITE));
         this.show();
+        recomputeDialogDimensions();
+        recomputeDialogLocation();
     }
 
     public void showDialog(Color color) {
         this.add(createCustomColorChooserPanel(color));
         this.show();
+        recomputeDialogDimensions();
+        recomputeDialogLocation();
     }
 
 
@@ -57,8 +65,8 @@ public class ColorChooser extends JDialog {
 
         this.setLayout(new BorderLayout());
         this.setTitle(" Choose A Color");
-        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        this.setLocation(DisplayUtility.getWindowStartX(WINDOW_WIDTH), DisplayUtility.getWindowStartY(WINDOW_HEIGHT));
+        this.setSize(WINDOW_INITIAL_WIDTH, WINDOW_INITIAL_HEIGHT);
+        this.setLocation(DisplayUtility.getWindowStartX(WINDOW_INITIAL_WIDTH), DisplayUtility.getWindowStartY(WINDOW_INITIAL_HEIGHT));
         this.addWindowListener(createCloseListener());
     }
 
@@ -73,7 +81,7 @@ public class ColorChooser extends JDialog {
     private JPanel createCustomColorChooserPanel(Color color) {
 
         JColorChooser javaColorChooser = new JColorChooser(color);
-        JPanel javaColorChooserPanel = new JPanel();
+        javaColorChooserPanel = new JPanel();
 
         javaColorChooser.getSelectionModel().getSelectedColor();
         javaColorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
@@ -89,7 +97,7 @@ public class ColorChooser extends JDialog {
         for (AbstractColorChooserPanel javaPanel : panels) {
             if (javaPanel.getDisplayName().equals("HSV")) {
                 javaColorChooserPanel = javaPanel;
-                javaColorChooserPanel.setBorder(new EmptyBorder(15,15,0,15));
+                javaColorChooserPanel.setBorder(new EmptyBorder(8, 14, 0, 16));
             }
         }
 
@@ -98,7 +106,7 @@ public class ColorChooser extends JDialog {
         previewPanel = new JPanel();
         previewPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
         previewPanel.setBackground(color);
-        JButton selectButton = new JButton("Select");
+        selectButton = new JButton("Select");
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,7 +132,7 @@ public class ColorChooser extends JDialog {
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-        bottomPanel.setBorder(new EmptyBorder(0, 22, 25, 22));
+        bottomPanel.setBorder(new EmptyBorder(0, 15, 17, 15));
         bottomPanel.add(redGreenBlueVerticalPanel);
         bottomPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(selectPanel);
@@ -134,6 +142,26 @@ public class ColorChooser extends JDialog {
         customColorChooserPanel.add(bottomPanel, BorderLayout.PAGE_END);
 
         return customColorChooserPanel;
+    }
+
+    private void recomputeDialogDimensions() {
+
+        int newWidth = 0;
+        newWidth += javaColorChooserPanel.getWidth();
+        newWidth += 30; // Right & Left Padding
+
+        int newHeight = 0;
+        newHeight += 197; // javaColorChooserPanel.getHeight();
+        newHeight += 8 + 7; // Upper & Lower Padding
+        newHeight += selectButton.getHeight();
+
+        this.setSize(newWidth, newHeight);
+    }
+
+    private void recomputeDialogLocation() {
+        this.setLocation(
+                DisplayUtility.getWindowStartX(this.getWidth()),
+                DisplayUtility.getWindowStartY(this.getHeight()));
     }
 
 
