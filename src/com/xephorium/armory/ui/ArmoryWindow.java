@@ -15,6 +15,22 @@ import com.xephorium.armory.ui.ColorProfilePanel.ColorProfilePanelListener;
 import javax.swing.*;
 import java.awt.*;
 
+
+/*
+ * Chris Cruzen                                March 2018
+ * Armory Window
+ *
+ *   ArmoryWindow is the single, top-layer view class of
+ * Halo Wars Armory. Its role is to take care of all GUI
+ * configuration/display behavior and alert the presenter
+ * layer when an action has taken place by ActionListener.
+ *
+ *   View classes created and managed by ArmoryWindow
+ * should remain as near to stateless as possible.
+ *
+ */
+
+
 public class ArmoryWindow implements
         InstallDirectoryPanelListener,
         DirectoryChooserListener,
@@ -45,7 +61,7 @@ public class ArmoryWindow implements
 
         ColorProfile[] colorProfileList = MockColorProfileRepository.getProfileList();
 
-        factionConfigurationPanel.updateProfiles(colorProfileList);
+        factionConfigurationPanel.updateColorProfiles(colorProfileList);
         colorProfilePanel.setColorProfileList(colorProfileList);
     }
 

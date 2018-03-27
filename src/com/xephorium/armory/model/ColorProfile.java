@@ -3,6 +3,7 @@ package com.xephorium.armory.model;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import java.awt.*;
+import java.awt.color.ProfileDataException;
 
 public class ColorProfile {
 
@@ -89,4 +90,16 @@ public class ColorProfile {
             return this.ordinal();
         }
     }
+
+
+    /*--- Utility Methods ---*/
+
+    public static String[] getColorProfileNames(ColorProfile[] colorProfileList) {
+        String[] colorProfileNameList = new String[colorProfileList.length];
+        for (int x = 0; x < colorProfileList.length; x++) {
+            colorProfileNameList[x] = colorProfileList[x].getName();
+        }
+        return colorProfileNameList;
+    }
+
 }

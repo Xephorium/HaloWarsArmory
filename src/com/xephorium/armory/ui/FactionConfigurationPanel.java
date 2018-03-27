@@ -29,8 +29,8 @@ public class FactionConfigurationPanel extends JPanel {
 
     private FactionConfigurationPanelListener listener;
 
-    private JComboBox[] unscComboBoxes = new JComboBox[6];
-    private JComboBox[] covenantComboBoxes = new JComboBox[6];
+    private JComboBox[] unscSelectors = new JComboBox[6];
+    private JComboBox[] covenantSelectors = new JComboBox[6];
     private String[] profileNames = {"No Profiles Available"};
 
 
@@ -46,25 +46,19 @@ public class FactionConfigurationPanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public void updateProfiles(ColorProfile[] colorProfileList) {
-
-        String[] newProfileNames = new String[colorProfileList.length];
-        for (int x = 0; x < colorProfileList.length; x++) {
-            newProfileNames[x] = colorProfileList[x].getName();
-        }
-
-        updateUNSCComboBoxes(newProfileNames);
-        updateCovenantComboBoxes(newProfileNames);
-
+    public void updateColorProfiles(ColorProfile[] colorProfileList) {
+        String[] newProfileNames = ColorProfile.getColorProfileNames(colorProfileList);
+        updateUNSCSelectors(newProfileNames);
+        updateCovenantSelectors(newProfileNames);
         this.profileNames = newProfileNames;
     }
 
 
     /*--- Private Update Methods ---*/
 
-    private void updateUNSCComboBoxes(String[] newProfileNames) {
+    private void updateUNSCSelectors(String[] newProfileNames) {
 
-        for (JComboBox comboBox : this.unscComboBoxes) {
+        for (JComboBox comboBox : this.unscSelectors) {
             String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
             comboBox.removeAllItems();
             for (int y = 0; y < newProfileNames.length; y++) {
@@ -76,9 +70,9 @@ public class FactionConfigurationPanel extends JPanel {
         }
     }
 
-    private void updateCovenantComboBoxes(String[] newProfileNames) {
+    private void updateCovenantSelectors(String[] newProfileNames) {
 
-        for (JComboBox comboBox : this.covenantComboBoxes) {
+        for (JComboBox comboBox : this.covenantSelectors) {
             String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
             comboBox.removeAllItems();
             for (int y = 0; y < newProfileNames.length; y++) {
@@ -162,11 +156,11 @@ public class FactionConfigurationPanel extends JPanel {
                     new Dimension(nameLabelPadding, 0)));
 
             if (faction == Faction.UNSC) {
-                unscComboBoxes[playerNumber] = createFactionComboBox(Faction.UNSC, playerNumber);
-                playerPanel.add(unscComboBoxes[playerNumber]);
+                unscSelectors[playerNumber] = createFactionComboBox(Faction.UNSC, playerNumber);
+                playerPanel.add(unscSelectors[playerNumber]);
             } else {
-                covenantComboBoxes[playerNumber] = createFactionComboBox(Faction.COVENANT, playerNumber);
-                playerPanel.add(covenantComboBoxes[playerNumber]);
+                covenantSelectors[playerNumber] = createFactionComboBox(Faction.COVENANT, playerNumber);
+                playerPanel.add(covenantSelectors[playerNumber]);
             }
 
             playerListPanel.add(playerPanel);
