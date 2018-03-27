@@ -2,6 +2,7 @@ package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.Profile.ColorType;
+import com.xephorium.armory.repository.MockProfileRepository;
 import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
@@ -42,22 +43,9 @@ public class ArmoryWindow implements
         initializeViewClasses();
         assembleWindowFrame();
 
-        Profile[] profileList = new Profile[12];
-        profileList[0] = new Profile("Snow & Ice", Color.BLUE, Color.WHITE, Color.BLUE, Color.WHITE, Color.BLUE);
-        profileList[1] = new Profile("Burnt Oak", Color.ORANGE, Color.WHITE, Color.ORANGE, Color.WHITE, Color.ORANGE);
-        profileList[2] = new Profile("Forest Green", Color.GREEN, Color.WHITE, Color.GREEN, Color.WHITE, Color.GREEN);
-        profileList[3] = new Profile("Lavender Rain", Color.PINK, Color.WHITE, Color.PINK, Color.WHITE, Color.PINK);
-        profileList[4] = new Profile("Gunmetal Gray", Color.GRAY, Color.WHITE, Color.GRAY, Color.WHITE, Color.GRAY);
-        profileList[5] = new Profile("Cherry Red", Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED);
-        profileList[6] = new Profile("Cherry Red", Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED);
-        profileList[7] = new Profile("Cherry Red", Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED);
-        profileList[8] = new Profile("Cherry Red", Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED);
-        profileList[9] = new Profile("Cherry Red", Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED);
-        profileList[10] = new Profile("Cherry Red", Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED);
-        profileList[11] = new Profile("Cherry Red", Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED);
+        Profile[] profileList = MockProfileRepository.getProfileList();
 
-
-
+        factionConfigurationPanel.updateProfiles(profileList);
         colorProfilePanel.setProfiles(profileList);
     }
 

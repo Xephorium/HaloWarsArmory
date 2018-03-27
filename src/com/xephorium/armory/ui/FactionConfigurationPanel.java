@@ -1,15 +1,17 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Faction;
+import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
-import com.xephorium.armory.ui.resource.font.ArmoryFont;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_COVENANT;
 import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_UNSC;
@@ -25,8 +27,10 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private FactionConfigurationPanelListener listener;
+
     private JComboBox[] unscComboBoxes = new JComboBox[6];
     private JComboBox[] covenantComboBoxes = new JComboBox[6];
+    private String[] profileNames = {"No Profiles Available"};
 
 
     /*--- Constructor ---*/
@@ -39,7 +43,54 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
 
-    /*--- Private Methods ---*/
+    /*--- Public Methods ---*/
+
+    public void updateProfiles(Profile[] profiles) {
+
+        String[] newProfileNames = new String[profiles.length];
+        for (int x = 0; x < profiles.length; x++) {
+            newProfileNames[x] = profiles[x].getName();
+        }
+
+        updateUNSCComboBoxes(newProfileNames);
+        updateCovenantComboBoxes(newProfileNames);
+
+        this.profileNames = newProfileNames;
+    }
+
+
+    /*--- Private Update Methods ---*/
+
+    private void updateUNSCComboBoxes(String[] newProfileNames) {
+
+        for (JComboBox comboBox : this.unscComboBoxes) {
+            String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
+            comboBox.removeAllItems();
+            for (int y = 0; y < newProfileNames.length; y++) {
+                comboBox.addItem(newProfileNames[y]);
+                if (newProfileNames[y].equals(oldSelection)) {
+                    comboBox.setSelectedIndex(y);
+                }
+            }
+        }
+    }
+
+    private void updateCovenantComboBoxes(String[] newProfileNames) {
+
+        for (JComboBox comboBox : this.covenantComboBoxes) {
+            String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
+            comboBox.removeAllItems();
+            for (int y = 0; y < newProfileNames.length; y++) {
+                comboBox.addItem(newProfileNames[y]);
+                if (newProfileNames[y].equals(oldSelection)) {
+                    comboBox.setSelectedIndex(y);
+                }
+            }
+        }
+    }
+
+
+    /*--- Private Setup Methods ---*/
 
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());
@@ -59,7 +110,7 @@ public class FactionConfigurationPanel extends JPanel {
         unscPanel.setBackground(Color.WHITE);
         unscPanel.setLayout(new BorderLayout());
         unscPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
-        unscPanel.add(createPlayerPanel(Faction.UNSC), BorderLayout.NORTH);
+        unscPanel.add(createPlayerListPanel(Faction.UNSC), BorderLayout.NORTH);
         unscPanel.add(createFactionPanel(Faction.UNSC), BorderLayout.CENTER);
 
         JLabel unscLabel = new JLabel("UNSC");
@@ -73,7 +124,7 @@ public class FactionConfigurationPanel extends JPanel {
         covenantPanel.setBackground(Color.WHITE);
         covenantPanel.setLayout(new BorderLayout());
         covenantPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
-        covenantPanel.add(createPlayerPanel(Faction.COVENANT), BorderLayout.NORTH);
+        covenantPanel.add(createPlayerListPanel(Faction.COVENANT), BorderLayout.NORTH);
         covenantPanel.add(createFactionPanel(Faction.COVENANT), BorderLayout.CENTER);
 
         JLabel covenantLabel = new JLabel("Covenant");
@@ -86,9 +137,8 @@ public class FactionConfigurationPanel extends JPanel {
         this.add(tabbedPane, BorderLayout.CENTER);
     }
 
-    private JPanel createPlayerPanel(Faction faction) {
+    private JPanel createPlayerListPanel(Faction faction) {
 
-        String[] colorProfileList = {"Snow & Ice", "Burnt Oak", "Forest Green", "Gunmetal Gray"};
         int nameLabelPadding = 10;
         int playerSeparationPadding = 15;
 
@@ -96,43 +146,50 @@ public class FactionConfigurationPanel extends JPanel {
         playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
         playerListPanel.setBackground(Color.WHITE);
 
-        for (int x = 0; x < 6; x++) {
+        for (int playerNumber = 0; playerNumber < 6; playerNumber++) {
 
             JPanel playerPanel = new JPanel();
             playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
             playerPanel.setBorder(new EmptyBorder(0, 0, playerSeparationPadding, 0));
             playerPanel.setBackground(Color.WHITE);
-            playerPanel.add(new JLabel("Player " + (x + 1)));
+            playerPanel.add(new JLabel("Player " + (playerNumber + 1)));
             playerPanel.add(new Box.Filler(
                     new Dimension(nameLabelPadding, 0),
                     new Dimension(nameLabelPadding, 0),
                     new Dimension(nameLabelPadding, 0)));
 
-            final int playerNumber = x + 1;
-            JComboBox comboBox = new JComboBox(colorProfileList);
-            comboBox.setSelectedIndex(0);
-            comboBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (faction == Faction.UNSC) {
-                        listener.handleUNSCPlayerUpdate(playerNumber, comboBox.getSelectedItem().toString());
-                    } else {
-                        listener.handleCovenantPlayerUpdate(playerNumber, comboBox.getSelectedItem().toString());
-                    }
-                }
-            });
-
             if (faction == Faction.UNSC) {
-                unscComboBoxes[x] = comboBox;
+                unscComboBoxes[playerNumber] = createFactionComboBox(Faction.UNSC, playerNumber);
+                playerPanel.add(unscComboBoxes[playerNumber]);
             } else {
-                covenantComboBoxes[x] = comboBox;
+                covenantComboBoxes[playerNumber] = createFactionComboBox(Faction.COVENANT, playerNumber);
+                playerPanel.add(covenantComboBoxes[playerNumber]);
             }
-            playerPanel.add(comboBox);
 
             playerListPanel.add(playerPanel);
         }
 
         return playerListPanel;
+    }
+
+    private JComboBox createFactionComboBox(Faction faction, int playerNumber) {
+
+        JComboBox comboBox;
+        comboBox = new JComboBox(profileNames);
+        comboBox.setSelectedIndex(0);
+        comboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent event) {
+                if (event.getStateChange() == ItemEvent.SELECTED) {
+                    if (faction == Faction.UNSC) {
+                        listener.handleUNSCPlayerUpdate(playerNumber, profileNames[comboBox.getSelectedIndex()]);
+                    } else {
+                        listener.handleCovenantPlayerUpdate(playerNumber, profileNames[comboBox.getSelectedIndex()]);
+                    }
+                }
+            }
+        });
+        return comboBox;
     }
 
     private JPanel createFactionPanel(Faction faction) {
