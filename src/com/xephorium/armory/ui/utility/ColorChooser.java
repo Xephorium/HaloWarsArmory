@@ -1,5 +1,6 @@
 package com.xephorium.armory.ui.utility;
 
+import com.sun.jndi.ldap.ext.StartTlsResponseImpl;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import javax.swing.*;
@@ -18,8 +19,13 @@ public class ColorChooser extends JDialog {
 
     /*--- Variables ---*/
 
-    private static final int WINDOW_INITIAL_HEIGHT = 255;
-    private static final int WINDOW_INITIAL_WIDTH = 460;
+    private static final int DIALOG_INITIAL_HEIGHT = 255;
+    private static final int DIALOG_INITIAL_WIDTH = 460;
+    private static final int DIALOG_HORIZONTAL_PADDING = 15;
+    private static final int DIALOG_VERTICAL_PADDING = 15;
+    private static final int PREVIEW_PANEL_WIDTH = 143;
+
+    private static final int PREFERRED_COLOR_CHOOSER_PANEL_HEIGHT = 205;
 
     private ColorChooserListener listener;
     private JPanel javaColorChooserPanel;
@@ -37,8 +43,6 @@ public class ColorChooser extends JDialog {
 
         initializeDialogAttributes();
         this.add(createCustomColorChooserPanel(Color.WHITE));
-
-        //this.setSize(javaColorChooserPanel.getWidth() + 30, javaColorChooserPanel.getHeight() + 40);
     }
 
 
@@ -65,8 +69,8 @@ public class ColorChooser extends JDialog {
 
         this.setLayout(new BorderLayout());
         this.setTitle(" Choose A Color");
-        this.setSize(WINDOW_INITIAL_WIDTH, WINDOW_INITIAL_HEIGHT);
-        this.setLocation(DisplayUtility.getWindowStartX(WINDOW_INITIAL_WIDTH), DisplayUtility.getWindowStartY(WINDOW_INITIAL_HEIGHT));
+        this.setSize(DIALOG_INITIAL_WIDTH, DIALOG_INITIAL_HEIGHT);
+        this.setLocation(DisplayUtility.getWindowStartX(DIALOG_INITIAL_WIDTH), DisplayUtility.getWindowStartY(DIALOG_INITIAL_HEIGHT));
         this.addWindowListener(createCloseListener());
     }
 
@@ -97,7 +101,7 @@ public class ColorChooser extends JDialog {
         for (AbstractColorChooserPanel javaPanel : panels) {
             if (javaPanel.getDisplayName().equals("HSV")) {
                 javaColorChooserPanel = javaPanel;
-                javaColorChooserPanel.setBorder(new EmptyBorder(8, 14, 0, 16));
+                javaColorChooserPanel.setBorder(new EmptyBorder(DIALOG_VERTICAL_PADDING - 8, DIALOG_HORIZONTAL_PADDING + 1, 0, DIALOG_HORIZONTAL_PADDING));
             }
         }
 
@@ -114,7 +118,7 @@ public class ColorChooser extends JDialog {
                 dispose();
             }
         });
-        previewPanel.setPreferredSize(new Dimension(143, selectButton.getHeight()));
+        previewPanel.setPreferredSize(new Dimension(PREVIEW_PANEL_WIDTH, selectButton.getHeight()));
         selectPanel.add(previewPanel);
         Dimension dim = new Dimension(10,5);
         selectPanel.add(new Box.Filler(dim, dim, dim));
@@ -132,7 +136,7 @@ public class ColorChooser extends JDialog {
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-        bottomPanel.setBorder(new EmptyBorder(0, 15, 17, 15));
+        bottomPanel.setBorder(new EmptyBorder(0, DIALOG_HORIZONTAL_PADDING + 3, DIALOG_VERTICAL_PADDING + 2, DIALOG_HORIZONTAL_PADDING));
         bottomPanel.add(redGreenBlueVerticalPanel);
         bottomPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(selectPanel);
@@ -148,11 +152,11 @@ public class ColorChooser extends JDialog {
 
         int newWidth = 0;
         newWidth += javaColorChooserPanel.getWidth();
-        newWidth += 30; // Right & Left Padding
+        newWidth += DIALOG_HORIZONTAL_PADDING * 2;
 
         int newHeight = 0;
-        newHeight += 197; // javaColorChooserPanel.getHeight();
-        newHeight += 8 + 7; // Upper & Lower Padding
+        newHeight += PREFERRED_COLOR_CHOOSER_PANEL_HEIGHT;
+        newHeight += DIALOG_VERTICAL_PADDING * 2;
         newHeight += selectButton.getHeight();
 
         this.setSize(newWidth, newHeight);
