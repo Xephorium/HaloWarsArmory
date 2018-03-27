@@ -11,12 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-class InstallationBrowsePanel extends JPanel {
+class InstallDirectoryPanel extends JPanel {
 
 
     /*--- Variables ---*/
 
-    private InstallationBrowsePanelListener listener;
+    private static int COMPONENT_HORIZONTAL_PADDING = 10;
+
+    private InstallDirectoryPanelListener listener;
 
     private ImageIcon imageIcon;
     private JTextField directoryTextField;
@@ -25,40 +27,42 @@ class InstallationBrowsePanel extends JPanel {
 
     /*--- Constructor ---*/
 
-    InstallationBrowsePanel(InstallationBrowsePanelListener listener) {
+    InstallDirectoryPanel(InstallDirectoryPanelListener listener) {
         this.listener = listener;
 
         initializePanelAttributes();
 
         imageIcon = ArmoryImage.ICON_INSTALLATION_UNKNOWN;
-        directoryTextField = createInstallationDirectoryTextField();
-        browseButton = createInstallationBrowseButton();
+        directoryTextField = createDirectoryTextField();
+        browseButton = createBrowseButton();
 
-        clearInstallationDirectory();
+        setDefaultInstallDirectory();
 
-        this.add(createInstallationIconLabel(imageIcon));
-        this.add(new Box.Filler(new Dimension(10, 0), new Dimension(10, 0), new Dimension(10, 0)));
+        Dimension padding = new Dimension(COMPONENT_HORIZONTAL_PADDING, 0);
+
+        this.add(createIconLabel(imageIcon));
+        this.add(new Box.Filler(padding, padding, padding));
         this.add(directoryTextField);
-        this.add(new Box.Filler(new Dimension(10, 0), new Dimension(10, 0), new Dimension(10, 0)));
+        this.add(new Box.Filler(padding, padding, padding));
         this.add(browseButton);
     }
 
 
     /*--- Public Methods ---*/
 
-    public void setValidInstallationDirectory(String directory) {
+    public void setValidInstallDirectory(String directory) {
         directoryTextField.setText(" " + directory);
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_FOUND.getImage());
         this.repaint();
     }
 
-    public void setInvalidInstallationDirectory() {
+    public void setInvalidInstallDirectory() {
         directoryTextField.setText(" Choose Halo Wars installation folder...");
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_INVALID.getImage());
         this.repaint();
     }
 
-    public void clearInstallationDirectory() {
+    public void setDefaultInstallDirectory() {
         directoryTextField.setText(" Choose Halo Wars installation folder...");
         imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_UNKNOWN.getImage());
         this.repaint();
@@ -77,11 +81,11 @@ class InstallationBrowsePanel extends JPanel {
         this.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
     }
 
-    private JLabel createInstallationIconLabel(ImageIcon imageIcon) {
+    private JLabel createIconLabel(ImageIcon imageIcon) {
         return new JLabel("", imageIcon, JLabel.CENTER);
     }
 
-    private JTextField createInstallationDirectoryTextField() {
+    private JTextField createDirectoryTextField() {
         JTextField textField = new JTextField();
         textField.setEnabled(false);
         textField.setBackground(Color.WHITE);
@@ -95,7 +99,7 @@ class InstallationBrowsePanel extends JPanel {
         return textField;
     }
 
-    private JButton createInstallationBrowseButton() {
+    private JButton createBrowseButton() {
         JButton button = new JButton("Browse");
         button.addActionListener(new ActionListener() {
             @Override
@@ -110,7 +114,7 @@ class InstallationBrowsePanel extends JPanel {
 
     /*--- Listener Interface ---*/
 
-    interface InstallationBrowsePanelListener {
+    interface InstallDirectoryPanelListener {
 
         void handleBrowseButtonClick();
     }

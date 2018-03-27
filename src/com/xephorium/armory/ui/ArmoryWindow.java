@@ -7,7 +7,7 @@ import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
-import com.xephorium.armory.ui.InstallationBrowsePanel.InstallationBrowsePanelListener;
+import com.xephorium.armory.ui.InstallDirectoryPanel.InstallDirectoryPanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 import com.xephorium.armory.ui.FactionConfigurationPanel.FactionConfigurationPanelListener;
 import com.xephorium.armory.ui.ColorProfilePanel.ColorProfilePanelListener;
@@ -16,7 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ArmoryWindow implements
-        InstallationBrowsePanelListener,
+        InstallDirectoryPanelListener,
         DirectoryChooserListener,
         FactionConfigurationPanelListener,
         ColorProfilePanelListener {
@@ -29,7 +29,7 @@ public class ArmoryWindow implements
     private final String WINDOW_TITLE = "  Halo Wars Armory";
 
     private JFrame frame;
-    private InstallationBrowsePanel installationBrowsePanel;
+    private InstallDirectoryPanel installDirectoryPanel;
     private FactionConfigurationPanel factionConfigurationPanel;
     private ColorProfilePanel colorProfilePanel;
     private DirectoryChooser directoryChooser;
@@ -70,7 +70,7 @@ public class ArmoryWindow implements
     private void initializeViewClasses() {
 
         frame = new JFrame(WINDOW_TITLE);
-        installationBrowsePanel = new InstallationBrowsePanel(this);
+        installDirectoryPanel = new InstallDirectoryPanel(this);
         factionConfigurationPanel = new FactionConfigurationPanel(this);
         colorProfilePanel = new ColorProfilePanel(this);
         directoryChooser = new DirectoryChooser(this);
@@ -85,7 +85,7 @@ public class ArmoryWindow implements
 
         frame.add(colorProfilePanel, BorderLayout.EAST);
         frame.add(factionConfigurationPanel, BorderLayout.CENTER);
-        frame.add(installationBrowsePanel, BorderLayout.PAGE_START);
+        frame.add(installDirectoryPanel, BorderLayout.PAGE_START);
     }
 
 
@@ -99,10 +99,10 @@ public class ArmoryWindow implements
     @Override
     public void handleDirectorySelection(String directory) {
         if (true /* Valid Halo Wars Installation */) {
-            installationBrowsePanel.setValidInstallationDirectory(directory);
+            installDirectoryPanel.setValidInstallDirectory(directory);
             DialogFactory.createGameFoundDialog(frame);
         } else {
-            installationBrowsePanel.setInvalidInstallationDirectory();
+            installDirectoryPanel.setInvalidInstallDirectory();
             DialogFactory.createGameNotFoundDialog(frame);
         }
     }
