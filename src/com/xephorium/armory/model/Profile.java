@@ -29,6 +29,15 @@ public class Profile {
         }
     }
 
+    public Profile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+        this.name = name;
+        this.setColor(ColorType.UNIT, unitColor);
+        this.setColor(ColorType.CORPSE, corpseColor);
+        this.setColor(ColorType.SELECTOR, selectorColor);
+        this.setColor(ColorType.MINIMAP, minimapColor);
+        this.setColor(ColorType.HUD, hudColor);
+    }
+
 
     /*--- Public Methods ---*/
 
@@ -60,8 +69,8 @@ public class Profile {
     /*--- ColorType Enum ---*/
 
     public enum ColorType {
-        UNITS("Units"),
-        CORPSES("Corpses"),
+        UNIT("Units"),
+        CORPSE("Corpses"),
         SELECTOR("Selector"),
         MINIMAP("Minimap"),
         HUD("HUD");

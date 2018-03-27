@@ -10,6 +10,8 @@ import com.xephorium.armory.ui.utility.StringUtility;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +24,9 @@ public class ColorProfilePanel extends JPanel {
     private ColorProfilePanelListener listener;
     private JTextField profileNameTextField;
     private JPanel[] profileColorPanels = new JPanel[ColorType.values().length];
+    private JList profileListPanel;
 
+    private Profile[] profiles;
 
     /*--- Constructor ---*/
 
@@ -38,23 +42,23 @@ public class ColorProfilePanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public String getCurrentProfileName() {
+    public String getWorkingProfileName() {
         return StringUtility.removeLeadingSpace(this.profileNameTextField.getText());
     }
 
-    public void setCurrentProfileName(String name) {
-        this.profileNameTextField.setText(StringUtility.addLeadingSpace(name));
+    public void setWorkingProfileName(String name) {
+        this.profileNameTextField.setText(name);
     }
 
-    public Color getCurrentProfileColor(ColorType colorType) {
+    public Color getWorkingProfileColor(ColorType colorType) {
         return profileColorPanels[colorType.getIndex()].getBackground();
     }
 
-    public void setCurrentProfileColor(ColorType colorType, Color color) {
+    public void setWorkingProfileColor(ColorType colorType, Color color) {
         profileColorPanels[colorType.getIndex()].setBackground(color);
     }
 
-    public Color[] getCurrentProfileColors() {
+    public Color[] getWorkingProfileColors() {
         Color[] colors = new Color[profileColorPanels.length];
         for (int x = 0; x < profileColorPanels.length; x++) {
             colors[x] = profileColorPanels[x].getBackground();
@@ -62,22 +66,31 @@ public class ColorProfilePanel extends JPanel {
         return colors;
     }
 
-    public void setCurrentProfileColors(Color[] colors) {
+    public void setWorkingProfileColors(Color[] colors) {
         for (int x = 0; x < profileColorPanels.length; x++) {
             profileColorPanels[x].setBackground(colors[x]);
         }
     }
 
-    public Profile getCurrentProfile() {
-        Profile currentProfile = new Profile();
-        currentProfile.setName(getCurrentProfileName());
-        currentProfile.setColors(getCurrentProfileColors());
-        return currentProfile;
+    public Profile getWorkingProfile() {
+        Profile workingProfile = new Profile();
+        workingProfile.setName(getWorkingProfileName());
+        workingProfile.setColors(getWorkingProfileColors());
+        return workingProfile;
     }
 
-    public void setCurrentProfile(Profile profile) {
-        setCurrentProfileName(profile.getName());
-        setCurrentProfileColors(profile.getColors());
+    public void setWorkingProfile(Profile profile) {
+        setWorkingProfileName(profile.getName());
+        setWorkingProfileColors(profile.getColors());
+    }
+
+    public void setProfiles(Profile[] profiles) {
+        this.profiles = profiles;
+        updateProfileBrowsePanel();
+    }
+
+    public Profile[] getProfiles() {
+        return this.profiles;
     }
 
 
@@ -111,7 +124,34 @@ public class ColorProfilePanel extends JPanel {
     }
 
     private JPanel createProfileBrowsePanel() {
-        return new JPanel();
+
+        JPanel profileBrowsePanel = new JPanel(new BorderLayout());
+        profileBrowsePanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
+
+        profileListPanel = new JList();
+        profileListPanel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        profileListPanel.setLayoutOrientation(JList.VERTICAL);
+        profileListPanel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    selectProfileByIndex(profileListPanel.getLeadSelectionIndex());
+                }
+            }
+        });
+
+        profileBrowsePanel.add(profileListPanel, BorderLayout.CENTER);
+
+        return profileBrowsePanel;
+    }
+
+    private void updateProfileBrowsePanel() {
+        String[] profileNames = new String[profiles.length];
+        for (int x = 0; x < profiles.length; x++) {
+            profileNames[x] = profiles[x].getName();
+        }
+        profileListPanel.setListData(profileNames);
+        profileListPanel.setSelectedIndex(0);
     }
 
     private JPanel createProfileSettingsPanel() {
@@ -123,7 +163,7 @@ public class ColorProfilePanel extends JPanel {
 
         profileNameTextField = new JTextField();
         profileNameTextField.setBackground(Color.WHITE);
-        setCurrentProfileName("Profile Name");
+        setWorkingProfileName("Profile Name");
 
         JPanel profileColorsPanel = new JPanel(new GridLayout(ColorType.values().length, 1));
         profileColorsPanel.setBorder(new EmptyBorder(5,0,5,0));
@@ -171,7 +211,7 @@ public class ColorProfilePanel extends JPanel {
         return new CustomMouseListener(new MouseClickListener() {
             @Override
             public void onMouseClick() {
-                listener.handleProfileColorClick(colorType, getCurrentProfileColor(colorType));
+                listener.handleProfileColorClick(colorType, getWorkingProfileColor(colorType));
             }
         });
     }
@@ -181,6 +221,11 @@ public class ColorProfilePanel extends JPanel {
         profilePreviewPanel.setBackground(ArmoryColor.WINDOW_TEST_COLOR);
         profilePreviewPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
         return profilePreviewPanel;
+    }
+
+    private void selectProfileByIndex(int index) {
+        setWorkingProfileName(profiles[index].getName());
+        setWorkingProfileColors(profiles[index].getColors());
     }
 
 

@@ -8,11 +8,7 @@ public class StringUtility {
             return "";
         }
 
-        if (!string.isEmpty() && string.substring(1,1).equals(" ")) {
-            return string;
-        } else {
-            return " " + string;
-        }
+        return " " + string.trim();
     }
 
     public static String removeLeadingSpace(String string) {
@@ -21,10 +17,6 @@ public class StringUtility {
             return "";
         }
 
-        if (string.substring(1,1).equals(" ")) {
-            return string.substring(1, string.length());
-        } else {
-            return string;
-        }
+        return string.trim();
     }
 }
