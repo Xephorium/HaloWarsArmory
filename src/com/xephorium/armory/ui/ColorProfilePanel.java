@@ -130,8 +130,7 @@ public class ColorProfilePanel extends JPanel {
         profileBrowsePanel.setBackground(Color.WHITE);
 
         JLabel profileListHeaderLabel = new JLabel("Color Profiles");
-        profileListHeaderLabel.setFont(ArmoryFont.LARGE);
-        profileListHeaderLabel.setBorder(new EmptyBorder(0,0,5,5));
+        profileListHeaderLabel.setBorder(new EmptyBorder(0,0,5,0));
 
         profileListPanel = new JList();
         profileListPanel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -146,8 +145,23 @@ public class ColorProfilePanel extends JPanel {
         });
         JScrollPane profileListScroller = new JScrollPane(profileListPanel);
 
+        JPanel profileBrowseEditPanel = new JPanel();
+        profileBrowseEditPanel.setLayout(new BorderLayout());
+        profileBrowseEditPanel.setBorder(new EmptyBorder(7, 0, 0, 0));
+        profileBrowseEditPanel.setBackground(Color.WHITE);
+        JButton profileDeleteButton = new JButton("Delete");
+        profileDeleteButton.setPreferredSize(new Dimension(70, 24));
+        JButton profileAddButton = new JButton("Add");
+        profileAddButton.setPreferredSize(new Dimension(70, 24));
+        JPanel middlePanel = new JPanel();
+        middlePanel.setBackground(Color.WHITE);
+        profileBrowseEditPanel.add(profileDeleteButton, BorderLayout.LINE_START);
+        profileBrowseEditPanel.add(middlePanel);
+        profileBrowseEditPanel.add(profileAddButton, BorderLayout.LINE_END);
+
         profileBrowsePanel.add(profileListHeaderLabel, BorderLayout.PAGE_START);
         profileBrowsePanel.add(profileListScroller, BorderLayout.CENTER);
+        profileBrowsePanel.add(profileBrowseEditPanel, BorderLayout.PAGE_END);
 
         return profileBrowsePanel;
     }
