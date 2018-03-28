@@ -48,4 +48,9 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
         mockProfileList = Profile.getUpdatedProfileList(mockProfileList, newProfile);
         armoryWindow.updateProfileList(mockProfileList);
     }
+
+    @Override
+    public void handleProfileSelection(Profile profile) {
+        armoryWindow.setSelectedProfile(profile);
+    }
 }

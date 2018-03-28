@@ -1,5 +1,6 @@
 package com.xephorium.armory.ui;
 
+import com.xephorium.armory.ui.ProfileBrowsePanel.ProfileBrowsePanelListener;
 import com.xephorium.armory.ui.ProfileAttributePanel.ProfileAttributePanelListener;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
@@ -9,7 +10,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class ProfileConfigurationPanel extends JPanel implements ProfileAttributePanelListener {
+public class ProfileConfigurationPanel extends JPanel implements
+        ProfileAttributePanelListener,
+        ProfileBrowsePanelListener {
 
 
     /*--- Variables ---*/
@@ -37,6 +40,11 @@ public class ProfileConfigurationPanel extends JPanel implements ProfileAttribut
 
     public void updateProfileList(Profile[] profileList) {
         profileBrowsePanel.updateProfileBrowsePanel(profileList);
+    }
+
+    public void setSelectedProfile(Profile profile) {
+        profileBrowsePanel.setSelectedProfile(profile);
+        profileAttributePanel.setWorkingProfile(profile);
     }
 
     public void setWorkingProfile(Profile profile) {
@@ -68,7 +76,7 @@ public class ProfileConfigurationPanel extends JPanel implements ProfileAttribut
     }
 
     private void initializeViewClasses() {
-        profileBrowsePanel = new ProfileBrowsePanel();
+        profileBrowsePanel = new ProfileBrowsePanel(this);
         profileAttributePanel = new ProfileAttributePanel(this);
     }
 
@@ -80,11 +88,17 @@ public class ProfileConfigurationPanel extends JPanel implements ProfileAttribut
         listener.handleWorkingProfileSaveClick(newProfile);
     }
 
+    @Override
+    public void handleProfileSelection(Profile profile) {
+        listener.handleProfileSelection(profile);
+    }
 
     /*--- Listener Interface ---*/
 
     interface ProfileConfigurationPanelListener {
 
         void handleWorkingProfileSaveClick(Profile newProfile);
+
+        void handleProfileSelection(Profile profile);
     }
 }

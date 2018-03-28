@@ -18,7 +18,7 @@ public class ProfileAttributePanel extends JPanel {
     private ProfileAttributePanelListener listener;
     private JTextField profileNameTextField;
     private JPanel[] profileColorPanels = new JPanel[Profile.ColorType.values().length];
-    private Profile workingPrimaryKey;
+    private Profile workingProfile;
 
 
     /*--- Constructor ---*/
@@ -39,23 +39,23 @@ public class ProfileAttributePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void setWorkingProfile(Profile profile) {
-        workingPrimaryKey = profile;
-        setWorkingProfileName(workingPrimaryKey.getName());
-        setWorkingProfileColors(workingPrimaryKey.getColors());
+        workingProfile = profile;
+        setWorkingProfileName(workingProfile.getName());
+        setWorkingProfileColors(workingProfile.getColors());
     }
 
     public void setWorkingProfileName(String name) {
-        workingPrimaryKey.setName(name);
+        workingProfile.setName(name);
         profileNameTextField.setText(name);
     }
 
     public void setWorkingProfileColor(Profile.ColorType colorType, Color color) {
-        workingPrimaryKey.setColor(colorType, color);
+        workingProfile.setColor(colorType, color);
         profileColorPanels[colorType.getIndex()].setBackground(color);
     }
 
     public void setWorkingProfileColors(Color[] colors) {
-        workingPrimaryKey.setColors(colors);
+        workingProfile.setColors(colors);
         for (int x = 0; x < profileColorPanels.length; x++) {
             profileColorPanels[x].setBackground(colors[x]);
         }
@@ -65,15 +65,9 @@ public class ProfileAttributePanel extends JPanel {
     /*--- Private Getter Methods ---*/
 
     private Profile getWorkingProfile() {
-        return workingPrimaryKey;
-    }
-
-    private String getWorkingProfileName() {
-        return workingPrimaryKey.getName();
-    }
-
-    private Color[] getWorkingProfileColors() {
-        return workingPrimaryKey.getColors();
+        Profile profile = workingProfile;
+        profile.setName(profileNameTextField.getText());
+        return profile;
     }
 
 

@@ -15,14 +15,16 @@ public class ProfileBrowsePanel extends JPanel {
 
     /*--- Variables ---*/
 
+    private ProfileBrowsePanelListener listener;
     private JList profileListPanel;
-    private int selectedPrimaryKey;
+    private Profile[] profileList;
 
 
     /*--- Constructor ---*/
 
-    public ProfileBrowsePanel() {
+    public ProfileBrowsePanel(ProfileBrowsePanelListener listener) {
         super();
+        this.listener = listener;
 
         initializePanelAttributes();
 
@@ -36,18 +38,21 @@ public class ProfileBrowsePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileBrowsePanel(Profile[] profileList) {
-        if (profileListPanel == null) {
-            String[] profileNames = Profile.getProfileNames(profileList);
-            this.profileListPanel.setListData(profileNames);
+        if (this.profileList == null || this.profileList.length < 1) {
+            this.profileList = profileList;
+            this.profileListPanel.setListData(Profile.getProfileNames(profileList));
             this.profileListPanel.setSelectedIndex(0);
-            this.selectedPrimaryKey = 0;
             return;
         }
 
-        String[] profileNames = Profile.getProfileNames(profileList);
-        int selectedProfileIndex = Profile.getProfileIndexOrFirstProfile(profileList, selectedPrimaryKey);
-        this.profileListPanel.setListData(profileNames);
-        this.profileListPanel.setSelectedIndex(selectedPrimaryKey);
+        Profile currentSelectedProfile = this.profileList[profileListPanel.getLeadSelectionIndex()];
+        this.profileList = profileList;
+        this.profileListPanel.setListData(Profile.getProfileNames(profileList));
+        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstProfile(profileList, currentSelectedProfile.getPrimaryKey()));
+    }
+
+    public void setSelectedProfile(Profile profile) {
+        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstProfile(profileList, profile.getPrimaryKey()));
     }
 
 
@@ -82,8 +87,7 @@ public class ProfileBrowsePanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    // TODO - Update ProfileAttributePanel
-                    //selectProfileByIndex(profileListPanel.getLeadSelectionIndex());
+                    listener.handleProfileSelection(profileList[profileListPanel.getLeadSelectionIndex()]);
                 }
             }
         });
@@ -109,6 +113,14 @@ public class ProfileBrowsePanel extends JPanel {
         profileBrowseButtonPanel.add(profileAddButton, BorderLayout.LINE_END);
 
         return profileBrowseButtonPanel;
+    }
+
+
+    /*--- Interface Listener ---*/
+
+    interface ProfileBrowsePanelListener {
+
+        void handleProfileSelection(Profile profile);
     }
 
 }

@@ -108,6 +108,13 @@ public class ArmoryWindow implements
     }
 
 
+    // Profile Configuration Panel
+
+    public void setSelectedProfile(Profile profile) {
+        profileConfigurationPanel.setSelectedProfile(profile);
+    }
+
+
     /*--- Private Methods --*/
 
     private void setGlobalLookAndFeel() {
@@ -160,6 +167,7 @@ public class ArmoryWindow implements
 
         void handleWorkingProfileSaveClick(Profile newProfile);
 
+        void handleProfileSelection(Profile profile);
     }
 
 
@@ -217,5 +225,10 @@ public class ArmoryWindow implements
     @Override
     public void handleWorkingProfileSaveClick(Profile newProfile) {
         listener.handleWorkingProfileSaveClick(newProfile);
+    }
+
+    @Override
+    public void handleProfileSelection(Profile profile) {
+        listener.handleProfileSelection(profile);
     }
 }
