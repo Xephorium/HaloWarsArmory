@@ -1,6 +1,6 @@
 package com.xephorium.armory.ui;
 
-import com.xephorium.armory.model.ColorProfile;
+import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
 
@@ -34,8 +34,8 @@ public class ProfileBrowsePanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public void updateProfileBrowsePanel(ColorProfile[] colorProfileList) {
-        String[] profileNames = ColorProfile.getColorProfileNames(colorProfileList);
+    public void updateProfileBrowsePanel(Profile[] profileList) {
+        String[] profileNames = Profile.getProfileNames(profileList);
 
         // TODO - Implement Proper Past Item Reselection
         this.profileListPanel.setListData(profileNames);

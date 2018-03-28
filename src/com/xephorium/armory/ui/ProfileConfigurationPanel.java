@@ -1,6 +1,6 @@
 package com.xephorium.armory.ui;
 
-import com.xephorium.armory.model.ColorProfile;
+import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import javax.swing.*;
@@ -32,19 +32,19 @@ public class ProfileConfigurationPanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public void updateColorProfileList(ColorProfile[] colorProfileList) {
-        profileBrowsePanel.updateProfileBrowsePanel(colorProfileList);
+    public void updateProfileList(Profile[] profileList) {
+        profileBrowsePanel.updateProfileBrowsePanel(profileList);
     }
 
-    public void setWorkingProfile(ColorProfile colorProfile) {
-        profileAttributePanel.setWorkingProfile(colorProfile);
+    public void setWorkingProfile(Profile profile) {
+        profileAttributePanel.setWorkingProfile(profile);
     }
 
     public void setWorkingProfileName(String name) {
         this.profileAttributePanel.setWorkingProfileName(name);
     }
 
-    public void setWorkingProfileColor(ColorProfile.ColorType colorType, Color color) {
+    public void setWorkingProfileColor(Profile.ColorType colorType, Color color) {
         profileAttributePanel.setWorkingProfileColor(colorType, color);
     }
 

@@ -3,9 +3,8 @@ package com.xephorium.armory.model;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import java.awt.*;
-import java.awt.color.ProfileDataException;
 
-public class ColorProfile {
+public class Profile {
 
 
     /*--- Variables ---*/
@@ -16,21 +15,21 @@ public class ColorProfile {
 
     /*--- Constructor(s) ---*/
 
-    public ColorProfile() {
-        this.name = "New Color ColorProfile";
+    public Profile() {
+        this.name = "New Color Profile";
         for (int x = 0; x < colors.length; x++) {
             this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
         }
     }
 
-    public ColorProfile(String name) {
+    public Profile(String name) {
         this.name = name;
         for (int x = 0; x < colors.length; x++) {
             this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
         }
     }
 
-    public ColorProfile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+    public Profile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
         this.name = name;
         this.setColor(ColorType.UNIT, unitColor);
         this.setColor(ColorType.CORPSE, corpseColor);
@@ -94,12 +93,12 @@ public class ColorProfile {
 
     /*--- Utility Methods ---*/
 
-    public static String[] getColorProfileNames(ColorProfile[] colorProfileList) {
-        String[] colorProfileNameList = new String[colorProfileList.length];
-        for (int x = 0; x < colorProfileList.length; x++) {
-            colorProfileNameList[x] = colorProfileList[x].getName();
+    public static String[] getProfileNames(Profile[] profileList) {
+        String[] profileNames = new String[profileList.length];
+        for (int x = 0; x < profileList.length; x++) {
+            profileNames[x] = profileList[x].getName();
         }
-        return colorProfileNameList;
+        return profileNames;
     }
 
 }

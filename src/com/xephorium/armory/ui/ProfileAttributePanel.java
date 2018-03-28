@@ -1,6 +1,6 @@
 package com.xephorium.armory.ui;
 
-import com.xephorium.armory.model.ColorProfile;
+import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.utility.CustomMouseListener;
 import com.xephorium.armory.ui.utility.StringUtility;
@@ -17,7 +17,7 @@ public class ProfileAttributePanel extends JPanel {
     /*--- Variables ---*/
 
     private JTextField profileNameTextField;
-    private JPanel[] profileColorPanels = new JPanel[ColorProfile.ColorType.values().length];
+    private JPanel[] profileColorPanels = new JPanel[Profile.ColorType.values().length];
 
 
     /*--- Constructor ---*/
@@ -36,16 +36,16 @@ public class ProfileAttributePanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public void setWorkingProfile(ColorProfile colorProfile) {
-        setWorkingProfileName(colorProfile.getName());
-        setWorkingProfileColors(colorProfile.getColors());
+    public void setWorkingProfile(Profile profile) {
+        setWorkingProfileName(profile.getName());
+        setWorkingProfileColors(profile.getColors());
     }
 
     public void setWorkingProfileName(String name) {
         this.profileNameTextField.setText(name);
     }
 
-    public void setWorkingProfileColor(ColorProfile.ColorType colorType, Color color) {
+    public void setWorkingProfileColor(Profile.ColorType colorType, Color color) {
         profileColorPanels[colorType.getIndex()].setBackground(color);
     }
 
@@ -58,11 +58,11 @@ public class ProfileAttributePanel extends JPanel {
 
     /*--- Private Getter Methods ---*/
 
-    private ColorProfile getWorkingProfile() {
-        ColorProfile workingColorProfile = new ColorProfile();
-        workingColorProfile.setName(getWorkingProfileName());
-        workingColorProfile.setColors(getWorkingProfileColors());
-        return workingColorProfile;
+    private Profile getWorkingProfile() {
+        Profile workingProfile = new Profile();
+        workingProfile.setName(getWorkingProfileName());
+        workingProfile.setColors(getWorkingProfileColors());
+        return workingProfile;
     }
 
     private String getWorkingProfileName() {
@@ -97,16 +97,16 @@ public class ProfileAttributePanel extends JPanel {
     }
 
     private JPanel createColorListPanel() {
-        JPanel colorListPanel = new JPanel(new GridLayout(ColorProfile.ColorType.values().length, 1));
+        JPanel colorListPanel = new JPanel(new GridLayout(Profile.ColorType.values().length, 1));
         colorListPanel.setBorder(new EmptyBorder(5,0,5,0));
         colorListPanel.setBackground(Color.WHITE);
-        for (ColorProfile.ColorType colorType : ColorProfile.ColorType.values()) {
+        for (Profile.ColorType colorType : Profile.ColorType.values()) {
             colorListPanel.add(createColorListItem(colorType));
         }
         return colorListPanel;
     }
 
-    private JPanel createColorListItem(ColorProfile.ColorType colorType) {
+    private JPanel createColorListItem(Profile.ColorType colorType) {
         JPanel colorListItem = new JPanel(new BorderLayout());
         colorListItem.addMouseListener(createColorListItemMouseListener(colorType));
         colorListItem.setBackground(Color.WHITE);
@@ -138,7 +138,7 @@ public class ProfileAttributePanel extends JPanel {
         return saveButton;
     }
 
-    private CustomMouseListener createColorListItemMouseListener(ColorProfile.ColorType colorType) {
+    private CustomMouseListener createColorListItemMouseListener(Profile.ColorType colorType) {
         return new CustomMouseListener(new CustomMouseListener.MouseClickListener() {
             @Override
             public void onMouseClick() {

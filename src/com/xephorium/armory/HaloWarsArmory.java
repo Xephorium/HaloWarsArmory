@@ -1,7 +1,7 @@
 package com.xephorium.armory;
 
-import com.xephorium.armory.model.ColorProfile;
-import com.xephorium.armory.repository.MockColorProfileRepository;
+import com.xephorium.armory.model.Profile;
+import com.xephorium.armory.repository.MockProfileRepository;
 import com.xephorium.armory.ui.ArmoryWindow;
 
 public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
@@ -18,8 +18,8 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
         armoryWindow = new ArmoryWindow(this);
         armoryWindow.displayWindow();
 
-        ColorProfile[] mockColorProfileList = MockColorProfileRepository.getProfileList();
-        armoryWindow.updateColorProfileList(mockColorProfileList);
+        Profile[] mockProfileList = MockProfileRepository.getProfileList();
+        armoryWindow.updateProfileList(mockProfileList);
     }
 
 
