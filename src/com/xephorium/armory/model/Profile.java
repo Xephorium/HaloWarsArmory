@@ -95,6 +95,12 @@ public class Profile {
         return sameNameAndId && sameColors;
     }
 
+    protected Profile cloneProfile() {
+        Profile newProfile = new Profile(this.getPrimaryKey(), this.name);
+        newProfile.setColors(this.getColors());
+        return newProfile;
+    }
+
     /*--- ColorType Enum ---*/
 
     public enum ColorType {
@@ -168,6 +174,14 @@ public class Profile {
             newProfileList[profileList.length] = newProfile;
             return newProfileList;
         }
+    }
+
+    public static Profile[] cloneProfileList(Profile[] profileList) {
+        Profile[] newProfileList = new Profile[profileList.length];
+        for (int x = 0; x < profileList.length; x++) {
+            newProfileList[x] = profileList[x].cloneProfile();
+        }
+        return newProfileList;
     }
 
 }
