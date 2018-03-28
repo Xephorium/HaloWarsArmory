@@ -47,8 +47,15 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
 
     @Override
     public void handleWorkingProfileSaveClick(Profile newProfile) {
+        if (newProfile.getName().trim().equals("")) {
+            armoryWindow.displayProfileMustHaveNameDialog();
+            return;
+        }
+
+        // TODO - Fix ProfileAttributePanel State Bug
         profileList = Profile.getUpdatedProfileList(profileList, newProfile);
         armoryWindow.updateProfileList(profileList);
+        armoryWindow.displayProfileSavedDialog();
         // TODO - Write Changes to File
     }
 

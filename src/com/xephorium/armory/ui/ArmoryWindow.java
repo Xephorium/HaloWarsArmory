@@ -123,6 +123,14 @@ public class ArmoryWindow implements
         DialogFactory.createColorChooserDialog(initialColor, listener);
     }
 
+    public void displayProfileMustHaveNameDialog() {
+        DialogFactory.createProfileMustHaveNameDialog(frame);
+    }
+
+    public void displayProfileSavedDialog() {
+        DialogFactory.createProfileSavedDialog(frame);
+    }
+
 
     /*--- Private Methods --*/
 

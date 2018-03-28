@@ -48,11 +48,11 @@ public class ProfileBrowsePanel extends JPanel {
         Profile currentSelectedProfile = this.profileList[profileListPanel.getLeadSelectionIndex()];
         this.profileList = profileList;
         this.profileListPanel.setListData(Profile.getProfileNames(profileList));
-        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstProfile(profileList, currentSelectedProfile.getPrimaryKey()));
+        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstIndex(profileList, currentSelectedProfile.getPrimaryKey()));
     }
 
     public void setSelectedProfile(Profile profile) {
-        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstProfile(profileList, profile.getPrimaryKey()));
+        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstIndex(profileList, profile.getPrimaryKey()));
     }
 
 

@@ -26,6 +26,22 @@ public class DialogFactory {
                 ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
     }
 
+    public static void createProfileMustHaveNameDialog(JFrame frame) {
+        JOptionPane.showMessageDialog(frame,
+                "Profile must have a name.",
+                "Invalid Name",
+                JOptionPane.ERROR_MESSAGE,
+                ArmoryImage.ICON_INSTALLATION_INVALID_DIALOG);
+    }
+
+    public static void createProfileSavedDialog(JFrame frame) {
+        JOptionPane.showMessageDialog(frame,
+                "Your profile has been saved.",
+                "Profile Saved",
+                JOptionPane.INFORMATION_MESSAGE,
+                ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
+    }
+
     public static void createColorChooserDialog(Color initialColor, ColorChooserListener listener) {
         ColorChooser colorChooser = new ColorChooser(listener);
         colorChooser.showDialog(initialColor);

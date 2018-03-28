@@ -77,6 +77,23 @@ public class Profile {
         this.colors = colors;
     }
 
+    @Override
+    public boolean equals(Object profile) {
+        if (!(profile instanceof Profile)) {
+            return false;
+        }
+
+        boolean sameNameAndId = ((Profile) profile).getPrimaryKey() == this.getPrimaryKey()
+                && ((Profile) profile).getName().equals(this.getName());
+
+        boolean sameColors = true;
+        for (int x = 0; x < this.getColors().length; x++) {
+            if (this.getColors()[x] != ((Profile) profile).getColors()[x]) {
+                sameColors = false;
+            }
+        }
+        return sameNameAndId && sameColors;
+    }
 
     /*--- ColorType Enum ---*/
 
@@ -113,7 +130,7 @@ public class Profile {
         return profileNames;
     }
 
-    public static int getProfileIndexOrFirstProfile(Profile[] profileList, int primaryKey) {
+    public static int getProfileIndexOrFirstIndex(Profile[] profileList, int primaryKey) {
         for (int x = 0; x < profileList.length; x++) {
             if (primaryKey == profileList[x].getPrimaryKey()) {
                 return x;
