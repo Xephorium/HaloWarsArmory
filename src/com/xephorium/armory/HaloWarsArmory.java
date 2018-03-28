@@ -13,7 +13,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
     /*--- Variables ---*/
 
     private ArmoryWindow armoryWindow;
-    Profile[] profileList;
+    private Profile[] profileList;
 
 
     /*--- Constructor ---*/

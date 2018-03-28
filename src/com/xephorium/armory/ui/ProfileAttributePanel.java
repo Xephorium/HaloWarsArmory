@@ -40,18 +40,8 @@ public class ProfileAttributePanel extends JPanel {
 
     public void setWorkingProfile(Profile profile) {
         workingProfile = profile;
-        setWorkingProfileName(workingProfile.getName());
-        setWorkingProfileColors(workingProfile.getColors());
-    }
-
-    public void setWorkingProfileName(String name) {
-        workingProfile.setName(name);
-        profileNameTextField.setText(name);
-    }
-
-    public void setWorkingProfileColor(Profile.ColorType colorType, Color color) {
-        workingProfile.setColor(colorType, color);
-        profileColorPanels[colorType.getIndex()].setBackground(color);
+        profileNameTextField.setText(profile.getName());
+        setWorkingProfileColors(profile.getColors());
     }
 
     public void setWorkingProfileColors(Color[] colors) {

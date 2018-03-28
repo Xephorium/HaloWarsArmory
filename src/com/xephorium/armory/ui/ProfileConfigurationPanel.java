@@ -51,18 +51,6 @@ public class ProfileConfigurationPanel extends JPanel implements
         profileAttributePanel.setWorkingProfile(profile);
     }
 
-    public void setWorkingProfileName(String name) {
-        this.profileAttributePanel.setWorkingProfileName(name);
-    }
-
-    public void setWorkingProfileColor(Profile.ColorType colorType, Color color) {
-        profileAttributePanel.setWorkingProfileColor(colorType, color);
-    }
-
-    public void setWorkingProfileColors(Color[] colors) {
-        profileAttributePanel.setWorkingProfileColors(colors);
-    }
-
 
     /*--- Private Methods ---*/
 
