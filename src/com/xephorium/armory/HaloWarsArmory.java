@@ -10,6 +10,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
     /*--- Variables ---*/
 
     private ArmoryWindow armoryWindow;
+    Profile[] mockProfileList;
 
 
     /*--- Constructor ---*/
@@ -18,7 +19,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
         armoryWindow = new ArmoryWindow(this);
         armoryWindow.displayWindow();
 
-        Profile[] mockProfileList = MockProfileRepository.getProfileList();
+        mockProfileList = MockProfileRepository.getProfileList();
         armoryWindow.updateProfileList(mockProfileList);
     }
 
@@ -39,5 +40,12 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
             armoryWindow.setInvalidInstallDirectory();
             armoryWindow.displayGameNotFoundDialog();
         }
+    }
+
+    @Override
+    public void handleWorkingProfileSaveClick(Profile newProfile) {
+        // TODO - Prompt To Verify Change
+        mockProfileList = Profile.getUpdatedProfileList(mockProfileList, newProfile);
+        armoryWindow.updateProfileList(mockProfileList);
     }
 }

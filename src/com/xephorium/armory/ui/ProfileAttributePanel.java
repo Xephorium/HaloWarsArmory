@@ -15,6 +15,7 @@ public class ProfileAttributePanel extends JPanel {
 
     /*--- Variables ---*/
 
+    private ProfileAttributePanelListener listener;
     private JTextField profileNameTextField;
     private JPanel[] profileColorPanels = new JPanel[Profile.ColorType.values().length];
     private Profile workingPrimaryKey;
@@ -22,8 +23,9 @@ public class ProfileAttributePanel extends JPanel {
 
     /*--- Constructor ---*/
 
-    public ProfileAttributePanel() {
+    public ProfileAttributePanel(ProfileAttributePanelListener listener) {
         super();
+        this.listener = listener;
 
         initializePanelAttributes();
         initializeProfileNameTextField();
@@ -127,9 +129,7 @@ public class ProfileAttributePanel extends JPanel {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // TODO - Handle Save Click
-                //listener.handleProfileSaveClick();
+                listener.handleWorkingProfileSaveClick(getWorkingProfile());
             }
         });
         return saveButton;
@@ -144,5 +144,13 @@ public class ProfileAttributePanel extends JPanel {
                 //listener.handleWorkingProfileColorClick(colorType, getWorkingProfileColor(colorType));
             }
         });
+    }
+
+
+    /*--- Listener Interface ---*/
+
+    interface ProfileAttributePanelListener {
+
+        void handleWorkingProfileSaveClick(Profile newProfile);
     }
 }

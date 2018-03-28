@@ -103,7 +103,7 @@ public class Profile {
     }
 
 
-    /*--- Utility Methods ---*/
+    /*--- Utility Methods (TODO - Make ProfileList Model & Use ArrayList) ---*/
 
     public static String[] getProfileNames(Profile[] profileList) {
         String[] profileNames = new String[profileList.length];
@@ -120,6 +120,37 @@ public class Profile {
             }
         }
         return 0;
+    }
+
+    public static boolean containsProfile(Profile[] profileList, Profile profile) {
+        for (int x = 0; x < profileList.length; x++) {
+            if (profile.getPrimaryKey() == profileList[x].getPrimaryKey()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Profile[] getUpdatedProfileList(Profile[] profileList, Profile newProfile) {
+        if (Profile.containsProfile(profileList, newProfile)) {
+            Profile[] newProfileList = new Profile[profileList.length];
+            for (int x = 0; x < profileList.length; x++) {
+                if (profileList[x].getPrimaryKey() == newProfile.getPrimaryKey()) {
+                    newProfileList[x] = newProfile;
+                } else {
+                    newProfileList[x] = profileList[x];
+                }
+            }
+            return newProfileList;
+
+        } else {
+            Profile[] newProfileList = new Profile[profileList.length + 1];
+            for (int x = 0; x < profileList.length; x++) {
+                newProfileList[x] = profileList[x];
+            }
+            newProfileList[profileList.length] = newProfile;
+            return newProfileList;
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallDirectoryPanel.InstallDirectoryPanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 import com.xephorium.armory.ui.FactionConfigurationPanel.FactionConfigurationPanelListener;
+import com.xephorium.armory.ui.ProfileConfigurationPanel.ProfileConfigurationPanelListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -32,8 +33,9 @@ import java.awt.*;
 
 public class ArmoryWindow implements
         InstallDirectoryPanelListener,
-        DirectoryChooserListener,
-        FactionConfigurationPanelListener {
+        FactionConfigurationPanelListener,
+        ProfileConfigurationPanelListener,
+        DirectoryChooserListener {
 
 
     /*--- Variables ---*/
@@ -127,7 +129,7 @@ public class ArmoryWindow implements
     private void initializeViewClasses() {
         installDirectoryPanel = new InstallDirectoryPanel(this);
         factionConfigurationPanel = new FactionConfigurationPanel(this);
-        profileConfigurationPanel = new ProfileConfigurationPanel();
+        profileConfigurationPanel = new ProfileConfigurationPanel(this);
         profilePreviewPanel = new ProfilePreviewPanel();
         directoryChooser = new DirectoryChooser(this);
     }
@@ -156,6 +158,8 @@ public class ArmoryWindow implements
 
         void handleDirectorySelection(String directory);
 
+        void handleWorkingProfileSaveClick(Profile newProfile);
+
     }
 
 
@@ -178,12 +182,12 @@ public class ArmoryWindow implements
     // Faction Configuration Panel
 
     @Override
-    public void handleUNSCPlayerUpdate(int playerNumber, String profileName) {
+    public void handleUNSCPlayerUpdate(int playerNumber, int profilePrimaryKey) {
         // TODO - Update UNSC Player
     }
 
     @Override
-    public void handleCovenantPlayerUpdate(int playerNumber, String profileName) {
+    public void handleCovenantPlayerUpdate(int playerNumber, int profilePrimaryKey) {
         // TODO - Update Covenant Player
     }
 
@@ -207,23 +211,11 @@ public class ArmoryWindow implements
         // TODO - Save Covenant Configuration
     }
 
-//    @Override
-//    public void handleProfileColorClick(ColorType colorType, Color currentColor) {
-//        DialogFactory.createColorChooserDialog(currentColor,new ColorChooser.ColorChooserListener() {
-//            @Override
-//            public void onColorSelected(Color color) {
-//                profileConfigurationPanel.setWorkingProfileColor(colorType, color);
-//            }
-//
-//            @Override
-//            public void onDialogClose() {
-//                // Do Nothing
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void handleProfileSaveClick() {
-//        // TODO - Save Selected Profile
-//    }
+
+    // Profile Configuration Panel
+
+    @Override
+    public void handleWorkingProfileSaveClick(Profile newProfile) {
+        listener.handleWorkingProfileSaveClick(newProfile);
+    }
 }
