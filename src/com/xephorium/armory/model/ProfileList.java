@@ -11,7 +11,7 @@ public class ProfileList {
     private List<Profile> profileList;
 
 
-    /*--- Constructor(s) ---*/
+    /*--- Constructor ---*/
 
     public ProfileList() {
         profileList = new ArrayList<>();
@@ -20,7 +20,7 @@ public class ProfileList {
 
     /*--- Public Methods ---*/
 
-    public Profile getProfile(Profile profile) {
+    public Profile getByPrimaryKey(Profile profile) {
 
         // TODO - Add Primary Key Enforcement
         for (int x = 0; x < profileList.size(); x++) {
@@ -31,7 +31,7 @@ public class ProfileList {
         return null;
     }
 
-    public void addProfile(Profile profile) {
+    public void add(Profile profile) {
 
         // TODO - Add Primary Key Enforcement
         if (this.containsProfile(profile)) {
@@ -41,12 +41,21 @@ public class ProfileList {
         }
     }
 
-    public Profile[] getProfileArray() {
+    public Profile[] getArray() {
         Profile[] profileArray = new Profile[profileList.size()];
         for (int x = 0; x < profileList.size(); x++) {
             profileArray[x] = profileList.get(x).cloneProfile();
         }
         return profileArray;
+    }
+
+    @Override
+    public ProfileList clone() {
+        ProfileList newProfileList = new ProfileList();
+        for (int x = 0; x < profileList.size(); x++) {
+            newProfileList.add(profileList.get(x).cloneProfile());
+        }
+        return newProfileList;
     }
 
     public int getIndexOrFirstIndex(Profile profile) {

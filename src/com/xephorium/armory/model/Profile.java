@@ -163,7 +163,7 @@ public class Profile {
         return false;
     }
 
-    // Depricated - Use ProfileList.getProfile()
+    // Depricated - Use ProfileList.getByPrimaryKey()
     public static Profile getProfileByPrimaryKey(Profile[] profileList, Profile profile) {
         for (int x = 0; x < profileList.length; x++) {
             if (profile.getPrimaryKey() == profileList[x].getPrimaryKey()) {

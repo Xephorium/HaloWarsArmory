@@ -1,6 +1,7 @@
 package com.xephorium.armory;
 
 import com.xephorium.armory.model.Profile;
+import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.repository.MockProfileRepository;
 import com.xephorium.armory.ui.ArmoryWindow;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
@@ -14,7 +15,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
     /*--- Variables ---*/
 
     private ArmoryWindow armoryWindow;
-    private Profile[] profileList;
+    private ProfileList profileList;
 
 
     /*--- Constructor ---*/
@@ -24,14 +25,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
         armoryWindow.displayWindow();
 
         profileList = MockProfileRepository.getProfileList();
-        armoryWindow.updateProfileList(getProfileList());
-    }
-
-
-    /*--- Private Methods ---*/
-
-    private Profile[] getProfileList() {
-        return Profile.cloneProfileList(profileList);
+        armoryWindow.updateProfileList(profileList.getArray());
     }
 
 
@@ -60,13 +54,13 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
             return;
         }
 
-        if (newProfile.equals(Profile.getProfileByPrimaryKey(getProfileList(), newProfile))) {
+        if (newProfile.equals(profileList.getByPrimaryKey(newProfile))) {
             armoryWindow.displayNoChangesToSaveDialog();
             return;
         }
 
-        this.profileList = Profile.getUpdatedProfileList(getProfileList(), newProfile);
-        armoryWindow.updateProfileList(getProfileList());
+        profileList.add(newProfile);
+        armoryWindow.updateProfileList(profileList.getArray());
         armoryWindow.displayProfileSavedDialog();
         // TODO - Write Changes to File
     }
