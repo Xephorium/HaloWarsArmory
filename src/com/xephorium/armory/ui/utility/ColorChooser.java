@@ -113,7 +113,7 @@ public class ColorChooser extends JDialog {
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.onColorSelected(javaColorChooser.getSelectionModel().getSelectedColor());
+                listener.onColorSelection(javaColorChooser.getSelectionModel().getSelectedColor());
                 dispose();
             }
         });
@@ -172,7 +172,7 @@ public class ColorChooser extends JDialog {
 
     public interface ColorChooserListener {
 
-        void onColorSelected(Color color);
+        void onColorSelection(Color color);
 
         void onDialogClose();
     }

@@ -3,6 +3,7 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
+import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
@@ -114,6 +115,14 @@ public class ArmoryWindow implements
         profileConfigurationPanel.setSelectedProfile(profile);
     }
 
+    public void setWorkingProfile(Profile profile) {
+        profileConfigurationPanel.setWorkingProfile(profile);
+    }
+
+    public void displayColorChooserDialog(Color initialColor, ColorChooser.ColorChooserListener listener) {
+        DialogFactory.createColorChooserDialog(initialColor, listener);
+    }
+
 
     /*--- Private Methods --*/
 
@@ -168,6 +177,8 @@ public class ArmoryWindow implements
         void handleWorkingProfileSaveClick(Profile newProfile);
 
         void handleProfileSelection(Profile profile);
+
+        void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType);
     }
 
 
@@ -230,5 +241,10 @@ public class ArmoryWindow implements
     @Override
     public void handleProfileSelection(Profile profile) {
         listener.handleProfileSelection(profile);
+    }
+
+    @Override
+    public void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType) {
+        listener.handleWorkingProfileColorClick(workingProfile, colorType);
     }
 }

@@ -84,21 +84,28 @@ public class ProfileConfigurationPanel extends JPanel implements
     /*--- Interface Overrides ---*/
 
     @Override
+    public void handleProfileSelection(Profile profile) {
+        listener.handleProfileSelection(profile);
+    }
+
+    @Override
     public void handleWorkingProfileSaveClick(Profile newProfile) {
         listener.handleWorkingProfileSaveClick(newProfile);
     }
 
     @Override
-    public void handleProfileSelection(Profile profile) {
-        listener.handleProfileSelection(profile);
+    public void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType) {
+        listener.handleWorkingProfileColorClick(workingProfile, colorType);
     }
 
     /*--- Listener Interface ---*/
 
     interface ProfileConfigurationPanelListener {
 
+        void handleProfileSelection(Profile profile);
+
         void handleWorkingProfileSaveClick(Profile newProfile);
 
-        void handleProfileSelection(Profile profile);
+        void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType);
     }
 }
