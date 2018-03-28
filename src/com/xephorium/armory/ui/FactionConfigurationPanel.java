@@ -22,6 +22,8 @@ public class FactionConfigurationPanel extends JPanel {
 
     /*--- Variables ---*/
 
+    private static final int INITIAL_PRIMARY_KEY = 0;
+
     private enum ButtonType {
         RESET,
         SAVE
@@ -31,7 +33,7 @@ public class FactionConfigurationPanel extends JPanel {
 
     private JComboBox[] unscSelectors = new JComboBox[6];
     private JComboBox[] covenantSelectors = new JComboBox[6];
-    private String[] profileNames = {"No Profiles Available"};
+    private Profile[] profileList = {new Profile(INITIAL_PRIMARY_KEY, "No Profiles Available")};
 
 
     /*--- Constructor ---*/
@@ -47,39 +49,34 @@ public class FactionConfigurationPanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileList(Profile[] profileList) {
-        String[] newProfileNames = Profile.getProfileNames(profileList);
-        updateUNSCSelectors(newProfileNames);
-        updateCovenantSelectors(newProfileNames);
-        this.profileNames = newProfileNames;
+        updateUNSCSelectors(profileList);
+        updateCovenantSelectors(profileList);
+        this.profileList = profileList;
     }
 
 
     /*--- Private Update Methods ---*/
 
-    private void updateUNSCSelectors(String[] newProfileNames) {
-
-        // TODO - Implement Proper Past Item Reselection
+    private void updateUNSCSelectors(Profile[] newProfileList) {
         for (JComboBox comboBox : this.unscSelectors) {
-            String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
+            int oldPrimaryKey = this.profileList[comboBox.getSelectedIndex()].getPrimaryKey();
             comboBox.removeAllItems();
-            for (int y = 0; y < newProfileNames.length; y++) {
-                comboBox.addItem(newProfileNames[y]);
-                if (newProfileNames[y].equals(oldSelection)) {
+            for (int y = 0; y < newProfileList.length; y++) {
+                comboBox.addItem(newProfileList[y].getName());
+                if (oldPrimaryKey == newProfileList[y].getPrimaryKey()) {
                     comboBox.setSelectedIndex(y);
                 }
             }
         }
     }
 
-    private void updateCovenantSelectors(String[] newProfileNames) {
-
-        // TODO - Implement Proper Past Item Reselection
+    private void updateCovenantSelectors(Profile[] newProfileList) {
         for (JComboBox comboBox : this.covenantSelectors) {
-            String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
+            int oldPrimaryKey = this.profileList[comboBox.getSelectedIndex()].getPrimaryKey();
             comboBox.removeAllItems();
-            for (int y = 0; y < newProfileNames.length; y++) {
-                comboBox.addItem(newProfileNames[y]);
-                if (newProfileNames[y].equals(oldSelection)) {
+            for (int y = 0; y < newProfileList.length; y++) {
+                comboBox.addItem(newProfileList[y].getName());
+                if (oldPrimaryKey == newProfileList[y].getPrimaryKey()) {
                     comboBox.setSelectedIndex(y);
                 }
             }
@@ -100,7 +97,6 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private void createTabbedPane() {
-
         JTabbedPane tabbedPane = new JTabbedPane();
 
         JPanel unscPanel = new JPanel();
@@ -137,7 +133,6 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private JPanel createPlayerListPanel(Faction faction) {
-
         int nameLabelPadding = 10;
         int playerSeparationPadding = 15;
 
@@ -172,18 +167,17 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private JComboBox createFactionComboBox(Faction faction, int playerNumber) {
-
         JComboBox comboBox;
-        comboBox = new JComboBox(profileNames);
+        comboBox = new JComboBox(Profile.getProfileNames(profileList));
         comboBox.setSelectedIndex(0);
         comboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     if (faction == Faction.UNSC) {
-                        listener.handleUNSCPlayerUpdate(playerNumber, profileNames[comboBox.getSelectedIndex()]);
+                        listener.handleUNSCPlayerUpdate(playerNumber, profileList[comboBox.getSelectedIndex()].getPrimaryKey());
                     } else {
-                        listener.handleCovenantPlayerUpdate(playerNumber, profileNames[comboBox.getSelectedIndex()]);
+                        listener.handleCovenantPlayerUpdate(playerNumber, profileList[comboBox.getSelectedIndex()].getPrimaryKey());
                     }
                 }
             }
@@ -192,7 +186,6 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private JPanel createFactionPanel(Faction faction) {
-
         JPanel factionPanel = new JPanel(new BorderLayout());
         factionPanel.setLayout(new BoxLayout(factionPanel, BoxLayout.X_AXIS));
         factionPanel.setBackground(Color.WHITE);
@@ -205,7 +198,6 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private JPanel createFactionButtonPanel(ButtonType buttonType, Faction faction) {
-
         JPanel mainButtonPanel = new JPanel(new BorderLayout());
         mainButtonPanel.setBackground(Color.WHITE);
 
@@ -242,7 +234,6 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private JPanel createFactionIconPanel(Faction faction) {
-
         JPanel iconPanel = new JPanel(new GridLayout(1, 1));
         iconPanel.setBackground(Color.WHITE);
         iconPanel.add(new JLabel("", faction == Faction.UNSC ? ICON_UNSC : ICON_COVENANT, JLabel.CENTER));
@@ -254,9 +245,9 @@ public class FactionConfigurationPanel extends JPanel {
 
     interface FactionConfigurationPanelListener {
 
-        void handleUNSCPlayerUpdate(int playerNumber, String profileName);
+        void handleUNSCPlayerUpdate(int playerNumber, int profilePimaryKey);
 
-        void handleCovenantPlayerUpdate(int playerNumber, String profileName);
+        void handleCovenantPlayerUpdate(int playerNumber, int profilePrimaryKey);
 
         void handleUNSCConfigurationReset();
 
