@@ -113,6 +113,7 @@ public class ArmoryWindow implements
 
     public void setSelectedProfile(Profile profile) {
         profileConfigurationPanel.setSelectedProfile(profile);
+        profileConfigurationPanel.setWorkingProfile(profile);
     }
 
     public void setWorkingProfile(Profile profile) {

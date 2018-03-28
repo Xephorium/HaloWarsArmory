@@ -4,8 +4,10 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.repository.MockProfileRepository;
 import com.xephorium.armory.ui.ArmoryWindow;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
+import com.xephorium.armory.ui.utility.StringUtility;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
 
@@ -23,7 +25,14 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
         armoryWindow.displayWindow();
 
         profileList = MockProfileRepository.getProfileList();
-        armoryWindow.updateProfileList(profileList);
+        armoryWindow.updateProfileList(getProfileList());
+    }
+
+
+    /*--- Private Methods ---*/
+
+    private Profile[] getProfileList() {
+        return Profile.cloneProfileList(profileList);
     }
 
 
@@ -47,14 +56,13 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
 
     @Override
     public void handleWorkingProfileSaveClick(Profile newProfile) {
-        if (newProfile.getName().trim().equals("")) {
+        if (StringUtility.isBlank(newProfile.getName())) {
             armoryWindow.displayProfileMustHaveNameDialog();
             return;
         }
 
-        // TODO - Fix ProfileAttributePanel State Bug
-        profileList = Profile.getUpdatedProfileList(profileList, newProfile);
-        armoryWindow.updateProfileList(profileList);
+        this.profileList = Profile.getUpdatedProfileList(getProfileList(), newProfile);
+        armoryWindow.updateProfileList(getProfileList());
         armoryWindow.displayProfileSavedDialog();
         // TODO - Write Changes to File
     }

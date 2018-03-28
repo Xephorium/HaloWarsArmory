@@ -49,34 +49,35 @@ public class FactionConfigurationPanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileList(Profile[] profileList) {
-        updateUNSCSelectors(profileList);
-        updateCovenantSelectors(profileList);
-        this.profileList = profileList;
+        Profile[] newProfileList = Profile.cloneProfileList(profileList);
+        updateUNSCSelectors(newProfileList);
+        updateCovenantSelectors(newProfileList);
+        this.profileList = newProfileList;
     }
 
 
     /*--- Private Update Methods ---*/
 
-    private void updateUNSCSelectors(Profile[] newProfileList) {
+    private void updateUNSCSelectors(Profile[] profileList) {
         for (JComboBox comboBox : this.unscSelectors) {
             int oldPrimaryKey = this.profileList[comboBox.getSelectedIndex()].getPrimaryKey();
             comboBox.removeAllItems();
-            for (int y = 0; y < newProfileList.length; y++) {
-                comboBox.addItem(newProfileList[y].getName());
-                if (oldPrimaryKey == newProfileList[y].getPrimaryKey()) {
+            for (int y = 0; y < profileList.length; y++) {
+                comboBox.addItem(profileList[y].getName());
+                if (oldPrimaryKey == profileList[y].getPrimaryKey()) {
                     comboBox.setSelectedIndex(y);
                 }
             }
         }
     }
 
-    private void updateCovenantSelectors(Profile[] newProfileList) {
+    private void updateCovenantSelectors(Profile[] profileList) {
         for (JComboBox comboBox : this.covenantSelectors) {
             int oldPrimaryKey = this.profileList[comboBox.getSelectedIndex()].getPrimaryKey();
             comboBox.removeAllItems();
-            for (int y = 0; y < newProfileList.length; y++) {
-                comboBox.addItem(newProfileList[y].getName());
-                if (oldPrimaryKey == newProfileList[y].getPrimaryKey()) {
+            for (int y = 0; y < profileList.length; y++) {
+                comboBox.addItem(profileList[y].getName());
+                if (oldPrimaryKey == profileList[y].getPrimaryKey()) {
                     comboBox.setSelectedIndex(y);
                 }
             }

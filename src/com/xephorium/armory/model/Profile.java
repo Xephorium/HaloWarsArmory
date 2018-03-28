@@ -95,9 +95,11 @@ public class Profile {
         return sameNameAndId && sameColors;
     }
 
-    protected Profile cloneProfile() {
-        Profile newProfile = new Profile(this.getPrimaryKey(), this.name);
-        newProfile.setColors(this.getColors());
+    public Profile cloneProfile() {
+        Profile newProfile = new Profile(this.getPrimaryKey(), this.getName());
+        for (int x = 0; x < ColorType.values().length; x++) {
+            newProfile.setColor(ColorType.getFromIndex(x), this.getColor(ColorType.getFromIndex(x)));
+        }
         return newProfile;
     }
 
@@ -122,6 +124,10 @@ public class Profile {
 
         public int getIndex() {
             return this.ordinal();
+        }
+
+        public static ColorType getFromIndex(int index) {
+            return ColorType.values()[index];
         }
     }
 

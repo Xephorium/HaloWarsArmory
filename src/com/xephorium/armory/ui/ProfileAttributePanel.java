@@ -39,15 +39,10 @@ public class ProfileAttributePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void setWorkingProfile(Profile profile) {
-        workingProfile = profile;
+        workingProfile = profile.cloneProfile();
         profileNameTextField.setText(profile.getName());
-        setWorkingProfileColors(profile.getColors());
-    }
-
-    public void setWorkingProfileColors(Color[] colors) {
-        workingProfile.setColors(colors);
         for (int x = 0; x < profileColorPanels.length; x++) {
-            profileColorPanels[x].setBackground(colors[x]);
+            profileColorPanels[x].setBackground(profile.getColor(Profile.ColorType.getFromIndex(x)));
         }
     }
 
@@ -55,7 +50,7 @@ public class ProfileAttributePanel extends JPanel {
     /*--- Private Getter Methods ---*/
 
     private Profile getWorkingProfile() {
-        Profile profile = workingProfile;
+        Profile profile = workingProfile.cloneProfile();
         profile.setName(profileNameTextField.getText());
         return profile;
     }

@@ -38,17 +38,18 @@ public class ProfileBrowsePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileBrowsePanel(Profile[] profileList) {
+        Profile[] newProfileList = Profile.cloneProfileList(profileList);
         if (this.profileList == null || this.profileList.length < 1) {
-            this.profileList = profileList;
-            this.profileListPanel.setListData(Profile.getProfileNames(profileList));
+            this.profileList = newProfileList;
+            this.profileListPanel.setListData(Profile.getProfileNames(newProfileList));
             this.profileListPanel.setSelectedIndex(0);
             return;
         }
 
         Profile currentSelectedProfile = this.profileList[profileListPanel.getLeadSelectionIndex()];
-        this.profileList = profileList;
-        this.profileListPanel.setListData(Profile.getProfileNames(profileList));
-        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstIndex(profileList, currentSelectedProfile.getPrimaryKey()));
+        this.profileList = newProfileList;
+        this.profileListPanel.setListData(Profile.getProfileNames(newProfileList));
+        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstIndex(newProfileList, currentSelectedProfile.getPrimaryKey()));
     }
 
     public void setSelectedProfile(Profile profile) {
