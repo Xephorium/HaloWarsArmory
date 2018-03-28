@@ -3,7 +3,6 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.utility.CustomMouseListener;
-import com.xephorium.armory.ui.utility.StringUtility;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +17,7 @@ public class ProfileAttributePanel extends JPanel {
 
     private JTextField profileNameTextField;
     private JPanel[] profileColorPanels = new JPanel[Profile.ColorType.values().length];
-    private Profile workingProfile;
+    private Profile workingPrimaryKey;
 
 
     /*--- Constructor ---*/
@@ -38,23 +37,23 @@ public class ProfileAttributePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void setWorkingProfile(Profile profile) {
-        workingProfile = profile;
-        setWorkingProfileName(workingProfile.getName());
-        setWorkingProfileColors(workingProfile.getColors());
+        workingPrimaryKey = profile;
+        setWorkingProfileName(workingPrimaryKey.getName());
+        setWorkingProfileColors(workingPrimaryKey.getColors());
     }
 
     public void setWorkingProfileName(String name) {
-        workingProfile.setName(name);
+        workingPrimaryKey.setName(name);
         profileNameTextField.setText(name);
     }
 
     public void setWorkingProfileColor(Profile.ColorType colorType, Color color) {
-        workingProfile.setColor(colorType, color);
+        workingPrimaryKey.setColor(colorType, color);
         profileColorPanels[colorType.getIndex()].setBackground(color);
     }
 
     public void setWorkingProfileColors(Color[] colors) {
-        workingProfile.setColors(colors);
+        workingPrimaryKey.setColors(colors);
         for (int x = 0; x < profileColorPanels.length; x++) {
             profileColorPanels[x].setBackground(colors[x]);
         }
@@ -64,15 +63,15 @@ public class ProfileAttributePanel extends JPanel {
     /*--- Private Getter Methods ---*/
 
     private Profile getWorkingProfile() {
-        return workingProfile;
+        return workingPrimaryKey;
     }
 
     private String getWorkingProfileName() {
-        return workingProfile.getName();
+        return workingPrimaryKey.getName();
     }
 
     private Color[] getWorkingProfileColors() {
-        return workingProfile.getColors();
+        return workingPrimaryKey.getColors();
     }
 
 

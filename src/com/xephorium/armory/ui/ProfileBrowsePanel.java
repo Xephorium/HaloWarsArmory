@@ -16,6 +16,7 @@ public class ProfileBrowsePanel extends JPanel {
     /*--- Variables ---*/
 
     private JList profileListPanel;
+    private int selectedPrimaryKey;
 
 
     /*--- Constructor ---*/
@@ -35,11 +36,18 @@ public class ProfileBrowsePanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileBrowsePanel(Profile[] profileList) {
-        String[] profileNames = Profile.getProfileNames(profileList);
+        if (profileListPanel == null) {
+            String[] profileNames = Profile.getProfileNames(profileList);
+            this.profileListPanel.setListData(profileNames);
+            this.profileListPanel.setSelectedIndex(0);
+            this.selectedPrimaryKey = 0;
+            return;
+        }
 
-        // TODO - Implement Proper Past Item Reselection
+        String[] profileNames = Profile.getProfileNames(profileList);
+        int selectedProfileIndex = Profile.getProfileIndexOrFirstProfile(profileList, selectedPrimaryKey);
         this.profileListPanel.setListData(profileNames);
-        this.profileListPanel.setSelectedIndex(0);
+        this.profileListPanel.setSelectedIndex(selectedPrimaryKey);
     }
 
 

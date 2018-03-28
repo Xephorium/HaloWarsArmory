@@ -45,6 +45,14 @@ public class Profile {
 
     /*--- Public Methods ---*/
 
+    public void setPrimaryKey(int primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
+    public int getPrimaryKey() {
+        return this.primaryKey;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -103,6 +111,15 @@ public class Profile {
             profileNames[x] = profileList[x].getName();
         }
         return profileNames;
+    }
+
+    public static int getProfileIndexOrFirstProfile(Profile[] profileList, int primaryKey) {
+        for (int x = 0; x < profileList.length; x++) {
+            if (primaryKey == profileList[x].getPrimaryKey()) {
+                return x;
+            }
+        }
+        return 0;
     }
 
 }
