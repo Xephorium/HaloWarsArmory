@@ -160,6 +160,15 @@ public class Profile {
         return false;
     }
 
+    public static Profile getProfileByPrimaryKey(Profile[] profileList, Profile profile) {
+        for (int x = 0; x < profileList.length; x++) {
+            if (profile.getPrimaryKey() == profileList[x].getPrimaryKey()) {
+                return profileList[x];
+            }
+        }
+        return null;
+    }
+
     public static Profile[] getUpdatedProfileList(Profile[] profileList, Profile newProfile) {
         if (Profile.containsProfile(profileList, newProfile)) {
             Profile[] newProfileList = new Profile[profileList.length];

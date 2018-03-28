@@ -61,6 +61,11 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
             return;
         }
 
+        if (newProfile.equals(Profile.getProfileByPrimaryKey(getProfileList(), newProfile))) {
+            armoryWindow.displayNoChangesToSaveDialog();
+            return;
+        }
+
         this.profileList = Profile.getUpdatedProfileList(getProfileList(), newProfile);
         armoryWindow.updateProfileList(getProfileList());
         armoryWindow.displayProfileSavedDialog();

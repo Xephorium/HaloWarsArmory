@@ -132,6 +132,10 @@ public class ArmoryWindow implements
         DialogFactory.createProfileSavedDialog(frame);
     }
 
+    public void displayNoChangesToSaveDialog() {
+        DialogFactory.createNoChangesToSaveDialog(frame);
+    }
+
 
     /*--- Private Methods --*/
 

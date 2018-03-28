@@ -42,6 +42,14 @@ public class DialogFactory {
                 ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
     }
 
+    public static void createNoChangesToSaveDialog(JFrame frame) {
+        JOptionPane.showMessageDialog(frame,
+                "There are no changes to save.",
+                "No Changes to Save",
+                JOptionPane.INFORMATION_MESSAGE,
+                ArmoryImage.ICON_INSTALLATION_INVALID_DIALOG);
+    }
+
     public static void createColorChooserDialog(Color initialColor, ColorChooserListener listener) {
         ColorChooser colorChooser = new ColorChooser(listener);
         colorChooser.showDialog(initialColor);
