@@ -7,7 +7,6 @@ import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
 import com.xephorium.armory.ui.utility.StringUtility;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
 

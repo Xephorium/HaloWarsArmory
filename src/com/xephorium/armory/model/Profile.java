@@ -134,6 +134,7 @@ public class Profile {
 
     /*--- Utility Methods (TODO - Make ProfileList Model & Use ArrayList) ---*/
 
+    // Depricated - Use ProfileList.getNameList()
     public static String[] getProfileNames(Profile[] profileList) {
         String[] profileNames = new String[profileList.length];
         for (int x = 0; x < profileList.length; x++) {
@@ -142,6 +143,7 @@ public class Profile {
         return profileNames;
     }
 
+    // Depricated - Use ProfileList.getPositionOrFirst()
     public static int getProfileIndexOrFirstIndex(Profile[] profileList, int primaryKey) {
         for (int x = 0; x < profileList.length; x++) {
             if (primaryKey == profileList[x].getPrimaryKey()) {
@@ -151,6 +153,7 @@ public class Profile {
         return 0;
     }
 
+    // Depricated - Only Used Internally
     public static boolean containsProfile(Profile[] profileList, Profile profile) {
         for (int x = 0; x < profileList.length; x++) {
             if (profile.getPrimaryKey() == profileList[x].getPrimaryKey()) {
@@ -160,6 +163,7 @@ public class Profile {
         return false;
     }
 
+    // Depricated - Use ProfileList.getProfile()
     public static Profile getProfileByPrimaryKey(Profile[] profileList, Profile profile) {
         for (int x = 0; x < profileList.length; x++) {
             if (profile.getPrimaryKey() == profileList[x].getPrimaryKey()) {
@@ -169,6 +173,7 @@ public class Profile {
         return null;
     }
 
+    // Depricated - Use ProfileList.setProfile()
     public static Profile[] getUpdatedProfileList(Profile[] profileList, Profile newProfile) {
         if (Profile.containsProfile(profileList, newProfile)) {
             Profile[] newProfileList = new Profile[profileList.length];
@@ -191,6 +196,7 @@ public class Profile {
         }
     }
 
+    // Depricated - Use ProfileList.clone()
     public static Profile[] cloneProfileList(Profile[] profileList) {
         Profile[] newProfileList = new Profile[profileList.length];
         for (int x = 0; x < profileList.length; x++) {
