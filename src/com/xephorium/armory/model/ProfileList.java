@@ -11,10 +11,15 @@ public class ProfileList {
     private List<Profile> profileList;
 
 
-    /*--- Constructor ---*/
+    /*--- Constructors ---*/
 
     public ProfileList() {
         profileList = new ArrayList<>();
+    }
+
+    public ProfileList(Profile profile) {
+        profileList = new ArrayList<>();
+        profileList.add(profile);
     }
 
 
@@ -43,14 +48,6 @@ public class ProfileList {
         } else {
             profileList.add(profile);
         }
-    }
-
-    public Profile[] getArray() {
-        Profile[] profileArray = new Profile[profileList.size()];
-        for (int x = 0; x < profileList.size(); x++) {
-            profileArray[x] = profileList.get(x).cloneProfile();
-        }
-        return profileArray;
     }
 
     @Override

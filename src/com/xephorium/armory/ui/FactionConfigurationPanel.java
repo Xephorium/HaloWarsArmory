@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_COVENANT;
 import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_UNSC;
@@ -32,9 +34,9 @@ public class FactionConfigurationPanel extends JPanel {
 
     private FactionConfigurationPanelListener listener;
 
-    private JComboBox[] unscSelectors = new JComboBox[6];
-    private JComboBox[] covenantSelectors = new JComboBox[6];
-    private Profile[] profileList = {new Profile(INITIAL_PRIMARY_KEY, "No Profiles Available")};
+    private List<JComboBox> unscSelectors = new ArrayList<>();
+    private List<JComboBox> covenantSelectors = new ArrayList<>();
+    private ProfileList profileList = new ProfileList(new Profile(INITIAL_PRIMARY_KEY, "No Profiles Available"));
 
 
     /*--- Constructor ---*/
@@ -50,7 +52,7 @@ public class FactionConfigurationPanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileList(ProfileList profileList) {
-        Profile[] newProfileList = profileList.getArray();
+        ProfileList newProfileList = profileList.clone();
         updateUNSCSelectors(newProfileList);
         updateCovenantSelectors(newProfileList);
         this.profileList = newProfileList;
@@ -59,27 +61,27 @@ public class FactionConfigurationPanel extends JPanel {
 
     /*--- Private Update Methods ---*/
 
-    private void updateUNSCSelectors(Profile[] profileList) {
-        for (JComboBox comboBox : this.unscSelectors) {
-            int oldPrimaryKey = this.profileList[comboBox.getSelectedIndex()].getPrimaryKey();
-            comboBox.removeAllItems();
-            for (int y = 0; y < profileList.length; y++) {
-                comboBox.addItem(profileList[y].getName());
-                if (oldPrimaryKey == profileList[y].getPrimaryKey()) {
-                    comboBox.setSelectedIndex(y);
+    private void updateUNSCSelectors(ProfileList newProfileList) {
+        for (JComboBox selector : unscSelectors) {
+            int oldPrimaryKey = profileList.getByIndex(selector.getSelectedIndex()).getPrimaryKey();
+            selector.removeAllItems();
+            for (int y = 0; y < newProfileList.size(); y++) {
+                selector.addItem(newProfileList.getByIndex(y).getName());
+                if (oldPrimaryKey == newProfileList.getByIndex(y).getPrimaryKey()) {
+                    selector.setSelectedIndex(y);
                 }
             }
         }
     }
 
-    private void updateCovenantSelectors(Profile[] profileList) {
-        for (JComboBox comboBox : this.covenantSelectors) {
-            int oldPrimaryKey = this.profileList[comboBox.getSelectedIndex()].getPrimaryKey();
-            comboBox.removeAllItems();
-            for (int y = 0; y < profileList.length; y++) {
-                comboBox.addItem(profileList[y].getName());
-                if (oldPrimaryKey == profileList[y].getPrimaryKey()) {
-                    comboBox.setSelectedIndex(y);
+    private void updateCovenantSelectors(ProfileList newProfileList) {
+        for (JComboBox selector : covenantSelectors) {
+            int oldPrimaryKey = profileList.getByIndex(selector.getSelectedIndex()).getPrimaryKey();
+            selector.removeAllItems();
+            for (int y = 0; y < newProfileList.size(); y++) {
+                selector.addItem(newProfileList.getByIndex(y).getName());
+                if (oldPrimaryKey == newProfileList.getByIndex(y).getPrimaryKey()) {
+                    selector.setSelectedIndex(y);
                 }
             }
         }
@@ -155,11 +157,11 @@ public class FactionConfigurationPanel extends JPanel {
                     new Dimension(nameLabelPadding, 0)));
 
             if (faction == Faction.UNSC) {
-                unscSelectors[playerNumber] = createFactionComboBox(Faction.UNSC, playerNumber);
-                playerPanel.add(unscSelectors[playerNumber]);
+                unscSelectors.add(createFactionComboBox(Faction.UNSC, playerNumber));
+                playerPanel.add(unscSelectors.get(playerNumber));
             } else {
-                covenantSelectors[playerNumber] = createFactionComboBox(Faction.COVENANT, playerNumber);
-                playerPanel.add(covenantSelectors[playerNumber]);
+                covenantSelectors.add(createFactionComboBox(Faction.COVENANT, playerNumber));
+                playerPanel.add(covenantSelectors.get(playerNumber));
             }
 
             playerListPanel.add(playerPanel);
@@ -170,16 +172,18 @@ public class FactionConfigurationPanel extends JPanel {
 
     private JComboBox createFactionComboBox(Faction faction, int playerNumber) {
         JComboBox comboBox;
-        comboBox = new JComboBox(Profile.getProfileNames(profileList));
+        comboBox = new JComboBox(profileList.getNameList());
         comboBox.setSelectedIndex(0);
         comboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     if (faction == Faction.UNSC) {
-                        listener.handleUNSCPlayerUpdate(playerNumber, profileList[comboBox.getSelectedIndex()].getPrimaryKey());
+                        listener.handleUNSCPlayerUpdate(playerNumber,
+                                profileList.getByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
                     } else {
-                        listener.handleCovenantPlayerUpdate(playerNumber, profileList[comboBox.getSelectedIndex()].getPrimaryKey());
+                        listener.handleCovenantPlayerUpdate(playerNumber,
+                                profileList.getByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
                     }
                 }
             }

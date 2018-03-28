@@ -1,8 +1,8 @@
 package com.xephorium.armory.model;
 
-import com.xephorium.armory.ui.resource.color.ArmoryColor;
-
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class Profile {
 
@@ -11,7 +11,7 @@ public class Profile {
 
     private int primaryKey;
     private String name;
-    private Color[] colors = new Color[ColorType.values().length];
+    private List<Color> colorList;
 
 
     /*--- Constructor(s) ---*/
@@ -19,27 +19,30 @@ public class Profile {
     public Profile(int primaryKey) {
         this.primaryKey = primaryKey;
         this.name = "New Color Profile";
-        for (int x = 0; x < colors.length; x++) {
-            this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
+        this.colorList = new ArrayList<>();
+        for (int x = 0; x < ColorType.values().length; x++) {
+            this.colorList.add(Color.WHITE);
         }
     }
 
     public Profile(int primaryKey, String name) {
         this.primaryKey = primaryKey;
         this.name = name;
-        for (int x = 0; x < colors.length; x++) {
-            this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
+        this.colorList = new ArrayList<>();
+        for (int x = 0; x < ColorType.values().length; x++) {
+            this.colorList.add(Color.WHITE);
         }
     }
 
     public Profile(int primaryKey, String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
         this.primaryKey = primaryKey;
         this.name = name;
-        this.setColor(ColorType.UNIT, unitColor);
-        this.setColor(ColorType.CORPSE, corpseColor);
-        this.setColor(ColorType.SELECTOR, selectorColor);
-        this.setColor(ColorType.MINIMAP, minimapColor);
-        this.setColor(ColorType.HUD, hudColor);
+        this.colorList = new ArrayList<>();
+        colorList.add(unitColor);
+        colorList.add(corpseColor);
+        colorList.add(selectorColor);
+        colorList.add(minimapColor);
+        colorList.add(hudColor);
     }
 
 
@@ -62,19 +65,19 @@ public class Profile {
     }
 
     public Color getColor(ColorType colorType) {
-        return this.colors[colorType.getIndex()];
+        return colorList.get(colorType.getIndex());
     }
 
     public void setColor(ColorType colorType, Color color) {
-        this.colors[colorType.getIndex()] = color;
+        this.colorList.set(colorType.getIndex(), color);
     }
 
-    public Color[] getColors() {
-        return this.colors;
-    }
-
-    public void setColors(Color[] colors) {
-        this.colors = colors;
+    public Profile cloneProfile() {
+        Profile newProfile = new Profile(this.getPrimaryKey(), this.getName());
+        for (int x = 0; x < ColorType.values().length; x++) {
+            newProfile.setColor(ColorType.getFromIndex(x), this.getColor(ColorType.getFromIndex(x)));
+        }
+        return newProfile;
     }
 
     @Override
@@ -87,21 +90,14 @@ public class Profile {
                 && ((Profile) profile).getName().equals(this.getName());
 
         boolean sameColors = true;
-        for (int x = 0; x < this.getColors().length; x++) {
-            if (this.getColors()[x] != ((Profile) profile).getColors()[x]) {
+        for (int x = 0; x < colorList.size(); x++) {
+            if (colorList.get(x) != ((Profile) profile).colorList.get(x)) {
                 sameColors = false;
             }
         }
         return sameNameAndId && sameColors;
     }
 
-    public Profile cloneProfile() {
-        Profile newProfile = new Profile(this.getPrimaryKey(), this.getName());
-        for (int x = 0; x < ColorType.values().length; x++) {
-            newProfile.setColor(ColorType.getFromIndex(x), this.getColor(ColorType.getFromIndex(x)));
-        }
-        return newProfile;
-    }
 
     /*--- ColorType Enum ---*/
 
@@ -130,27 +126,4 @@ public class Profile {
             return ColorType.values()[index];
         }
     }
-
-
-    /*--- Utility Methods (TODO - Make ProfileList Model & Use ArrayList) ---*/
-
-    // Depricated - Use ProfileList.getNameList()
-    public static String[] getProfileNames(Profile[] profileList) {
-        String[] profileNames = new String[profileList.length];
-        for (int x = 0; x < profileList.length; x++) {
-            profileNames[x] = profileList[x].getName();
-        }
-        return profileNames;
-    }
-
-    // Depricated - Use ProfileList.getPositionOrFirst()
-    public static int getProfileIndexOrFirstIndex(Profile[] profileList, int primaryKey) {
-        for (int x = 0; x < profileList.length; x++) {
-            if (primaryKey == profileList[x].getPrimaryKey()) {
-                return x;
-            }
-        }
-        return 0;
-    }
-
 }
