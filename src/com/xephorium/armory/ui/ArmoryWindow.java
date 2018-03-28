@@ -43,6 +43,8 @@ public class ArmoryWindow implements
     private final int WINDOW_WIDTH = 665;
     private final String WINDOW_TITLE = "  Halo Wars Armory";
 
+    private ArmoryWindowListener listener;
+
     private JFrame frame;
     private InstallDirectoryPanel installDirectoryPanel;
     private FactionConfigurationPanel factionConfigurationPanel;
@@ -53,9 +55,10 @@ public class ArmoryWindow implements
 
     /*--- Constructor(s) ---*/
 
-    public ArmoryWindow() {
-        setGlobalLookAndFeel();
+    public ArmoryWindow(ArmoryWindowListener listener) {
+        this.listener = listener;
 
+        setGlobalLookAndFeel();
         initializeFrameAttributes();
         initializeViewClasses();
         createProfilePanels();
@@ -75,6 +78,26 @@ public class ArmoryWindow implements
 
     public void displayWindow() {
         frame.setVisible(true);
+    }
+
+    public void displayDirectoryChooser() {
+        directoryChooser.displayChooser();
+    }
+
+    public void displayGameFoundDialog() {
+        DialogFactory.createGameFoundDialog(frame);
+    }
+
+    public void displayGameNotFoundDialog() {
+        DialogFactory.createGameNotFoundDialog(frame);
+    }
+
+    public void setValidInstallDirectory(String directory) {
+        installDirectoryPanel.setValidInstallDirectory(directory);
+    }
+
+    public void setInvalidInstallDirectory() {
+        installDirectoryPanel.setInvalidInstallDirectory();
     }
 
 
@@ -120,22 +143,27 @@ public class ArmoryWindow implements
     }
 
 
-    /*--- Interface Methods ---*/
+    /*--- Listener Interface ---*/
+
+    public interface ArmoryWindowListener {
+
+        void handleBrowseButtonClick();
+
+        void handleDirectorySelection(String directory);
+
+    }
+
+
+    /*--- Interface Overrides ---*/
 
     @Override
     public void handleBrowseButtonClick() {
-        directoryChooser.displayChooser();
+        listener.handleBrowseButtonClick();
     }
 
     @Override
     public void handleDirectorySelection(String directory) {
-        if (true /* Valid Halo Wars Installation */) {
-            installDirectoryPanel.setValidInstallDirectory(directory);
-            DialogFactory.createGameFoundDialog(frame);
-        } else {
-            installDirectoryPanel.setInvalidInstallDirectory();
-            DialogFactory.createGameNotFoundDialog(frame);
-        }
+        listener.handleDirectorySelection(directory);
     }
 
     @Override
