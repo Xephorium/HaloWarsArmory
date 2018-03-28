@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileAttributePanel extends JPanel {
 
@@ -17,7 +19,7 @@ public class ProfileAttributePanel extends JPanel {
 
     private ProfileAttributePanelListener listener;
     private JTextField profileNameTextField;
-    private JPanel[] profileColorPanels = new JPanel[Profile.ColorType.values().length];
+    private List<JPanel> profileColorPanels = new ArrayList<>();
     private Profile workingProfile;
 
 
@@ -41,8 +43,8 @@ public class ProfileAttributePanel extends JPanel {
     public void setWorkingProfile(Profile profile) {
         workingProfile = profile.cloneProfile();
         profileNameTextField.setText(profile.getName());
-        for (int x = 0; x < profileColorPanels.length; x++) {
-            profileColorPanels[x].setBackground(profile.getColor(Profile.ColorType.getFromIndex(x)));
+        for (int x = 0; x < profileColorPanels.size(); x++) {
+            profileColorPanels.get(x).setBackground(profile.getColor(Profile.ColorType.getFromIndex(x)));
         }
     }
 
@@ -91,11 +93,11 @@ public class ProfileAttributePanel extends JPanel {
 
         JPanel colorPreviewPanel = new JPanel(new GridBagLayout());
         colorPreviewPanel.setBackground(Color.WHITE);
-        profileColorPanels[colorType.getIndex()] = new JPanel();
-        profileColorPanels[colorType.getIndex()].setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
-        profileColorPanels[colorType.getIndex()].setBackground(ArmoryColor.WINDOW_TEST_COLOR);
-        profileColorPanels[colorType.getIndex()].setPreferredSize(new Dimension(15, 15));
-        colorPreviewPanel.add(profileColorPanels[colorType.getIndex()], new GridBagConstraints());
+        profileColorPanels.add(new JPanel());
+        profileColorPanels.get(colorType.getIndex()).setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
+        profileColorPanels.get(colorType.getIndex()).setBackground(ArmoryColor.WINDOW_TEST_COLOR);
+        profileColorPanels.get(colorType.getIndex()).setPreferredSize(new Dimension(15, 15));
+        colorPreviewPanel.add(profileColorPanels.get(colorType.getIndex()), new GridBagConstraints());
 
         colorListItem.add(new JLabel(colorType.getDisplayName()), BorderLayout.CENTER);
         colorListItem.add(colorPreviewPanel, BorderLayout.LINE_END);
