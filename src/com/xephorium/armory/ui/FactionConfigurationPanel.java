@@ -2,6 +2,7 @@ package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.Faction;
+import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
@@ -48,8 +49,8 @@ public class FactionConfigurationPanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public void updateProfileList(Profile[] profileList) {
-        Profile[] newProfileList = Profile.cloneProfileList(profileList);
+    public void updateProfileList(ProfileList profileList) {
+        Profile[] newProfileList = profileList.getArray();
         updateUNSCSelectors(newProfileList);
         updateCovenantSelectors(newProfileList);
         this.profileList = newProfileList;

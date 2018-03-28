@@ -1,6 +1,7 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Profile;
+import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
 
@@ -17,7 +18,7 @@ public class ProfileBrowsePanel extends JPanel {
 
     private ProfileBrowsePanelListener listener;
     private JList profileListPanel;
-    private Profile[] profileList;
+    private ProfileList profileList;
 
 
     /*--- Constructor ---*/
@@ -37,23 +38,34 @@ public class ProfileBrowsePanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public void updateProfileBrowsePanel(Profile[] profileList) {
-        Profile[] newProfileList = Profile.cloneProfileList(profileList);
-        if (this.profileList == null || this.profileList.length < 1) {
+    public void updateProfileBrowsePanel(ProfileList profileList) {
+        ProfileList newProfileList = profileList.clone();
+
+        // Initial Profile List
+        if (this.profileList == null) {
             this.profileList = newProfileList;
-            this.profileListPanel.setListData(Profile.getProfileNames(newProfileList));
+            this.profileListPanel.setListData(newProfileList.getNameList());
             this.profileListPanel.setSelectedIndex(0);
             return;
         }
 
-        Profile currentSelectedProfile = this.profileList[profileListPanel.getLeadSelectionIndex()];
+        // Empty Profile List
+        if (this.profileList.size() < 1) {
+            this.profileList = null;
+            this.profileListPanel.removeAll();
+            this.profileListPanel.clearSelection();
+            return;
+        }
+
+        // Populated Profile List
+        Profile currentSelectedProfile = this.profileList.getByIndex(profileListPanel.getLeadSelectionIndex());
         this.profileList = newProfileList;
-        this.profileListPanel.setListData(Profile.getProfileNames(newProfileList));
-        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstIndex(newProfileList, currentSelectedProfile.getPrimaryKey()));
+        this.profileListPanel.setListData(newProfileList.getNameList());
+        this.profileListPanel.setSelectedIndex(newProfileList.getIndexOrFirstIndex(currentSelectedProfile));
     }
 
     public void setSelectedProfile(Profile profile) {
-        this.profileListPanel.setSelectedIndex(Profile.getProfileIndexOrFirstIndex(profileList, profile.getPrimaryKey()));
+        this.profileListPanel.setSelectedIndex(profileList.getIndexOrFirstIndex(profile));
     }
 
 
@@ -88,7 +100,7 @@ public class ProfileBrowsePanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    listener.handleProfileSelection(profileList[profileListPanel.getLeadSelectionIndex()]);
+                    listener.handleProfileSelection(profileList.getByIndex(profileListPanel.getLeadSelectionIndex()));
                 }
             }
         });

@@ -1,6 +1,7 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Profile;
+import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.utility.ColorChooser;
@@ -80,7 +81,7 @@ public class ArmoryWindow implements
         frame.setVisible(true);
     }
 
-    public void updateProfileList(Profile[] profileList) {
+    public void updateProfileList(ProfileList profileList) {
         factionConfigurationPanel.updateProfileList(profileList);
         profileConfigurationPanel.updateProfileList(profileList);
     }

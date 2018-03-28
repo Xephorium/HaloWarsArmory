@@ -25,7 +25,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
         armoryWindow.displayWindow();
 
         profileList = MockProfileRepository.getProfileList();
-        armoryWindow.updateProfileList(profileList.getArray());
+        armoryWindow.updateProfileList(profileList);
     }
 
 
@@ -60,7 +60,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
         }
 
         profileList.add(newProfile);
-        armoryWindow.updateProfileList(profileList.getArray());
+        armoryWindow.updateProfileList(profileList);
         armoryWindow.displayProfileSavedDialog();
         // TODO - Write Changes to File
     }

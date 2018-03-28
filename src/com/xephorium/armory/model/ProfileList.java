@@ -31,6 +31,10 @@ public class ProfileList {
         return null;
     }
 
+    public Profile getByIndex(int index) {
+        return profileList.get(index).cloneProfile();
+    }
+
     public void add(Profile profile) {
 
         // TODO - Add Primary Key Enforcement
@@ -73,6 +77,10 @@ public class ProfileList {
             profileNames[x] = profileList.get(x).getName();
         }
         return profileNames;
+    }
+
+    public int size() {
+        return profileList.size();
     }
 
 

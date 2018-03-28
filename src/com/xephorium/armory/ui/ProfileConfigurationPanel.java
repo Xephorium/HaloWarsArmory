@@ -1,5 +1,6 @@
 package com.xephorium.armory.ui;
 
+import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.ProfileBrowsePanel.ProfileBrowsePanelListener;
 import com.xephorium.armory.ui.ProfileAttributePanel.ProfileAttributePanelListener;
 import com.xephorium.armory.model.Profile;
@@ -38,7 +39,7 @@ public class ProfileConfigurationPanel extends JPanel implements
 
     /*--- Public Methods ---*/
 
-    public void updateProfileList(Profile[] profileList) {
+    public void updateProfileList(ProfileList profileList) {
         profileBrowsePanel.updateProfileBrowsePanel(profileList);
     }
 
