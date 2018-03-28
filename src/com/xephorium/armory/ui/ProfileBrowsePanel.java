@@ -37,7 +37,7 @@ public class ProfileBrowsePanel extends JPanel {
     public void updateProfileBrowsePanel(ColorProfile[] colorProfileList) {
         String[] profileNames = ColorProfile.getColorProfileNames(colorProfileList);
 
-        // TODO - Implement Past Item Reselection
+        // TODO - Implement Proper Past Item Reselection
         this.profileListPanel.setListData(profileNames);
         this.profileListPanel.setSelectedIndex(0);
     }
@@ -74,7 +74,7 @@ public class ProfileBrowsePanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    // TODO - Update ProfileUpdatePanel
+                    // TODO - Update ProfileAttributePanel
                     //selectProfileByIndex(profileListPanel.getLeadSelectionIndex());
                 }
             }

@@ -19,8 +19,6 @@ public class ProfileAttributePanel extends JPanel {
     private JTextField profileNameTextField;
     private JPanel[] profileColorPanels = new JPanel[ColorProfile.ColorType.values().length];
 
-    private ColorProfile[] colorProfileList;
-
 
     /*--- Constructor ---*/
 
@@ -38,28 +36,17 @@ public class ProfileAttributePanel extends JPanel {
 
     /*--- Public Methods ---*/
 
-    public String getWorkingProfileName() {
-        return StringUtility.removeLeadingSpace(this.profileNameTextField.getText());
+    public void setWorkingProfile(ColorProfile colorProfile) {
+        setWorkingProfileName(colorProfile.getName());
+        setWorkingProfileColors(colorProfile.getColors());
     }
 
     public void setWorkingProfileName(String name) {
         this.profileNameTextField.setText(name);
     }
 
-    public Color getWorkingProfileColor(ColorProfile.ColorType colorType) {
-        return profileColorPanels[colorType.getIndex()].getBackground();
-    }
-
     public void setWorkingProfileColor(ColorProfile.ColorType colorType, Color color) {
         profileColorPanels[colorType.getIndex()].setBackground(color);
-    }
-
-    public Color[] getWorkingProfileColors() {
-        Color[] colors = new Color[profileColorPanels.length];
-        for (int x = 0; x < profileColorPanels.length; x++) {
-            colors[x] = profileColorPanels[x].getBackground();
-        }
-        return colors;
     }
 
     public void setWorkingProfileColors(Color[] colors) {
@@ -68,24 +55,30 @@ public class ProfileAttributePanel extends JPanel {
         }
     }
 
-    public ColorProfile getWorkingProfile() {
+
+    /*--- Private Getter Methods ---*/
+
+    private ColorProfile getWorkingProfile() {
         ColorProfile workingColorProfile = new ColorProfile();
         workingColorProfile.setName(getWorkingProfileName());
         workingColorProfile.setColors(getWorkingProfileColors());
         return workingColorProfile;
     }
 
-    public void setWorkingProfile(ColorProfile colorProfile) {
-        setWorkingProfileName(colorProfile.getName());
-        setWorkingProfileColors(colorProfile.getColors());
+    private String getWorkingProfileName() {
+        return StringUtility.removeLeadingSpace(this.profileNameTextField.getText());
     }
 
-    public void setColorProfileList(ColorProfile[] colorProfileList) {
-        this.colorProfileList = colorProfileList;
+    private Color[] getWorkingProfileColors() {
+        Color[] colors = new Color[profileColorPanels.length];
+        for (int x = 0; x < profileColorPanels.length; x++) {
+            colors[x] = profileColorPanels[x].getBackground();
+        }
+        return colors;
     }
 
 
-    /*--- Private Methods ---*/
+    /*--- Private Setup Methods ---*/
 
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());

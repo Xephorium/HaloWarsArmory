@@ -58,6 +58,7 @@ public class FactionConfigurationPanel extends JPanel {
 
     private void updateUNSCSelectors(String[] newProfileNames) {
 
+        // TODO - Implement Proper Past Item Reselection
         for (JComboBox comboBox : this.unscSelectors) {
             String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
             comboBox.removeAllItems();
@@ -72,6 +73,7 @@ public class FactionConfigurationPanel extends JPanel {
 
     private void updateCovenantSelectors(String[] newProfileNames) {
 
+        // TODO - Implement Proper Past Item Reselection
         for (JComboBox comboBox : this.covenantSelectors) {
             String oldSelection = this.profileNames[comboBox.getSelectedIndex()];
             comboBox.removeAllItems();

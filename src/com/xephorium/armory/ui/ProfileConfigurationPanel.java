@@ -32,6 +32,10 @@ public class ProfileConfigurationPanel extends JPanel {
 
     /*--- Public Methods ---*/
 
+    public void updateColorProfileList(ColorProfile[] colorProfileList) {
+        profileBrowsePanel.updateProfileBrowsePanel(colorProfileList);
+    }
+
     public void setWorkingProfile(ColorProfile colorProfile) {
         profileAttributePanel.setWorkingProfile(colorProfile);
     }
@@ -46,10 +50,6 @@ public class ProfileConfigurationPanel extends JPanel {
 
     public void setWorkingProfileColors(Color[] colors) {
         profileAttributePanel.setWorkingProfileColors(colors);
-    }
-
-    public void setColorProfileList(ColorProfile[] colorProfileList) {
-        profileAttributePanel.setColorProfileList(colorProfileList);
     }
 
 

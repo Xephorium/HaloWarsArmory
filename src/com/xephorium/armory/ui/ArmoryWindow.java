@@ -1,7 +1,6 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.ColorProfile;
-import com.xephorium.armory.repository.MockColorProfileRepository;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.utility.DialogFactory;
@@ -21,9 +20,9 @@ import java.awt.*;
  * Armory Window
  *
  *   ArmoryWindow is the single, top-layer view class of
- * Halo Wars Armory. Its role is to take care of all GUI
- * configuration/display behavior and alert the presenter
- * layer when an action has taken place by ActionListener.
+ * Halo Wars Armory. Its role is to drive the interface
+ * and alert the presenter layer when a user action has
+ * taken place.
  *
  *   View classes created and managed by ArmoryWindow
  * should remain as near to stateless as possible.
@@ -66,19 +65,25 @@ public class ArmoryWindow implements
         frame.add(installDirectoryPanel, BorderLayout.PAGE_START);
         frame.add(factionConfigurationPanel, BorderLayout.CENTER);
         frame.add(createProfilePanels(), BorderLayout.EAST);
-
-        ColorProfile[] colorProfileList = MockColorProfileRepository.getProfileList();
-
-        factionConfigurationPanel.updateColorProfiles(colorProfileList);
-        profileConfigurationPanel.setColorProfileList(colorProfileList);
     }
 
 
-    /*--- Public Methods --*/
+    /*--- Core ArmoryWindow Functionality ---*/
+
+
+    // General
 
     public void displayWindow() {
         frame.setVisible(true);
     }
+
+    public void updateColorProfileList(ColorProfile[] colorProfileList) {
+        factionConfigurationPanel.updateColorProfiles(colorProfileList);
+        profileConfigurationPanel.updateColorProfileList(colorProfileList);
+    }
+
+
+    // Install Directory Panel
 
     public void displayDirectoryChooser() {
         directoryChooser.displayChooser();
@@ -156,6 +161,9 @@ public class ArmoryWindow implements
 
     /*--- Interface Overrides ---*/
 
+
+    // Install Directory Panel
+
     @Override
     public void handleBrowseButtonClick() {
         listener.handleBrowseButtonClick();
@@ -165,6 +173,9 @@ public class ArmoryWindow implements
     public void handleDirectorySelection(String directory) {
         listener.handleDirectorySelection(directory);
     }
+
+
+    // Faction Configuration Panel
 
     @Override
     public void handleUNSCPlayerUpdate(int playerNumber, String profileName) {
