@@ -9,27 +9,31 @@ public class Profile {
 
     /*--- Variables ---*/
 
+    private int primaryKey;
     private String name;
     private Color[] colors = new Color[ColorType.values().length];
 
 
     /*--- Constructor(s) ---*/
 
-    public Profile() {
+    public Profile(int primaryKey) {
+        this.primaryKey = primaryKey;
         this.name = "New Color Profile";
         for (int x = 0; x < colors.length; x++) {
             this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
         }
     }
 
-    public Profile(String name) {
+    public Profile(int primaryKey, String name) {
+        this.primaryKey = primaryKey;
         this.name = name;
         for (int x = 0; x < colors.length; x++) {
             this.colors[x] = ArmoryColor.WINDOW_TEST_COLOR;
         }
     }
 
-    public Profile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+    public Profile(int primaryKey, String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+        this.primaryKey = primaryKey;
         this.name = name;
         this.setColor(ColorType.UNIT, unitColor);
         this.setColor(ColorType.CORPSE, corpseColor);
