@@ -3,6 +3,8 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.model.ColorProfile;
 import com.xephorium.armory.model.ColorProfile.ColorType;
 import com.xephorium.armory.repository.MockColorProfileRepository;
+import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
@@ -10,9 +12,10 @@ import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallDirectoryPanel.InstallDirectoryPanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 import com.xephorium.armory.ui.FactionConfigurationPanel.FactionConfigurationPanelListener;
-import com.xephorium.armory.ui.ColorProfilePanel.ColorProfilePanelListener;
+import com.xephorium.armory.ui.ProfileConfigurationPanel.ProfileConfigurationPanelListener;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 
@@ -35,7 +38,7 @@ public class ArmoryWindow implements
         InstallDirectoryPanelListener,
         DirectoryChooserListener,
         FactionConfigurationPanelListener,
-        ColorProfilePanelListener {
+        ProfileConfigurationPanelListener {
 
 
     /*--- Variables ---*/
@@ -47,7 +50,8 @@ public class ArmoryWindow implements
     private JFrame frame;
     private InstallDirectoryPanel installDirectoryPanel;
     private FactionConfigurationPanel factionConfigurationPanel;
-    private ColorProfilePanel colorProfilePanel;
+    private ProfileConfigurationPanel profileConfigurationPanel;
+    private ProfilePreviewPanel profilePreviewPanel;
     private DirectoryChooser directoryChooser;
 
 
@@ -62,7 +66,7 @@ public class ArmoryWindow implements
         ColorProfile[] colorProfileList = MockColorProfileRepository.getProfileList();
 
         factionConfigurationPanel.updateColorProfiles(colorProfileList);
-        colorProfilePanel.setColorProfileList(colorProfileList);
+        profileConfigurationPanel.setColorProfileList(colorProfileList);
     }
 
 
@@ -88,7 +92,8 @@ public class ArmoryWindow implements
         frame = new JFrame(WINDOW_TITLE);
         installDirectoryPanel = new InstallDirectoryPanel(this);
         factionConfigurationPanel = new FactionConfigurationPanel(this);
-        colorProfilePanel = new ColorProfilePanel(this);
+        profileConfigurationPanel = new ProfileConfigurationPanel(this);
+        profilePreviewPanel = new ProfilePreviewPanel();
         directoryChooser = new DirectoryChooser(this);
     }
 
@@ -97,9 +102,21 @@ public class ArmoryWindow implements
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setLocation(DisplayUtility.getWindowStartX(WINDOW_WIDTH), DisplayUtility.getWindowStartY(WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
 
-        frame.add(colorProfilePanel, BorderLayout.EAST);
+        JPanel eastPanel = new JPanel(new GridLayout(2, 1, 0, ArmoryDimension.PANEL_PADDING));
+        eastPanel.setBorder(new EmptyBorder(
+                ArmoryDimension.PANEL_PADDING/2,
+                ArmoryDimension.PANEL_PADDING/2,
+                ArmoryDimension.WINDOW_PADDING_VERTICAL,
+                ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
+        eastPanel.setPreferredSize(new Dimension(ArmoryDimension.COLOR_PROFILE_PANEL_WIDTH, 0));
+        eastPanel.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
+
+        eastPanel.add(profileConfigurationPanel);
+        eastPanel.add(profilePreviewPanel);
+
+        frame.add(eastPanel, BorderLayout.EAST);
         frame.add(factionConfigurationPanel, BorderLayout.CENTER);
         frame.add(installDirectoryPanel, BorderLayout.PAGE_START);
     }
@@ -158,7 +175,7 @@ public class ArmoryWindow implements
         DialogFactory.createColorChooserDialog(currentColor,new ColorChooser.ColorChooserListener() {
             @Override
             public void onColorSelected(Color color) {
-                colorProfilePanel.setWorkingProfileColor(colorType, color);
+                profileConfigurationPanel.setWorkingProfileColor(colorType, color);
             }
 
             @Override
