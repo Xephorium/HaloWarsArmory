@@ -12,7 +12,6 @@ import com.xephorium.armory.ui.utility.DisplayUtility;
 import com.xephorium.armory.ui.InstallDirectoryPanel.InstallDirectoryPanelListener;
 import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
 import com.xephorium.armory.ui.FactionConfigurationPanel.FactionConfigurationPanelListener;
-import com.xephorium.armory.ui.ProfileConfigurationPanel.ProfileConfigurationPanelListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -37,8 +36,7 @@ import java.awt.*;
 public class ArmoryWindow implements
         InstallDirectoryPanelListener,
         DirectoryChooserListener,
-        FactionConfigurationPanelListener,
-        ProfileConfigurationPanelListener {
+        FactionConfigurationPanelListener {
 
 
     /*--- Variables ---*/
@@ -92,7 +90,7 @@ public class ArmoryWindow implements
         frame = new JFrame(WINDOW_TITLE);
         installDirectoryPanel = new InstallDirectoryPanel(this);
         factionConfigurationPanel = new FactionConfigurationPanel(this);
-        profileConfigurationPanel = new ProfileConfigurationPanel(this);
+        profileConfigurationPanel = new ProfileConfigurationPanel();
         profilePreviewPanel = new ProfilePreviewPanel();
         directoryChooser = new DirectoryChooser(this);
     }
@@ -170,23 +168,23 @@ public class ArmoryWindow implements
         // TODO - Save Covenant Configuration
     }
 
-    @Override
-    public void handleProfileColorClick(ColorType colorType, Color currentColor) {
-        DialogFactory.createColorChooserDialog(currentColor,new ColorChooser.ColorChooserListener() {
-            @Override
-            public void onColorSelected(Color color) {
-                profileConfigurationPanel.setWorkingProfileColor(colorType, color);
-            }
-
-            @Override
-            public void onDialogClose() {
-                // Do Nothing
-            }
-        });
-    }
-
-    @Override
-    public void handleProfileSaveClick() {
-        // TODO - Save Selected ColorProfile
-    }
+//    @Override
+//    public void handleProfileColorClick(ColorType colorType, Color currentColor) {
+//        DialogFactory.createColorChooserDialog(currentColor,new ColorChooser.ColorChooserListener() {
+//            @Override
+//            public void onColorSelected(Color color) {
+//                profileConfigurationPanel.setWorkingProfileColor(colorType, color);
+//            }
+//
+//            @Override
+//            public void onDialogClose() {
+//                // Do Nothing
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void handleProfileSaveClick() {
+//        // TODO - Save Selected ColorProfile
+//    }
 }
