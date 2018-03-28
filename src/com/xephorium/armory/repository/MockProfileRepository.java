@@ -19,6 +19,13 @@ public class MockProfileRepository {
     }
 
     private static Profile createProfile(int primaryKey, String name, Color color) {
-        return new Profile(primaryKey, name, color, color, color, color, color);
+        return new Profile(
+                primaryKey,
+                name,
+                color,
+                color.darker(),
+                color.darker().darker(),
+                color.darker(),
+                color);
     }
 }

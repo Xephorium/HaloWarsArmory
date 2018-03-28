@@ -44,7 +44,7 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
 
     @Override
     public void handleWorkingProfileSaveClick(Profile newProfile) {
-        // TODO - Prompt To Verify Change
+        // TODO - Write Changes to File
         mockProfileList = Profile.getUpdatedProfileList(mockProfileList, newProfile);
         armoryWindow.updateProfileList(mockProfileList);
     }
