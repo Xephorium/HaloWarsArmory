@@ -1,18 +1,12 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.ColorProfile;
-import com.xephorium.armory.model.ColorProfile.ColorType;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
-import com.xephorium.armory.ui.utility.CustomMouseListener;
-import com.xephorium.armory.ui.utility.CustomMouseListener.MouseClickListener;
-import com.xephorium.armory.ui.utility.StringUtility;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ProfileConfigurationPanel extends JPanel {
 

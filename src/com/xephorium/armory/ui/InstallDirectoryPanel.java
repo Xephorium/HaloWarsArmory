@@ -1,6 +1,5 @@
 package com.xephorium.armory.ui;
 
-import com.sun.jdi.LocalVariable;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;

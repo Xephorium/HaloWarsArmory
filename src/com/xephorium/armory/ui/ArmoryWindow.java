@@ -1,11 +1,9 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.ColorProfile;
-import com.xephorium.armory.model.ColorProfile.ColorType;
 import com.xephorium.armory.repository.MockColorProfileRepository;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
-import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
@@ -56,10 +54,15 @@ public class ArmoryWindow implements
     /*--- Constructor(s) ---*/
 
     public ArmoryWindow() {
-
         setGlobalLookAndFeel();
+
+        initializeFrameAttributes();
         initializeViewClasses();
-        assembleWindowFrame();
+        createProfilePanels();
+
+        frame.add(installDirectoryPanel, BorderLayout.PAGE_START);
+        frame.add(factionConfigurationPanel, BorderLayout.CENTER);
+        frame.add(createProfilePanels(), BorderLayout.EAST);
 
         ColorProfile[] colorProfileList = MockColorProfileRepository.getProfileList();
 
@@ -85,9 +88,15 @@ public class ArmoryWindow implements
         }
     }
 
-    private void initializeViewClasses() {
-
+    private void initializeFrameAttributes() {
         frame = new JFrame(WINDOW_TITLE);
+        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        frame.setLocation(DisplayUtility.getWindowStartX(WINDOW_WIDTH), DisplayUtility.getWindowStartY(WINDOW_HEIGHT));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+    }
+
+    private void initializeViewClasses() {
         installDirectoryPanel = new InstallDirectoryPanel(this);
         factionConfigurationPanel = new FactionConfigurationPanel(this);
         profileConfigurationPanel = new ProfileConfigurationPanel();
@@ -95,13 +104,7 @@ public class ArmoryWindow implements
         directoryChooser = new DirectoryChooser(this);
     }
 
-    private void assembleWindowFrame() {
-
-        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        frame.setLocation(DisplayUtility.getWindowStartX(WINDOW_WIDTH), DisplayUtility.getWindowStartY(WINDOW_HEIGHT));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(true);
-
+    private JPanel createProfilePanels() {
         JPanel eastPanel = new JPanel(new GridLayout(2, 1, 0, ArmoryDimension.PANEL_PADDING));
         eastPanel.setBorder(new EmptyBorder(
                 ArmoryDimension.PANEL_PADDING/2,
@@ -113,10 +116,7 @@ public class ArmoryWindow implements
 
         eastPanel.add(profileConfigurationPanel);
         eastPanel.add(profilePreviewPanel);
-
-        frame.add(eastPanel, BorderLayout.EAST);
-        frame.add(factionConfigurationPanel, BorderLayout.CENTER);
-        frame.add(installDirectoryPanel, BorderLayout.PAGE_START);
+        return eastPanel;
     }
 
 
