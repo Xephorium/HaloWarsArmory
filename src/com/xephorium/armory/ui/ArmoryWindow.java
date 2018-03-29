@@ -121,6 +121,11 @@ public class ArmoryWindow {
         profileConfigurationPanel.setWorkingProfile(profile);
     }
 
+    public void selectNewProfile(Profile profile) {
+        profileConfigurationPanel.selectNewProfile(profile);
+        profileConfigurationPanel.setWorkingProfile(profile);
+    }
+
     public void setWorkingProfile(Profile profile) {
         profileConfigurationPanel.setWorkingProfile(profile);
     }

@@ -29,9 +29,11 @@ public interface ArmoryWindowListener {
 
     // Profile Configuration Panel
 
-    void handleWorkingProfileSaveClick(Profile newProfile);
-
     void handleProfileSelection(Profile profile);
 
+    void handleWorkingProfileSaveClick(Profile newProfile);
+
     void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType);
+
+    void handleAddProfileClick();
 }

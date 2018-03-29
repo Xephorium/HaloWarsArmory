@@ -142,4 +142,20 @@ public class HaloWarsArmory implements ArmoryWindowListener {
             }
         });
     }
+
+    @Override
+    public void handleAddProfileClick() {
+        Profile newProfile = new Profile(getNewProfileName());
+        profileList.addTop(newProfile);
+        armoryWindow.updateProfileList(profileList);
+        armoryWindow.selectNewProfile(newProfile);
+        // TODO - Write Changes to File
+    }
+
+
+    /*--- Private Methods ---*/
+
+    private String getNewProfileName() {
+        return "New Profile";
+    }
 }

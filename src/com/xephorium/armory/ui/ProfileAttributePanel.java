@@ -17,7 +17,7 @@ public class ProfileAttributePanel extends JPanel {
 
     /*--- Variables ---*/
 
-    private ProfileAttributePanelListener listener;
+    private ArmoryWindowListener listener;
     private JTextField profileNameTextField;
     private List<JPanel> profileColorPanels = new ArrayList<>();
     private Profile workingProfile;
@@ -25,7 +25,7 @@ public class ProfileAttributePanel extends JPanel {
 
     /*--- Constructor ---*/
 
-    public ProfileAttributePanel(ProfileAttributePanelListener listener) {
+    public ProfileAttributePanel(ArmoryWindowListener listener) {
         super();
         this.listener = listener;
 
@@ -123,15 +123,5 @@ public class ProfileAttributePanel extends JPanel {
                 listener.handleWorkingProfileColorClick(getWorkingProfile(), colorType);
             }
         });
-    }
-
-
-    /*--- Listener Interface ---*/
-
-    interface ProfileAttributePanelListener {
-
-        void handleWorkingProfileSaveClick(Profile newProfile);
-
-        void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType);
     }
 }

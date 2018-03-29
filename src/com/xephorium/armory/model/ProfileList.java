@@ -50,6 +50,18 @@ public class ProfileList {
         }
     }
 
+    public void addTop(Profile profile) {
+        if (profile.getPrimaryKey() == Profile.INITIALIZATION_KEY) {
+            profile.setPrimaryKey(generateNewPrimaryKey());
+        }
+
+        if (this.containsProfile(profile)) {
+            updateExistingProfile(profile);
+        } else {
+            profileList.add(0, profile);
+        }
+    }
+
     @Override
     public ProfileList clone() {
         ProfileList newProfileList = new ProfileList();

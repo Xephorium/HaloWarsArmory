@@ -10,20 +10,23 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ProfileBrowsePanel extends JPanel {
 
 
     /*--- Variables ---*/
 
-    private ProfileBrowsePanelListener listener;
+    private ArmoryWindowListener listener;
+    private JScrollPane profileListScrollPane;
     private JList profileListPanel;
     private ProfileList profileList;
 
 
     /*--- Constructor ---*/
 
-    public ProfileBrowsePanel(ProfileBrowsePanelListener listener) {
+    public ProfileBrowsePanel(ArmoryWindowListener listener) {
         super();
         this.listener = listener;
 
@@ -68,6 +71,15 @@ public class ProfileBrowsePanel extends JPanel {
         this.profileListPanel.setSelectedIndex(profileList.getIndexOrFirstIndex(profile));
     }
 
+    public void selectNewProfile(Profile profile) {
+        this.profileListPanel.setSelectedIndex(profileList.getIndexOrFirstIndex(profile));
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                profileListScrollPane.getVerticalScrollBar().setValue(0);
+            }
+        });
+    }
+
 
     /*--- Private Methods ---*/
 
@@ -85,9 +97,9 @@ public class ProfileBrowsePanel extends JPanel {
 
     private JScrollPane createProfileBrowseScrollPane() {
         initializeProfileBrowseList();
-        JScrollPane profileListScroller = new JScrollPane(profileListPanel);
-        profileListScroller.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
-        return profileListScroller;
+        profileListScrollPane = new JScrollPane(profileListPanel);
+        profileListScrollPane.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
+        return profileListScrollPane;
     }
 
     private void initializeProfileBrowseList() {
@@ -117,6 +129,12 @@ public class ProfileBrowsePanel extends JPanel {
 
         JButton profileAddButton = new JButton("Add");
         profileAddButton.setPreferredSize(new Dimension(70, 24));
+        profileAddButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.handleAddProfileClick();
+            }
+        });
 
         JPanel spacerPanel = new JPanel();
         spacerPanel.setBackground(Color.WHITE);
@@ -126,14 +144,6 @@ public class ProfileBrowsePanel extends JPanel {
         profileBrowseButtonPanel.add(profileAddButton, BorderLayout.LINE_END);
 
         return profileBrowseButtonPanel;
-    }
-
-
-    /*--- Interface Listener ---*/
-
-    interface ProfileBrowsePanelListener {
-
-        void handleProfileSelection(Profile profile);
     }
 
 }
