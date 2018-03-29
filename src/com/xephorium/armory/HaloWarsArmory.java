@@ -2,7 +2,7 @@ package com.xephorium.armory;
 
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
-import com.xephorium.armory.repository.MockProfileRepository;
+import com.xephorium.armory.repository.ArmoryRepository;
 import com.xephorium.armory.ui.ArmoryWindow;
 import com.xephorium.armory.ui.ArmoryWindowListener;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
@@ -16,22 +16,26 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     /*--- Variables ---*/
 
-    private ArmoryWindow armoryWindow;
+    ArmoryRepository armoryRepository;
+
     private ProfileList profileList;
     private List<Integer> unscPlayerConfiguration;
     private List<Integer> covenantPlayerConfiguration;
+
+    private ArmoryWindow armoryWindow;
 
 
     /*--- Constructor ---*/
 
     public HaloWarsArmory() {
+        armoryRepository = new ArmoryRepository();
         armoryWindow = new ArmoryWindow(this);
+
+        profileList = armoryRepository.loadPlayerProfileList();
+        unscPlayerConfiguration = armoryRepository.loadCustomUNSCPlayerConfiguration();
+        covenantPlayerConfiguration = armoryRepository.loadCustomUNSCPlayerConfiguration();
+
         armoryWindow.displayWindow();
-
-        profileList = MockProfileRepository.getProfileList();
-        unscPlayerConfiguration = MockProfileRepository.loadCustomPlayerConfiguration();
-        covenantPlayerConfiguration = MockProfileRepository.loadCustomPlayerConfiguration();
-
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
@@ -74,14 +78,16 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleUNSCConfigurationReset() {
-        unscPlayerConfiguration = MockProfileRepository.loadDefaultUNSCPlayerConfiguration();
+        unscPlayerConfiguration = armoryRepository.loadDefaultUNSCPlayerConfiguration();
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
+        // TODO - Write Changes to File
     }
 
     @Override
     public void handleCovenantConfigurationReset() {
-        covenantPlayerConfiguration = MockProfileRepository.loadDefaultCovenantPlayerConfiguration();
+        covenantPlayerConfiguration = armoryRepository.loadDefaultCovenantPlayerConfiguration();
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
+        // TODO - Write Changes to File
     }
 
     @Override
