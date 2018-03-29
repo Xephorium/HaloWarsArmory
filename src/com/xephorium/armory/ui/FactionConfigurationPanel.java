@@ -54,6 +54,7 @@ public class FactionConfigurationPanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileList(ProfileList profileList) {
+        selectorSetupComplete = false;
         ProfileList newProfileList = profileList.clone();
 
         if (newProfileList.isEmpty()) {
