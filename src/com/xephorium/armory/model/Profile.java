@@ -9,6 +9,8 @@ public class Profile {
 
     /*--- Variables ---*/
 
+    public static final int INITIALIZATION_KEY = -1;
+
     private int primaryKey;
     private String name;
     private List<Color> colorList;
@@ -16,8 +18,8 @@ public class Profile {
 
     /*--- Constructor(s) ---*/
 
-    public Profile(int primaryKey) {
-        this.primaryKey = primaryKey;
+    public Profile() {
+        this.primaryKey = INITIALIZATION_KEY;
         this.name = "New Color Profile";
         this.colorList = new ArrayList<>();
         for (int x = 0; x < ColorType.values().length; x++) {
@@ -25,8 +27,8 @@ public class Profile {
         }
     }
 
-    public Profile(int primaryKey, String name) {
-        this.primaryKey = primaryKey;
+    public Profile(String name) {
+        this.primaryKey = INITIALIZATION_KEY;
         this.name = name;
         this.colorList = new ArrayList<>();
         for (int x = 0; x < ColorType.values().length; x++) {
@@ -34,8 +36,8 @@ public class Profile {
         }
     }
 
-    public Profile(int primaryKey, String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
-        this.primaryKey = primaryKey;
+    public Profile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+        this.primaryKey = INITIALIZATION_KEY;
         this.name = name;
         this.colorList = new ArrayList<>();
         colorList.add(unitColor);
@@ -73,7 +75,8 @@ public class Profile {
     }
 
     public Profile cloneProfile() {
-        Profile newProfile = new Profile(this.getPrimaryKey(), this.getName());
+        Profile newProfile = new Profile(this.getName());
+        newProfile.setPrimaryKey(this.getPrimaryKey());
         for (int x = 0; x < ColorType.values().length; x++) {
             newProfile.setColor(ColorType.getFromIndex(x), this.getColor(ColorType.getFromIndex(x)));
         }

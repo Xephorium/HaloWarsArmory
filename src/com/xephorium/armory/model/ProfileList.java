@@ -26,8 +26,6 @@ public class ProfileList {
     /*--- Public Methods ---*/
 
     public Profile getByPrimaryKey(Profile profile) {
-
-        // TODO - Add Primary Key Enforcement
         for (int x = 0; x < profileList.size(); x++) {
             if (profile.getPrimaryKey() == profileList.get(x).getPrimaryKey()) {
                 return profileList.get(x).cloneProfile();
@@ -41,10 +39,12 @@ public class ProfileList {
     }
 
     public void add(Profile profile) {
+        if (profile.getPrimaryKey() == Profile.INITIALIZATION_KEY) {
+            profile.setPrimaryKey(generateNewPrimaryKey());
+        }
 
-        // TODO - Add Primary Key Enforcement
         if (this.containsProfile(profile)) {
-            updateProfile(profile);
+            updateExistingProfile(profile);
         } else {
             profileList.add(profile);
         }
@@ -92,11 +92,28 @@ public class ProfileList {
         return false;
     }
 
-    private void updateProfile(Profile profile) {
+    private boolean containsPrimaryKey(int primaryKey) {
+        for (int x = 0; x < profileList.size(); x++) {
+            if (primaryKey == profileList.get(x).getPrimaryKey()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void updateExistingProfile(Profile profile) {
         for (int x = 0; x < profileList.size(); x++) {
             if (profileList.get(x).getPrimaryKey() == profile.getPrimaryKey()) {
                 profileList.set(x, profile);
             }
         }
+    }
+
+    private int generateNewPrimaryKey() {
+        int newPrimaryKey = 0;
+        while (this.containsPrimaryKey(newPrimaryKey)) {
+            newPrimaryKey++;
+        }
+        return newPrimaryKey;
     }
 }

@@ -25,8 +25,6 @@ public class FactionConfigurationPanel extends JPanel {
 
     /*--- Variables ---*/
 
-    private static final int INITIAL_PRIMARY_KEY = 0;
-
     private enum ButtonType {
         RESET,
         SAVE
@@ -36,7 +34,7 @@ public class FactionConfigurationPanel extends JPanel {
 
     private List<JComboBox> unscSelectors = new ArrayList<>();
     private List<JComboBox> covenantSelectors = new ArrayList<>();
-    private ProfileList profileList = new ProfileList(new Profile(INITIAL_PRIMARY_KEY, "No Profiles Available"));
+    private ProfileList profileList = new ProfileList(new Profile("No Profiles Available"));
 
 
     /*--- Constructor ---*/
