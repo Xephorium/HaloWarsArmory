@@ -22,6 +22,7 @@ public class ProfileBrowsePanel extends JPanel {
     private JScrollPane profileListScrollPane;
     private JList profileListPanel;
     private ProfileList profileList;
+    private boolean browsePanelEmptyState = false;
 
 
     /*--- Constructor ---*/
@@ -44,23 +45,32 @@ public class ProfileBrowsePanel extends JPanel {
     public void updateProfileBrowsePanel(ProfileList profileList) {
         ProfileList newProfileList = profileList.clone();
 
+        // Empty Profile List
+        if (newProfileList.isEmpty()) {
+            browsePanelEmptyState = true;
+            this.profileListPanel.setEnabled(false);
+            this.profileList = null;
+            this.profileListPanel.removeAll();
+            this.profileListPanel.clearSelection();
+            this.profileListPanel.setListData(getEmptyStateData());
+            return;
+        }
+
         // Initial Profile List
         if (this.profileList == null) {
+            browsePanelEmptyState = false;
+            this.profileListPanel.setEnabled(true);
             this.profileList = newProfileList;
+            this.profileListPanel.removeAll();
+            this.profileListPanel.clearSelection();
             this.profileListPanel.setListData(newProfileList.getNameList());
             this.profileListPanel.setSelectedIndex(0);
             return;
         }
 
-        // Empty Profile List
-        if (this.profileList.size() < 1) {
-            this.profileList = null;
-            this.profileListPanel.removeAll();
-            this.profileListPanel.clearSelection();
-            return;
-        }
-
         // Populated Profile List
+        browsePanelEmptyState = false;
+        this.profileListPanel.setEnabled(true);
         Profile currentSelectedProfile = this.profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex());
         this.profileList = newProfileList;
         this.profileListPanel.setListData(newProfileList.getNameList());
@@ -111,7 +121,7 @@ public class ProfileBrowsePanel extends JPanel {
         profileListPanel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting()) {
+                if (!event.getValueIsAdjusting() && !browsePanelEmptyState) {
                     listener.handleSelectProfileClick(profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex()));
                 }
             }
@@ -129,7 +139,9 @@ public class ProfileBrowsePanel extends JPanel {
         profileDeleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.handleDeleteProfileClick(profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex()).getPrimaryKey());
+                if (!browsePanelEmptyState) {
+                    listener.handleDeleteProfileClick(profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex()).getPrimaryKey());
+                }
             }
         });
 
@@ -150,6 +162,12 @@ public class ProfileBrowsePanel extends JPanel {
         profileBrowseButtonPanel.add(profileAddButton, BorderLayout.LINE_END);
 
         return profileBrowseButtonPanel;
+    }
+
+    private String[] getEmptyStateData() {
+        String[] emptyStateData = new String[1];
+        emptyStateData[0] = "No Profiles Available";
+        return emptyStateData;
     }
 
 }

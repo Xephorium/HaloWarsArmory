@@ -205,8 +205,6 @@ public class FactionConfigurationPanel extends JPanel {
                         return;
                     }
 
-                    System.out.println("Test");
-
                     if (faction == Faction.UNSC) {
                         listener.handleUNSCPlayerUpdate(playerNumber,
                                 profileList.getProfileByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
