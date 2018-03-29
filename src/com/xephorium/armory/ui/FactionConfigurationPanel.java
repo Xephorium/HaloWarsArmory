@@ -83,11 +83,11 @@ public class FactionConfigurationPanel extends JPanel {
 
     private void updateFactionSelectors(List<JComboBox> factionSelectors, ProfileList newProfileList) {
         for (JComboBox selector : factionSelectors) {
-            int oldPrimaryKey = profileList.getByIndex(selector.getSelectedIndex()).getPrimaryKey();
+            int oldPrimaryKey = profileList.getProfileByIndex(selector.getSelectedIndex()).getPrimaryKey();
             selector.removeAllItems();
             for (int y = 0; y < newProfileList.size(); y++) {
-                selector.addItem(newProfileList.getByIndex(y).getName());
-                if (oldPrimaryKey == newProfileList.getByIndex(y).getPrimaryKey()) {
+                selector.addItem(newProfileList.getProfileByIndex(y).getName());
+                if (oldPrimaryKey == newProfileList.getProfileByIndex(y).getPrimaryKey()) {
                     selector.setSelectedIndex(y);
                 }
             }
@@ -191,10 +191,10 @@ public class FactionConfigurationPanel extends JPanel {
 
                     if (faction == Faction.UNSC) {
                         listener.handleUNSCPlayerUpdate(playerNumber,
-                                profileList.getByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
+                                profileList.getProfileByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
                     } else {
                         listener.handleCovenantPlayerUpdate(playerNumber,
-                                profileList.getByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
+                                profileList.getProfileByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
                     }
                 }
             }

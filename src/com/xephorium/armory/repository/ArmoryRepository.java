@@ -24,7 +24,7 @@ public class ArmoryRepository {
         List<Integer> customUNSCPlayerConfiguration = new ArrayList<>();
         ProfileList profileList = loadPlayerProfileList();
         for (int x = 0; x < 6; x++) {
-            customUNSCPlayerConfiguration.add(profileList.getByIndex(x).getPrimaryKey());
+            customUNSCPlayerConfiguration.add(profileList.getProfileByIndex(x).getPrimaryKey());
         }
         return customUNSCPlayerConfiguration;
     }
@@ -34,7 +34,7 @@ public class ArmoryRepository {
         List<Integer> customCovenantPlayerConfiguration = new ArrayList<>();
         ProfileList profileList = loadPlayerProfileList();
         for (int x = 0; x < 6; x++) {
-            customCovenantPlayerConfiguration.add(profileList.getByIndex(x).getPrimaryKey());
+            customCovenantPlayerConfiguration.add(profileList.getProfileByIndex(x).getPrimaryKey());
         }
         return customCovenantPlayerConfiguration;
     }

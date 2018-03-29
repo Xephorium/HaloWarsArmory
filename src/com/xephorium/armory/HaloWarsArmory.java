@@ -104,13 +104,35 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     // Profile Configuration
 
     @Override
+    public void handleSelectProfileClick(Profile profile) {
+        armoryWindow.setSelectedProfile(profile);
+    }
+
+    @Override
+    public void handleAddProfileClick() {
+        Profile newProfile = new Profile(getNewProfileName());
+        profileList.addTop(newProfile);
+        armoryWindow.updateProfileList(profileList);
+        armoryWindow.selectNewProfile(newProfile);
+        // TODO - Write Changes to File
+    }
+
+    @Override
+    public void handleDeleteProfileClick(int primaryKey) {
+        // TODO - Prompt For Delete
+        profileList.delete(primaryKey);
+        armoryWindow.updateProfileList(profileList);
+        // TODO - Write Changes to File
+    }
+
+    @Override
     public void handleWorkingProfileSaveClick(Profile newProfile) {
         if (StringUtility.isBlank(newProfile.getName())) {
             armoryWindow.displayProfileMustHaveNameDialog();
             return;
         }
 
-        if (newProfile.equals(profileList.getByPrimaryKey(newProfile.getPrimaryKey()))) {
+        if (newProfile.equals(profileList.getProfileByPrimaryKey(newProfile.getPrimaryKey()))) {
             armoryWindow.displayNoChangesToSaveDialog();
             return;
         }
@@ -119,11 +141,6 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         armoryWindow.updateProfileList(profileList);
         armoryWindow.displayProfileSavedDialog();
         // TODO - Write Changes to File
-    }
-
-    @Override
-    public void handleProfileSelection(Profile profile) {
-        armoryWindow.setSelectedProfile(profile);
     }
 
     @Override
@@ -142,16 +159,6 @@ public class HaloWarsArmory implements ArmoryWindowListener {
             }
         });
     }
-
-    @Override
-    public void handleAddProfileClick() {
-        Profile newProfile = new Profile(getNewProfileName());
-        profileList.addTop(newProfile);
-        armoryWindow.updateProfileList(profileList);
-        armoryWindow.selectNewProfile(newProfile);
-        // TODO - Write Changes to File
-    }
-
 
     /*--- Private Methods ---*/
 

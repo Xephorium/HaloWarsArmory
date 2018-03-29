@@ -1,5 +1,6 @@
 package com.xephorium.armory.model;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ProfileList {
 
     /*--- Public Methods ---*/
 
-    public Profile getByPrimaryKey(int primaryKey) {
+    public Profile getProfileByPrimaryKey(int primaryKey) {
         for (int x = 0; x < profileList.size(); x++) {
             if (primaryKey == profileList.get(x).getPrimaryKey()) {
                 return profileList.get(x).cloneProfile();
@@ -34,7 +35,7 @@ public class ProfileList {
         return null;
     }
 
-    public Profile getByIndex(int index) {
+    public Profile getProfileByIndex(int index) {
         return profileList.get(index).cloneProfile();
     }
 
@@ -59,6 +60,16 @@ public class ProfileList {
             updateExistingProfile(profile);
         } else {
             profileList.add(0, profile);
+        }
+    }
+
+    public void delete(int primaryKey) {
+        if (containsPrimaryKey(primaryKey)) {
+            for (int x = 0; x < profileList.size(); x++) {
+                if (primaryKey == profileList.get(x).getPrimaryKey()) {
+                    profileList.remove(x);
+                }
+            }
         }
     }
 
@@ -90,6 +101,12 @@ public class ProfileList {
     }
 
     public String[] getNameList() {
+        if (profileList.size() < 1) {
+            String[] emptyList = new String[1];
+            emptyList[0] = "No Profiles Available";
+            return emptyList;
+        }
+
         String[] profileNames = new String[profileList.size()];
         for (int x = 0; x < profileList.size(); x++) {
             profileNames[x] = profileList.get(x).getName();

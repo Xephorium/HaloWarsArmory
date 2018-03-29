@@ -47,6 +47,17 @@ public class Profile {
         colorList.add(hudColor);
     }
 
+    public Profile(int primaryKey, String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+        this.primaryKey = primaryKey;
+        this.name = name;
+        this.colorList = new ArrayList<>();
+        colorList.add(unitColor);
+        colorList.add(corpseColor);
+        colorList.add(selectorColor);
+        colorList.add(minimapColor);
+        colorList.add(hudColor);
+    }
+
 
     /*--- Public Methods ---*/
 

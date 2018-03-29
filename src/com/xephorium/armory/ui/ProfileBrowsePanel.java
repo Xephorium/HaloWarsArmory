@@ -61,7 +61,7 @@ public class ProfileBrowsePanel extends JPanel {
         }
 
         // Populated Profile List
-        Profile currentSelectedProfile = this.profileList.getByIndex(profileListPanel.getLeadSelectionIndex());
+        Profile currentSelectedProfile = this.profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex());
         this.profileList = newProfileList;
         this.profileListPanel.setListData(newProfileList.getNameList());
         this.profileListPanel.setSelectedIndex(newProfileList.getIndexOrFirstIndex(currentSelectedProfile));
@@ -112,7 +112,7 @@ public class ProfileBrowsePanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    listener.handleProfileSelection(profileList.getByIndex(profileListPanel.getLeadSelectionIndex()));
+                    listener.handleSelectProfileClick(profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex()));
                 }
             }
         });
@@ -126,6 +126,12 @@ public class ProfileBrowsePanel extends JPanel {
 
         JButton profileDeleteButton = new JButton("Delete");
         profileDeleteButton.setPreferredSize(new Dimension(70, 24));
+        profileDeleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.handleDeleteProfileClick(profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex()).getPrimaryKey());
+            }
+        });
 
         JButton profileAddButton = new JButton("Add");
         profileAddButton.setPreferredSize(new Dimension(70, 24));
