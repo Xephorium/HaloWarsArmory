@@ -25,9 +25,9 @@ public class ProfileList {
 
     /*--- Public Methods ---*/
 
-    public Profile getByPrimaryKey(Profile profile) {
+    public Profile getByPrimaryKey(int primaryKey) {
         for (int x = 0; x < profileList.size(); x++) {
-            if (profile.getPrimaryKey() == profileList.get(x).getPrimaryKey()) {
+            if (primaryKey == profileList.get(x).getPrimaryKey()) {
                 return profileList.get(x).cloneProfile();
             }
         }
@@ -62,6 +62,15 @@ public class ProfileList {
     public int getIndexOrFirstIndex(Profile profile) {
         for (int x = 0; x < profileList.size(); x++) {
             if (profile.getPrimaryKey() == profileList.get(x).getPrimaryKey()) {
+                return x;
+            }
+        }
+        return 0;
+    }
+
+    public int getIndexOrFirstIndex(int primaryKey) {
+        for (int x = 0; x < profileList.size(); x++) {
+            if (primaryKey == profileList.get(x).getPrimaryKey()) {
                 return x;
             }
         }

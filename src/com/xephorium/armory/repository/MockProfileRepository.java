@@ -4,8 +4,13 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MockProfileRepository {
+
+
+    /*--- Public Methods ---*/
 
     public static ProfileList getProfileList() {
         ProfileList profileList = new ProfileList();
@@ -18,6 +23,26 @@ public class MockProfileRepository {
         profileList.add(createProfile("Lava Glow", new Color(218, 155, 26)));
         return profileList;
     }
+
+    public static List<Integer> loadCustomPlayerConfiguration() {
+        List<Integer> playerProfileList = new ArrayList<>();
+        ProfileList profileList = getProfileList();
+        for (int x = 0; x < 6; x++) {
+            playerProfileList.add(profileList.getByIndex(x).getPrimaryKey());
+        }
+        return playerProfileList;
+    }
+
+    public static List<Integer> loadDefaultUNSCPlayerConfiguration() {
+        return loadCustomPlayerConfiguration();
+    }
+
+    public static List<Integer> loadDefaultCovenantPlayerConfiguration() {
+        return loadCustomPlayerConfiguration();
+    }
+
+
+    /*--- Private Methods ---*/
 
     private static Profile createProfile(String name, Color color) {
         return new Profile(

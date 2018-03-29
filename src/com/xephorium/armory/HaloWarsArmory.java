@@ -9,6 +9,7 @@ import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
 import com.xephorium.armory.ui.utility.StringUtility;
 
 import java.awt.*;
+import java.util.List;
 
 public class HaloWarsArmory implements ArmoryWindowListener {
 
@@ -17,6 +18,8 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     private ArmoryWindow armoryWindow;
     private ProfileList profileList;
+    private List<Integer> unscPlayerConfiguration;
+    private List<Integer> covenantPlayerConfiguration;
 
 
     /*--- Constructor ---*/
@@ -26,7 +29,12 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         armoryWindow.displayWindow();
 
         profileList = MockProfileRepository.getProfileList();
+        unscPlayerConfiguration = MockProfileRepository.loadCustomPlayerConfiguration();
+        covenantPlayerConfiguration = MockProfileRepository.loadCustomPlayerConfiguration();
+
         armoryWindow.updateProfileList(profileList);
+        armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
+        armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
     }
 
 
@@ -56,32 +64,34 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleUNSCPlayerUpdate(int playerNumber, int profilePrimaryKey) {
-        // TODO
+        unscPlayerConfiguration.set(playerNumber, profilePrimaryKey);
     }
 
     @Override
     public void handleCovenantPlayerUpdate(int playerNumber, int profilePrimaryKey) {
-        // TODO
+        covenantPlayerConfiguration.set(playerNumber, profilePrimaryKey);
     }
 
     @Override
     public void handleUNSCConfigurationReset() {
-        // TODO
+        unscPlayerConfiguration = MockProfileRepository.loadDefaultUNSCPlayerConfiguration();
+        armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
     }
 
     @Override
     public void handleCovenantConfigurationReset() {
-        // TODO
+        covenantPlayerConfiguration = MockProfileRepository.loadDefaultCovenantPlayerConfiguration();
+        armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
     }
 
     @Override
     public void handleUNSCConfigurationSave() {
-        // TODO
+        // TODO - Write Changes to File
     }
 
     @Override
     public void handleCovenantConfigurationSave() {
-        // TODO
+        // TODO - Write Changes to File
     }
 
 
@@ -94,7 +104,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
             return;
         }
 
-        if (newProfile.equals(profileList.getByPrimaryKey(newProfile))) {
+        if (newProfile.equals(profileList.getByPrimaryKey(newProfile.getPrimaryKey()))) {
             armoryWindow.displayNoChangesToSaveDialog();
             return;
         }

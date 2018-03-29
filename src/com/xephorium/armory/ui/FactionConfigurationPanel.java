@@ -35,6 +35,7 @@ public class FactionConfigurationPanel extends JPanel {
     private List<JComboBox> unscSelectors = new ArrayList<>();
     private List<JComboBox> covenantSelectors = new ArrayList<>();
     private ProfileList profileList = new ProfileList(new Profile("No Profiles Available"));
+    private boolean selectorListenersEnabled = false;
 
 
     /*--- Constructor ---*/
@@ -51,16 +52,37 @@ public class FactionConfigurationPanel extends JPanel {
 
     public void updateProfileList(ProfileList profileList) {
         ProfileList newProfileList = profileList.clone();
-        updateUNSCSelectors(newProfileList);
-        updateCovenantSelectors(newProfileList);
+        updateFactionSelectors(unscSelectors, newProfileList);
+        updateFactionSelectors(covenantSelectors, newProfileList);
         this.profileList = newProfileList;
+        selectorListenersEnabled = true;
+    }
+
+    public void updateUNSCPlayerConfiguration(List<Integer> unscPlayerProfiles) {
+        if (unscPlayerProfiles.size() < 1) {
+            return;
+        }
+
+        for (int x = 0; x < unscPlayerProfiles.size(); x++) {
+            unscSelectors.get(x).setSelectedIndex(profileList.getIndexOrFirstIndex(unscPlayerProfiles.get(x)));
+        }
+    }
+
+    public void updateCovenantPlayerConfiguration(List<Integer> covenantPlayerProfiles) {
+        if (covenantPlayerProfiles.size() < 1) {
+            return;
+        }
+
+        for (int x = 0; x < covenantPlayerProfiles.size(); x++) {
+            covenantSelectors.get(x).setSelectedIndex(profileList.getIndexOrFirstIndex(covenantPlayerProfiles.get(x)));
+        }
     }
 
 
     /*--- Private Update Methods ---*/
 
-    private void updateUNSCSelectors(ProfileList newProfileList) {
-        for (JComboBox selector : unscSelectors) {
+    private void updateFactionSelectors(List<JComboBox> factionSelectors, ProfileList newProfileList) {
+        for (JComboBox selector : factionSelectors) {
             int oldPrimaryKey = profileList.getByIndex(selector.getSelectedIndex()).getPrimaryKey();
             selector.removeAllItems();
             for (int y = 0; y < newProfileList.size(); y++) {
@@ -72,18 +94,6 @@ public class FactionConfigurationPanel extends JPanel {
         }
     }
 
-    private void updateCovenantSelectors(ProfileList newProfileList) {
-        for (JComboBox selector : covenantSelectors) {
-            int oldPrimaryKey = profileList.getByIndex(selector.getSelectedIndex()).getPrimaryKey();
-            selector.removeAllItems();
-            for (int y = 0; y < newProfileList.size(); y++) {
-                selector.addItem(newProfileList.getByIndex(y).getName());
-                if (oldPrimaryKey == newProfileList.getByIndex(y).getPrimaryKey()) {
-                    selector.setSelectedIndex(y);
-                }
-            }
-        }
-    }
 
 
     /*--- Private Setup Methods ---*/
@@ -171,11 +181,14 @@ public class FactionConfigurationPanel extends JPanel {
     private JComboBox createFactionComboBox(Faction faction, int playerNumber) {
         JComboBox comboBox;
         comboBox = new JComboBox(profileList.getNameList());
-        comboBox.setSelectedIndex(0);
         comboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
+                    if (!selectorListenersEnabled) {
+                        return;
+                    }
+
                     if (faction == Faction.UNSC) {
                         listener.handleUNSCPlayerUpdate(playerNumber,
                                 profileList.getByIndex(comboBox.getSelectedIndex()).getPrimaryKey());

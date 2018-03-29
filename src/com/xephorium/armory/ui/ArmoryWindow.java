@@ -12,6 +12,7 @@ import com.xephorium.armory.ui.utility.DisplayUtility;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 
 /*
@@ -99,6 +100,17 @@ public class ArmoryWindow {
 
     public void setInvalidInstallDirectory() {
         installDirectoryPanel.setInvalidInstallDirectory();
+    }
+
+
+    // Faction Configuration
+
+    public void updateUNSCPlayerConfiguration(List<Integer> unscPlayerProfiles) {
+        factionConfigurationPanel.updateUNSCPlayerConfiguration(unscPlayerProfiles);
+    }
+
+    public void updateCovenantPlayerConfiguration(List<Integer> covenantPlayerProfiles) {
+        factionConfigurationPanel.updateCovenantPlayerConfiguration(covenantPlayerProfiles);
     }
 
 
