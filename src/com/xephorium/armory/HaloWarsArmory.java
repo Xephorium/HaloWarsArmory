@@ -114,7 +114,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleAddProfileClick() {
-        Profile newProfile = new Profile(getNewProfileName());
+        Profile newProfile = new Profile(profileList.generateNewName());
         profileList.addNewProfileTop(newProfile);
         armoryWindow.updateProfileList(profileList);
         armoryWindow.selectNewProfile(profileList.getProfileByIndex(0));

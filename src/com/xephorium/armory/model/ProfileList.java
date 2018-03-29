@@ -160,12 +160,26 @@ public class ProfileList {
         return profileList.isEmpty();
     }
 
+    public String generateNewName() {
+        String newNameBase = "New Profile";
+
+        if (!containsName(newNameBase)) {
+            return newNameBase;
+        } else {
+            int x = 1;
+            while (containsName(newNameBase + " " + x)) {
+                x++;
+            }
+            return newNameBase + " " + x;
+        }
+
+    }
 
     /*--- Private Methods ---*/
 
-    private boolean containsProfile(Profile profile) {
+    private boolean containsName(String name) {
         for (int x = 0; x < profileList.size(); x++) {
-            if (profile.getPrimaryKey() == profileList.get(x).getPrimaryKey()) {
+            if (name.equals(profileList.get(x).getName())) {
                 return true;
             }
         }
