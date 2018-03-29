@@ -35,6 +35,8 @@ public class FactionConfigurationPanel extends JPanel {
     private List<JComboBox> unscSelectors = new ArrayList<>();
     private List<JComboBox> covenantSelectors = new ArrayList<>();
     private ProfileList profileList = new ProfileList(new Profile("No Profiles Available"));
+    private JButton saveButton;
+    private JButton resetButton;
     private boolean selectorSetupComplete = false;
     private boolean selectorEmptyState = false;
 
@@ -58,7 +60,6 @@ public class FactionConfigurationPanel extends JPanel {
             setEmptyFactionSelectors(covenantSelectors);
             return;
         }
-
         ProfileList newProfileList = profileList.clone();
         updateFactionSelectors(unscSelectors, newProfileList);
         updateFactionSelectors(covenantSelectors, newProfileList);
@@ -240,8 +241,22 @@ public class FactionConfigurationPanel extends JPanel {
         JPanel horizontalButtonPanel = new JPanel(flowLayout);
         horizontalButtonPanel.setBackground(Color.WHITE);
 
-        JButton button = new JButton(buttonType == ButtonType.RESET ? "Reset" : "Save");
-        button.addActionListener(new ActionListener() {
+        if (buttonType == ButtonType.SAVE) {
+            saveButton = new JButton("Save");
+            saveButton.addActionListener(getFactionButtonActionListener(buttonType, faction));
+        } else {
+            resetButton = new JButton("Reset");
+            resetButton.addActionListener(getFactionButtonActionListener(buttonType, faction));
+        }
+
+        horizontalButtonPanel.add(buttonType == ButtonType.SAVE ? saveButton : resetButton);
+        mainButtonPanel.add(horizontalButtonPanel, BorderLayout.SOUTH);
+
+        return mainButtonPanel;
+    }
+
+    private ActionListener getFactionButtonActionListener(ButtonType buttonType, Faction faction) {
+        return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (buttonType == ButtonType.RESET) {
@@ -251,19 +266,16 @@ public class FactionConfigurationPanel extends JPanel {
                         listener.handleCovenantConfigurationReset();
                     }
                 } else {
-                    if (faction == Faction.UNSC) {
-                        listener.handleUNSCConfigurationSave();
-                    } else {
-                        listener.handleCovenantConfigurationSave();
+                    if (!selectorEmptyState) {
+                        if (faction == Faction.UNSC) {
+                            listener.handleUNSCConfigurationSave();
+                        } else {
+                            listener.handleCovenantConfigurationSave();
+                        }
                     }
                 }
             }
-        });
-
-        horizontalButtonPanel.add(button);
-        mainButtonPanel.add(horizontalButtonPanel, BorderLayout.SOUTH);
-
-        return mainButtonPanel;
+        };
     }
 
     private JPanel createFactionIconPanel(Faction faction) {
