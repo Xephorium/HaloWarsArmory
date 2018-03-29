@@ -22,6 +22,7 @@ public class ProfileBrowsePanel extends JPanel {
     private JScrollPane profileListScrollPane;
     private JList profileListPanel;
     private ProfileList profileList;
+    private boolean browsePanelSetupComplete = false;
     private boolean browsePanelEmptyState = false;
 
 
@@ -58,22 +59,26 @@ public class ProfileBrowsePanel extends JPanel {
 
         // Initial Profile List
         if (this.profileList == null) {
+            browsePanelSetupComplete = false;
             browsePanelEmptyState = false;
             this.profileListPanel.setEnabled(true);
             this.profileList = newProfileList;
             this.profileListPanel.removeAll();
             this.profileListPanel.clearSelection();
             this.profileListPanel.setListData(newProfileList.getNameList());
+            browsePanelSetupComplete = true;
             this.profileListPanel.setSelectedIndex(0);
             return;
         }
 
         // Populated Profile List
+        browsePanelSetupComplete = false;
         browsePanelEmptyState = false;
         this.profileListPanel.setEnabled(true);
         Profile currentSelectedProfile = this.profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex());
         this.profileList = newProfileList;
         this.profileListPanel.setListData(newProfileList.getNameList());
+        browsePanelSetupComplete = true;
         this.profileListPanel.setSelectedIndex(newProfileList.getIndexOrFirstIndex(currentSelectedProfile));
     }
 
@@ -121,7 +126,7 @@ public class ProfileBrowsePanel extends JPanel {
         profileListPanel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting() && !browsePanelEmptyState) {
+                if (!event.getValueIsAdjusting() && !browsePanelEmptyState && browsePanelSetupComplete) {
                     listener.handleSelectProfileClick(profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex()));
                 }
             }

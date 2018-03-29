@@ -66,6 +66,7 @@ public class FactionConfigurationPanel extends JPanel {
         updateFactionSelectors(unscSelectors, newProfileList);
         updateFactionSelectors(covenantSelectors, newProfileList);
         this.profileList = newProfileList;
+
         selectorSetupComplete = true;
         selectorEmptyState = false;
     }

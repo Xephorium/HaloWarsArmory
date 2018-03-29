@@ -51,14 +51,17 @@ public class ArmoryRepository {
 
     public ProfileList loadPlayerProfileList() {
         // TODO - Read Changes From File
+        // TODO - Note: UNSC/Covenant profiles must be hardcoded with the same
+        // TODO - absurd, negative primary keys. This is to prevent custom profile
+        // TODO - upon override upon Configuration reset.
         ProfileList profileList = new ProfileList();
-        profileList.add(createProfile("Snow & Ice", new Color(139, 195, 235)));
-        profileList.add(createProfile("Burnt Oak", new Color(136, 97, 24)));
-        profileList.add(createProfile("Forest Green", new Color(115, 156, 103)));
-        profileList.add(createProfile("Lavender Rain", new Color(165, 114, 215)));
-        profileList.add(createProfile("Gunmetal Gray", new Color(90, 90, 90)));
-        profileList.add(createProfile("Cherry Red", new Color(228, 74, 63)));
-        profileList.add(createProfile("Lava Glow", new Color(218, 155, 26)));
+        profileList.addNewProfile(createProfile(-50, "Default - Snow & Ice", new Color(139, 195, 235)));
+        profileList.addNewProfile(createProfile(-51, "Default - Burnt Oak", new Color(136, 97, 24)));
+        profileList.addNewProfile(createProfile(-52, "Default - Forest Green", new Color(115, 156, 103)));
+        profileList.addNewProfile(createProfile(-53, "Default - Lavender Rain", new Color(165, 114, 215)));
+        profileList.addNewProfile(createProfile(-54, "Default - Gunmetal Gray", new Color(90, 90, 90)));
+        profileList.addNewProfile(createProfile(-55, "Default - Cherry Red", new Color(228, 74, 63)));
+        profileList.addNewProfile(createProfile(-56, "Default - Lava Glow", new Color(218, 155, 26)));
         return profileList;
     }
 
@@ -75,8 +78,9 @@ public class ArmoryRepository {
 
     /*--- Private Methods ---*/
 
-    private static Profile createProfile(String name, Color color) {
+    private static Profile createProfile(int primaryKey, String name, Color color) {
         return new Profile(
+                primaryKey,
                 name,
                 color,
                 color.darker(),

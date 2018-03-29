@@ -1,6 +1,5 @@
 package com.xephorium.armory.model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,34 +38,59 @@ public class ProfileList {
         return profileList.get(index).cloneProfile();
     }
 
-    public void add(Profile profile) {
-        if (profile.getPrimaryKey() == Profile.INITIALIZATION_KEY) {
-            profile.setPrimaryKey(generateNewPrimaryKey());
-        }
 
-        if (this.containsProfile(profile)) {
-            updateExistingProfile(profile);
-        } else {
-            profileList.add(profile);
+    public void updateExistingProfile(Profile profile) {
+        Profile newProfile = profile.cloneProfile();
+        for (int x = 0; x < profileList.size(); x++) {
+            if (profileList.get(x).getPrimaryKey() == newProfile.getPrimaryKey()) {
+                profileList.set(x, newProfile);
+            }
         }
     }
 
-    public void addTop(Profile profile) {
-        if (profile.getPrimaryKey() == Profile.INITIALIZATION_KEY) {
-            profile.setPrimaryKey(generateNewPrimaryKey());
+    public void addNewProfile(Profile profile) {
+        Profile newProfile = profile.cloneProfile();
+
+        if (newProfile.getPrimaryKey() == Profile.INITIALIZATION_KEY
+                || containsPrimaryKey(newProfile.getPrimaryKey())) {
+            newProfile.setPrimaryKey(generateNewPrimaryKey());
         }
 
-        if (this.containsProfile(profile)) {
-            updateExistingProfile(profile);
-        } else {
-            profileList.add(0, profile);
-        }
+        profileList.add(newProfile);
     }
 
-    public void addAll(ProfileList profileList) {
+    public void addNewProfileTop(Profile profile) {
+        Profile newProfile = profile.cloneProfile();
+
+        if (newProfile.getPrimaryKey() == Profile.INITIALIZATION_KEY
+                || containsPrimaryKey(newProfile.getPrimaryKey())) {
+            newProfile.setPrimaryKey(generateNewPrimaryKey());
+        }
+
+        profileList.add(0, newProfile);
+    }
+
+    public void addAllNewProfiles(ProfileList profileList) {
         ProfileList newProfileList = profileList.clone();
         for (int x = 0; x < newProfileList.size(); x++) {
-            this.profileList.add(newProfileList.getProfileByIndex(x));
+            addNewProfile(newProfileList.getProfileByIndex(x));
+        }
+    }
+
+    public void addDefaultFactionProfiles(ProfileList defaultFactionProfiles) {
+        ProfileList newDefaultFactionProfiles = defaultFactionProfiles.clone();
+
+        // Remove Existing Default Profiles
+        for (int x = 0; x < newDefaultFactionProfiles.size(); x++) {
+            int primaryKey = newDefaultFactionProfiles.getProfileByIndex(x).getPrimaryKey();
+            if (containsPrimaryKey(primaryKey)) {
+                delete(primaryKey);
+            }
+        }
+
+        // Add Default Profiles To Bottom
+        for (int x = 0; x < newDefaultFactionProfiles.size(); x++) {
+            addNewProfile(newDefaultFactionProfiles.getProfileByIndex(x));
         }
     }
 
@@ -90,7 +114,8 @@ public class ProfileList {
     public ProfileList clone() {
         ProfileList newProfileList = new ProfileList();
         for (int x = 0; x < profileList.size(); x++) {
-            newProfileList.add(profileList.get(x).cloneProfile());
+            // TODO - Change to addNewProfile()
+            newProfileList.addNewProfile(profileList.get(x).cloneProfile());
         }
         return newProfileList;
     }
@@ -154,14 +179,6 @@ public class ProfileList {
             }
         }
         return false;
-    }
-
-    private void updateExistingProfile(Profile profile) {
-        for (int x = 0; x < profileList.size(); x++) {
-            if (profileList.get(x).getPrimaryKey() == profile.getPrimaryKey()) {
-                profileList.set(x, profile);
-            }
-        }
     }
 
     private int generateNewPrimaryKey() {

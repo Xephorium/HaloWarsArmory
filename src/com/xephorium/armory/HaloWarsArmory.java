@@ -79,7 +79,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     @Override
     public void handleUNSCConfigurationReset() {
         unscPlayerConfiguration = armoryRepository.loadDefaultUNSCPlayerConfiguration();
-        profileList.addAll(armoryRepository.loadDefaultUNSCPlayerProfiles());
+        profileList.addDefaultFactionProfiles(armoryRepository.loadDefaultUNSCPlayerProfiles());
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
         // TODO - Write Changes to File
@@ -88,7 +88,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     @Override
     public void handleCovenantConfigurationReset() {
         covenantPlayerConfiguration = armoryRepository.loadDefaultCovenantPlayerConfiguration();
-        profileList.addAll(armoryRepository.loadDefaultCovenantPlayerProfiles());
+        profileList.addDefaultFactionProfiles(armoryRepository.loadDefaultCovenantPlayerProfiles());
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
         // TODO - Write Changes to File
@@ -115,7 +115,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     @Override
     public void handleAddProfileClick() {
         Profile newProfile = new Profile(getNewProfileName());
-        profileList.addTop(newProfile);
+        profileList.addNewProfileTop(newProfile);
         armoryWindow.updateProfileList(profileList);
         armoryWindow.selectNewProfile(newProfile);
         // TODO - Write Changes to File
@@ -141,7 +141,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
             return;
         }
 
-        profileList.add(newProfile);
+        profileList.updateExistingProfile(newProfile);
         armoryWindow.updateProfileList(profileList);
         armoryWindow.displayProfileSavedDialog();
         // TODO - Write Changes to File
