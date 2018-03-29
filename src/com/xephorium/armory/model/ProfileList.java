@@ -63,6 +63,13 @@ public class ProfileList {
         }
     }
 
+    public void addAll(ProfileList profileList) {
+        ProfileList newProfileList = profileList.clone();
+        for (int x = 0; x < newProfileList.size(); x++) {
+            this.profileList.add(newProfileList.getProfileByIndex(x));
+        }
+    }
+
     public void delete(int primaryKey) {
         if (containsPrimaryKey(primaryKey)) {
             for (int x = 0; x < profileList.size(); x++) {
@@ -70,6 +77,12 @@ public class ProfileList {
                     profileList.remove(x);
                 }
             }
+        }
+    }
+
+    public void deleteAll() {
+        for (int x = 0; x < profileList.size(); x++) {
+            profileList.remove(x);
         }
     }
 

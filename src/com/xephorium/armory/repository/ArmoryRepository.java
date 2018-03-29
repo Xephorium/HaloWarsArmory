@@ -62,6 +62,16 @@ public class ArmoryRepository {
         return profileList;
     }
 
+    public ProfileList loadDefaultUNSCPlayerProfiles() {
+        // TODO - Real Data
+        return loadPlayerProfileList();
+    }
+
+    public ProfileList loadDefaultCovenantPlayerProfiles() {
+        // TODO - Real Data
+        return loadPlayerProfileList();
+    }
+
 
     /*--- Private Methods ---*/
 

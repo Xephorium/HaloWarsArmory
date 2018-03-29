@@ -79,6 +79,8 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     @Override
     public void handleUNSCConfigurationReset() {
         unscPlayerConfiguration = armoryRepository.loadDefaultUNSCPlayerConfiguration();
+        profileList.addAll(armoryRepository.loadDefaultUNSCPlayerProfiles());
+        armoryWindow.updateProfileList(profileList);
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
         // TODO - Write Changes to File
     }
@@ -86,6 +88,8 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     @Override
     public void handleCovenantConfigurationReset() {
         covenantPlayerConfiguration = armoryRepository.loadDefaultCovenantPlayerConfiguration();
+        profileList.addAll(armoryRepository.loadDefaultCovenantPlayerProfiles());
+        armoryWindow.updateProfileList(profileList);
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
         // TODO - Write Changes to File
     }
