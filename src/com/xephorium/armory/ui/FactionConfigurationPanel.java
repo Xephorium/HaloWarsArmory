@@ -35,7 +35,8 @@ public class FactionConfigurationPanel extends JPanel {
     private List<JComboBox> unscSelectors = new ArrayList<>();
     private List<JComboBox> covenantSelectors = new ArrayList<>();
     private ProfileList profileList = new ProfileList(new Profile("No Profiles Available"));
-    private boolean selectorListenersEnabled = false;
+    private boolean selectorSetupComplete = false;
+    private boolean selectorEmptyState = false;
 
 
     /*--- Constructor ---*/
@@ -51,11 +52,19 @@ public class FactionConfigurationPanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileList(ProfileList profileList) {
+        if (profileList.isEmpty()) {
+            selectorEmptyState = true;
+            setEmptyFactionSelectors(unscSelectors);
+            setEmptyFactionSelectors(covenantSelectors);
+            return;
+        }
+
         ProfileList newProfileList = profileList.clone();
         updateFactionSelectors(unscSelectors, newProfileList);
         updateFactionSelectors(covenantSelectors, newProfileList);
         this.profileList = newProfileList;
-        selectorListenersEnabled = true;
+        selectorSetupComplete = true;
+        selectorEmptyState = false;
     }
 
     public void updateUNSCPlayerConfiguration(List<Integer> unscPlayerProfiles) {
@@ -94,6 +103,13 @@ public class FactionConfigurationPanel extends JPanel {
         }
     }
 
+    private void setEmptyFactionSelectors(List<JComboBox> factionSelectors) {
+        for (JComboBox selector : factionSelectors) {
+            selector.removeAllItems();
+            selector.addItem("No Profiles Available");
+            selector.setSelectedIndex(0);
+        }
+    }
 
 
     /*--- Private Setup Methods ---*/
@@ -185,9 +201,11 @@ public class FactionConfigurationPanel extends JPanel {
             @Override
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
-                    if (!selectorListenersEnabled) {
+                    if (!selectorSetupComplete || selectorEmptyState) {
                         return;
                     }
+
+                    System.out.println("Test");
 
                     if (faction == Faction.UNSC) {
                         listener.handleUNSCPlayerUpdate(playerNumber,

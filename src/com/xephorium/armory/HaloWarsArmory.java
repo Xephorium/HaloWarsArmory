@@ -163,6 +163,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     /*--- Private Methods ---*/
 
     private String getNewProfileName() {
+        // TODO - Generate Name Not Taken
         return "New Profile";
     }
 }

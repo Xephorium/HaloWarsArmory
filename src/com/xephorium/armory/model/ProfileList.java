@@ -118,6 +118,10 @@ public class ProfileList {
         return profileList.size();
     }
 
+    public boolean isEmpty() {
+        return profileList.isEmpty();
+    }
+
 
     /*--- Private Methods ---*/
 
