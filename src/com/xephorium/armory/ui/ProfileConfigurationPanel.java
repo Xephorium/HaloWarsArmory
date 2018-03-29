@@ -18,14 +18,14 @@ public class ProfileConfigurationPanel extends JPanel implements
 
     /*--- Variables ---*/
 
-    private ProfileConfigurationPanelListener listener;
+    private ArmoryWindowListener listener;
     private ProfileBrowsePanel profileBrowsePanel;
     private ProfileAttributePanel profileAttributePanel;
 
 
     /*--- Constructor ---*/
 
-    public ProfileConfigurationPanel(ProfileConfigurationPanelListener listener) {
+    public ProfileConfigurationPanel(ArmoryWindowListener listener) {
         super();
         this.listener = listener;
 
@@ -85,16 +85,5 @@ public class ProfileConfigurationPanel extends JPanel implements
     @Override
     public void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType) {
         listener.handleWorkingProfileColorClick(workingProfile, colorType);
-    }
-
-    /*--- Listener Interface ---*/
-
-    interface ProfileConfigurationPanelListener {
-
-        void handleProfileSelection(Profile profile);
-
-        void handleWorkingProfileSaveClick(Profile newProfile);
-
-        void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType);
     }
 }

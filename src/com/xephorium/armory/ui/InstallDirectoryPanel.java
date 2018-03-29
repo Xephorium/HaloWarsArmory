@@ -18,7 +18,7 @@ class InstallDirectoryPanel extends JPanel {
 
     private static int COMPONENT_HORIZONTAL_PADDING = 10;
 
-    private InstallDirectoryPanelListener listener;
+    private ArmoryWindowListener listener;
 
     private ImageIcon imageIcon;
     private JTextField directoryTextField;
@@ -26,7 +26,7 @@ class InstallDirectoryPanel extends JPanel {
 
     /*--- Constructor ---*/
 
-    InstallDirectoryPanel(InstallDirectoryPanelListener listener) {
+    InstallDirectoryPanel(ArmoryWindowListener listener) {
         this.listener = listener;
 
         initializePanelAttributes();
@@ -107,13 +107,5 @@ class InstallDirectoryPanel extends JPanel {
         });
 
         return button;
-    }
-
-
-    /*--- Listener Interface ---*/
-
-    interface InstallDirectoryPanelListener {
-
-        void handleBrowseButtonClick();
     }
 }

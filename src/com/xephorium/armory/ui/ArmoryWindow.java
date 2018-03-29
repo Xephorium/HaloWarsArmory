@@ -8,10 +8,6 @@ import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
 import com.xephorium.armory.ui.utility.DisplayUtility;
-import com.xephorium.armory.ui.InstallDirectoryPanel.InstallDirectoryPanelListener;
-import com.xephorium.armory.ui.utility.DirectoryChooser.DirectoryChooserListener;
-import com.xephorium.armory.ui.FactionConfigurationPanel.FactionConfigurationPanelListener;
-import com.xephorium.armory.ui.ProfileConfigurationPanel.ProfileConfigurationPanelListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -33,11 +29,7 @@ import java.awt.*;
  */
 
 
-public class ArmoryWindow implements
-        InstallDirectoryPanelListener,
-        FactionConfigurationPanelListener,
-        ProfileConfigurationPanelListener,
-        DirectoryChooserListener {
+public class ArmoryWindow {
 
 
     /*--- Variables ---*/
@@ -87,7 +79,7 @@ public class ArmoryWindow implements
     }
 
 
-    // Install Directory Panel
+    // Install Directory
 
     public void displayDirectoryChooser() {
         directoryChooser.displayChooser();
@@ -110,7 +102,7 @@ public class ArmoryWindow implements
     }
 
 
-    // Profile Configuration Panel
+    // Profile Configuration
 
     public void setSelectedProfile(Profile profile) {
         profileConfigurationPanel.setSelectedProfile(profile);
@@ -157,11 +149,11 @@ public class ArmoryWindow implements
     }
 
     private void initializeViewClasses() {
-        installDirectoryPanel = new InstallDirectoryPanel(this);
-        factionConfigurationPanel = new FactionConfigurationPanel(this);
-        profileConfigurationPanel = new ProfileConfigurationPanel(this);
+        installDirectoryPanel = new InstallDirectoryPanel(listener);
+        factionConfigurationPanel = new FactionConfigurationPanel(listener);
+        profileConfigurationPanel = new ProfileConfigurationPanel(listener);
         profilePreviewPanel = new ProfilePreviewPanel();
-        directoryChooser = new DirectoryChooser(this);
+        directoryChooser = new DirectoryChooser(listener);
     }
 
     private JPanel createProfilePanels() {
@@ -177,88 +169,5 @@ public class ArmoryWindow implements
         eastPanel.add(profileConfigurationPanel);
         eastPanel.add(profilePreviewPanel);
         return eastPanel;
-    }
-
-
-    /*--- Listener Interface ---*/
-
-    public interface ArmoryWindowListener {
-
-        void handleBrowseButtonClick();
-
-        void handleDirectorySelection(String directory);
-
-        void handleWorkingProfileSaveClick(Profile newProfile);
-
-        void handleProfileSelection(Profile profile);
-
-        void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType);
-    }
-
-
-    /*--- Interface Overrides ---*/
-
-
-    // Install Directory Panel
-
-    @Override
-    public void handleBrowseButtonClick() {
-        listener.handleBrowseButtonClick();
-    }
-
-    @Override
-    public void handleDirectorySelection(String directory) {
-        listener.handleDirectorySelection(directory);
-    }
-
-
-    // Faction Configuration Panel
-
-    @Override
-    public void handleUNSCPlayerUpdate(int playerNumber, int profilePrimaryKey) {
-        // TODO - Update UNSC Player
-    }
-
-    @Override
-    public void handleCovenantPlayerUpdate(int playerNumber, int profilePrimaryKey) {
-        // TODO - Update Covenant Player
-    }
-
-    @Override
-    public void handleUNSCConfigurationReset() {
-        // TODO - Reset UNSC Configuration
-    }
-
-    @Override
-    public void handleCovenantConfigurationReset() {
-        // TODO - Reset Covenant Configuration
-    }
-
-    @Override
-    public void handleUNSCConfigurationSave() {
-        // TODO - Save UNSC Configuration
-    }
-
-    @Override
-    public void handleCovenantConfigurationSave() {
-        // TODO - Save Covenant Configuration
-    }
-
-
-    // Profile Configuration Panel
-
-    @Override
-    public void handleWorkingProfileSaveClick(Profile newProfile) {
-        listener.handleWorkingProfileSaveClick(newProfile);
-    }
-
-    @Override
-    public void handleProfileSelection(Profile profile) {
-        listener.handleProfileSelection(profile);
-    }
-
-    @Override
-    public void handleWorkingProfileColorClick(Profile workingProfile, Profile.ColorType colorType) {
-        listener.handleWorkingProfileColorClick(workingProfile, colorType);
     }
 }

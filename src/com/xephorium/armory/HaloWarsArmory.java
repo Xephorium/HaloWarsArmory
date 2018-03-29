@@ -4,12 +4,13 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.repository.MockProfileRepository;
 import com.xephorium.armory.ui.ArmoryWindow;
+import com.xephorium.armory.ui.ArmoryWindowListener;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
 import com.xephorium.armory.ui.utility.StringUtility;
 
 import java.awt.*;
 
-public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
+public class HaloWarsArmory implements ArmoryWindowListener {
 
 
     /*--- Variables ---*/
@@ -31,6 +32,9 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
 
     /*--- Armory Window Overrides ---*/
 
+
+    // Installation Directory
+
     @Override
     public void handleBrowseButtonClick() {
         armoryWindow.displayDirectoryChooser();
@@ -46,6 +50,42 @@ public class HaloWarsArmory implements ArmoryWindow.ArmoryWindowListener {
             armoryWindow.displayGameNotFoundDialog();
         }
     }
+
+
+    // Faction Configuration
+
+    @Override
+    public void handleUNSCPlayerUpdate(int playerNumber, int profilePrimaryKey) {
+        // TODO
+    }
+
+    @Override
+    public void handleCovenantPlayerUpdate(int playerNumber, int profilePrimaryKey) {
+        // TODO
+    }
+
+    @Override
+    public void handleUNSCConfigurationReset() {
+        // TODO
+    }
+
+    @Override
+    public void handleCovenantConfigurationReset() {
+        // TODO
+    }
+
+    @Override
+    public void handleUNSCConfigurationSave() {
+        // TODO
+    }
+
+    @Override
+    public void handleCovenantConfigurationSave() {
+        // TODO
+    }
+
+
+    // Profile Configuration
 
     @Override
     public void handleWorkingProfileSaveClick(Profile newProfile) {

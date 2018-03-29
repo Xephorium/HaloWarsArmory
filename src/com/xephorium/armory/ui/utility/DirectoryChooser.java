@@ -1,5 +1,7 @@
 package com.xephorium.armory.ui.utility;
 
+import com.xephorium.armory.ui.ArmoryWindowListener;
+
 import javax.swing.*;
 import java.io.File;
 
@@ -8,12 +10,12 @@ public class DirectoryChooser extends JFileChooser {
 
     /*--- Variables ---*/
 
-    private DirectoryChooserListener listener;
+    private ArmoryWindowListener listener;
 
 
     /*--- Constructor ---*/
 
-    public DirectoryChooser(DirectoryChooserListener listener) {
+    public DirectoryChooser(ArmoryWindowListener listener) {
         this.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         this.setDialogTitle("Halo Wars Installation Folder");
         this.listener = listener;
@@ -29,13 +31,5 @@ public class DirectoryChooser extends JFileChooser {
             File selectedFile = this.getSelectedFile();
             listener.handleDirectorySelection(selectedFile.getAbsolutePath());
         }
-    }
-
-
-    /*--- Listener Interface ---*/
-
-    public interface DirectoryChooserListener {
-
-        void handleDirectorySelection(String directory);
     }
 }

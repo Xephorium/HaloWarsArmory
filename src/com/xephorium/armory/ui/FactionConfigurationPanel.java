@@ -30,7 +30,7 @@ public class FactionConfigurationPanel extends JPanel {
         SAVE
     }
 
-    private FactionConfigurationPanelListener listener;
+    private ArmoryWindowListener listener;
 
     private List<JComboBox> unscSelectors = new ArrayList<>();
     private List<JComboBox> covenantSelectors = new ArrayList<>();
@@ -39,7 +39,7 @@ public class FactionConfigurationPanel extends JPanel {
 
     /*--- Constructor ---*/
 
-    public FactionConfigurationPanel(FactionConfigurationPanelListener listener) {
+    public FactionConfigurationPanel(ArmoryWindowListener listener) {
         this.listener = listener;
 
         initializePanelAttributes();
@@ -242,23 +242,5 @@ public class FactionConfigurationPanel extends JPanel {
         iconPanel.setBackground(Color.WHITE);
         iconPanel.add(new JLabel("", faction == Faction.UNSC ? ICON_UNSC : ICON_COVENANT, JLabel.CENTER));
         return iconPanel;
-    }
-
-
-    /*--- Listener Interface ---*/
-
-    interface FactionConfigurationPanelListener {
-
-        void handleUNSCPlayerUpdate(int playerNumber, int profilePimaryKey);
-
-        void handleCovenantPlayerUpdate(int playerNumber, int profilePrimaryKey);
-
-        void handleUNSCConfigurationReset();
-
-        void handleCovenantConfigurationReset();
-
-        void handleUNSCConfigurationSave();
-
-        void handleCovenantConfigurationSave();
     }
 }
