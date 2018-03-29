@@ -117,7 +117,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         Profile newProfile = new Profile(getNewProfileName());
         profileList.addNewProfileTop(newProfile);
         armoryWindow.updateProfileList(profileList);
-        armoryWindow.selectNewProfile(newProfile);
+        armoryWindow.selectNewProfile(profileList.getProfileByIndex(0));
         // TODO - Write Changes to File
     }
 
@@ -130,7 +130,9 @@ public class HaloWarsArmory implements ArmoryWindowListener {
     }
 
     @Override
-    public void handleWorkingProfileSaveClick(Profile newProfile) {
+    public void handleWorkingProfileSaveClick(Profile profile) {
+        Profile newProfile = profile.cloneProfile();
+
         if (StringUtility.isBlank(newProfile.getName())) {
             armoryWindow.displayProfileMustHaveNameDialog();
             return;
