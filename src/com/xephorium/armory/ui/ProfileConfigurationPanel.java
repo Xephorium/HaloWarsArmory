@@ -3,6 +3,7 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,6 +17,7 @@ public class ProfileConfigurationPanel extends JPanel {
     /*--- Variables ---*/
 
     private ArmoryWindowListener listener;
+    private JPanel profileConfigurationPanel;
     private ProfileBrowsePanel profileBrowsePanel;
     private ProfileAttributePanel profileAttributePanel;
     private EmptyProfileAttributePanel emptyProfileAttributePanel;
@@ -30,8 +32,8 @@ public class ProfileConfigurationPanel extends JPanel {
         initializePanelAttributes();
         initializeViewClasses();
 
-        this.add(profileBrowsePanel, BorderLayout.CENTER);
-        this.add(profileAttributePanel, BorderLayout.LINE_END);
+        profileConfigurationPanel.add(profileBrowsePanel, BorderLayout.CENTER);
+        profileConfigurationPanel.add(profileAttributePanel, BorderLayout.LINE_END);
     }
 
 
@@ -65,24 +67,33 @@ public class ProfileConfigurationPanel extends JPanel {
     /*--- Private Methods ---*/
 
     private void showPopulatedProfileAttributePanel() {
-        this.remove(emptyProfileAttributePanel);
-        this.add(profileAttributePanel, BorderLayout.LINE_END);
-        this.repaint();
+        profileConfigurationPanel.remove(emptyProfileAttributePanel);
+        profileConfigurationPanel.add(profileAttributePanel, BorderLayout.LINE_END);
+        profileConfigurationPanel.repaint();
     }
 
     private void showEmptyProfileAttributePanel() {
-        this.remove(profileAttributePanel);
-        this.add(emptyProfileAttributePanel, BorderLayout.LINE_END);
-        this.repaint();
+        profileConfigurationPanel.remove(profileAttributePanel);
+        profileConfigurationPanel.add(emptyProfileAttributePanel, BorderLayout.LINE_END);
+        profileConfigurationPanel.repaint();
     }
 
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());
-        this.setBackground(Color.WHITE);
-        this.setBorder(new CompoundBorder(
+
+        profileConfigurationPanel = new JPanel(new BorderLayout());
+        profileConfigurationPanel.setBackground(Color.WHITE);
+        profileConfigurationPanel.setBorder(new CompoundBorder(
                 BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT),
                 new EmptyBorder(15, 15, 15, 15)
         ));
+
+        JPanel paddingPanel = new JPanel();
+        paddingPanel.setPreferredSize(new Dimension(0, ArmoryDimension.PANEL_PADDING));
+        paddingPanel.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
+
+        this.add(profileConfigurationPanel, BorderLayout.CENTER);
+        this.add(paddingPanel, BorderLayout.PAGE_END);
     }
 
     private void initializeViewClasses() {

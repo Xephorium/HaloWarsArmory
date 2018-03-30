@@ -174,17 +174,17 @@ public class ArmoryWindow {
     }
 
     private JPanel createProfilePanels() {
-        JPanel eastPanel = new JPanel(new GridLayout(2, 1, 0, ArmoryDimension.PANEL_PADDING));
+        JPanel eastPanel = new JPanel(new BorderLayout());
         eastPanel.setBorder(new EmptyBorder(
                 ArmoryDimension.PANEL_PADDING/2,
                 ArmoryDimension.PANEL_PADDING/2,
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
-        eastPanel.setPreferredSize(new Dimension(ArmoryDimension.COLOR_PROFILE_PANEL_WIDTH, 0));
+        eastPanel.setPreferredSize(new Dimension(ArmoryDimension.PREVIEW_PANEL_WIDTH, 0));
         eastPanel.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
 
-        eastPanel.add(profileConfigurationPanel);
-        eastPanel.add(profilePreviewPanel);
+        eastPanel.add(profileConfigurationPanel, BorderLayout.CENTER);
+        eastPanel.add(profilePreviewPanel, BorderLayout.PAGE_END);
         return eastPanel;
     }
 }

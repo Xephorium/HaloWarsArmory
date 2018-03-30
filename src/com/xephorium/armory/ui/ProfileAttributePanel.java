@@ -2,6 +2,7 @@ package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.utility.CustomMouseListener;
 
 import javax.swing.*;
@@ -96,7 +97,9 @@ public class ProfileAttributePanel extends JPanel {
         profileColorPanels.add(new JPanel());
         profileColorPanels.get(colorType.getIndex()).setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
         profileColorPanels.get(colorType.getIndex()).setBackground(ArmoryColor.WINDOW_TEST_COLOR);
-        profileColorPanels.get(colorType.getIndex()).setPreferredSize(new Dimension(15, 15));
+        profileColorPanels.get(colorType.getIndex()).setPreferredSize(new Dimension(
+                ArmoryDimension.PREVIEW_BOX_DIMENSIONS,
+                ArmoryDimension.PREVIEW_BOX_DIMENSIONS));
         colorPreviewPanel.add(profileColorPanels.get(colorType.getIndex()), new GridBagConstraints());
 
         colorListItem.add(new JLabel(colorType.getDisplayName()), BorderLayout.CENTER);
