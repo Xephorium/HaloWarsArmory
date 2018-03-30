@@ -4,6 +4,7 @@ import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
+import com.xephorium.armory.ui.resource.font.ArmoryFont;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -32,6 +33,7 @@ public class ProfileConfigurationPanel extends JPanel {
         initializePanelAttributes();
         initializeViewClasses();
 
+        profileConfigurationPanel.add(createProfileConfigurationHeader(), BorderLayout.PAGE_START);
         profileConfigurationPanel.add(profileBrowsePanel, BorderLayout.CENTER);
         profileConfigurationPanel.add(profileAttributePanel, BorderLayout.LINE_END);
     }
@@ -100,5 +102,12 @@ public class ProfileConfigurationPanel extends JPanel {
         profileBrowsePanel = new ProfileBrowsePanel(listener);
         profileAttributePanel = new ProfileAttributePanel(listener);
         emptyProfileAttributePanel = new EmptyProfileAttributePanel();
+    }
+
+    private JLabel createProfileConfigurationHeader() {
+        JLabel profileBrowseHeader = new JLabel("Color Profiles");
+        profileBrowseHeader.setBorder(new EmptyBorder(0,0,10,0));
+        profileBrowseHeader.setFont(ArmoryFont.NORMAL_BOLD);
+        return profileBrowseHeader;
     }
 }

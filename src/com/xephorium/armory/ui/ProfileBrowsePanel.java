@@ -34,7 +34,6 @@ public class ProfileBrowsePanel extends JPanel {
 
         initializePanelAttributes();
 
-        this.add(createProfileBrowseHeader(), BorderLayout.PAGE_START);
         this.add(createProfileBrowseScrollPane(), BorderLayout.CENTER);
         this.add(createProfileBrowseButtonPanel(), BorderLayout.PAGE_END);
 
@@ -101,13 +100,6 @@ public class ProfileBrowsePanel extends JPanel {
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());
         this.setBackground(Color.WHITE);
-    }
-
-    private JLabel createProfileBrowseHeader() {
-        JLabel profileBrowseHeader = new JLabel("Color Profiles");
-        profileBrowseHeader.setBorder(new EmptyBorder(0,0,5,0));
-        profileBrowseHeader.setFont(ArmoryFont.NORMAL_BOLD);
-        return profileBrowseHeader;
     }
 
     private JScrollPane createProfileBrowseScrollPane() {
