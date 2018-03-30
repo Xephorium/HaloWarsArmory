@@ -5,6 +5,7 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class ProfileConfigurationPanel extends JPanel {
     private ArmoryWindowListener listener;
     private ProfileBrowsePanel profileBrowsePanel;
     private ProfileAttributePanel profileAttributePanel;
+    private EmptyProfileAttributePanel emptyProfileAttributePanel;
 
 
     /*--- Constructor ---*/
@@ -36,6 +38,16 @@ public class ProfileConfigurationPanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void updateProfileList(ProfileList profileList) {
+        if (profileList.isEmpty()) {
+            this.remove(profileAttributePanel);
+            this.add(emptyProfileAttributePanel, BorderLayout.LINE_END);
+            this.repaint();
+        } else {
+            this.remove(emptyProfileAttributePanel);
+            this.add(profileAttributePanel, BorderLayout.LINE_END);
+            this.repaint();
+        }
+
         profileBrowsePanel.updateProfileBrowsePanel(profileList);
     }
 
@@ -68,5 +80,6 @@ public class ProfileConfigurationPanel extends JPanel {
     private void initializeViewClasses() {
         profileBrowsePanel = new ProfileBrowsePanel(listener);
         profileAttributePanel = new ProfileAttributePanel(listener);
+        emptyProfileAttributePanel = new EmptyProfileAttributePanel();
     }
 }

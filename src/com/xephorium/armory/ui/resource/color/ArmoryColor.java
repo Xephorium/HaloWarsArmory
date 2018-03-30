@@ -10,4 +10,6 @@ public class ArmoryColor {
     public static final Color WINDOW_TEST_COLOR = new Color(199, 226, 254);
 
     public static final Color PROFILE_LIST_SELECTION_COLOR = new Color(225, 225, 225);
+
+    public static final Color TEXT_DISABLED = new Color(110, 110, 110);
 }
