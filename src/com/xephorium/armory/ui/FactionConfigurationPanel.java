@@ -164,7 +164,7 @@ public class FactionConfigurationPanel extends JPanel {
         JLabel covenantLabel = new JLabel("Covenant");
         covenantLabel.setFont(ArmoryFont.NORMAL_BOLD);
         covenantLabel.setHorizontalAlignment(JLabel.CENTER);
-        covenantLabel.setBorder(new EmptyBorder(4, 3, 3, 3));
+        covenantLabel.setBorder(new EmptyBorder(4, 3, 3, 4));
 
         tabbedPane.addTab("Covenant", covenantPanel);
         tabbedPane.setTabComponentAt(1, covenantLabel);
