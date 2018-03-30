@@ -8,6 +8,7 @@ public class ArmoryDimension {
     public static final int WINDOW_PADDING_VERTICAL = 20;
     public static final int PANEL_PADDING = 20;
 
+    public static final int ATTRIBUTE_BOX_WIDTH = 145;
     public static final int PREVIEW_BOX_DIMENSIONS = 15;
     public static final int PREVIEW_PANEL_WIDTH = 370;
     public static final int PREVIEW_PANEL_HEIGHT = 208;

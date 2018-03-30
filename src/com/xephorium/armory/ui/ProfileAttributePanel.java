@@ -63,7 +63,7 @@ public class ProfileAttributePanel extends JPanel {
 
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(135, 0));
+        this.setPreferredSize(new Dimension(ArmoryDimension.ATTRIBUTE_BOX_WIDTH, 0));
         this.setBorder(new EmptyBorder(0,15,0,0));
         this.setBackground(Color.WHITE);
     }
