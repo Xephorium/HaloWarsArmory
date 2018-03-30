@@ -134,7 +134,11 @@ public class FactionConfigurationPanel extends JPanel {
         JPanel unscPanel = new JPanel();
         unscPanel.setBackground(Color.WHITE);
         unscPanel.setLayout(new BorderLayout());
-        unscPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
+        unscPanel.setBorder(new EmptyBorder(
+                ArmoryDimension.FACTION_PLAYER_PADDING_VERTICAL,
+                ArmoryDimension.FACTION_PLAYER_PADDING_HORIZONTAL,
+                ArmoryDimension.FACTION_PLAYER_PADDING_VERTICAL,
+                ArmoryDimension.FACTION_PLAYER_PADDING_HORIZONTAL));
         unscPanel.add(createPlayerListPanel(Faction.UNSC), BorderLayout.NORTH);
         unscPanel.add(createFactionPanel(Faction.UNSC), BorderLayout.CENTER);
 
@@ -149,7 +153,11 @@ public class FactionConfigurationPanel extends JPanel {
         JPanel covenantPanel = new JPanel();
         covenantPanel.setBackground(Color.WHITE);
         covenantPanel.setLayout(new BorderLayout());
-        covenantPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
+        covenantPanel.setBorder(new EmptyBorder(
+                ArmoryDimension.FACTION_PLAYER_PADDING_VERTICAL,
+                ArmoryDimension.FACTION_PLAYER_PADDING_HORIZONTAL,
+                ArmoryDimension.FACTION_PLAYER_PADDING_VERTICAL,
+                ArmoryDimension.FACTION_PLAYER_PADDING_HORIZONTAL));
         covenantPanel.add(createPlayerListPanel(Faction.COVENANT), BorderLayout.NORTH);
         covenantPanel.add(createFactionPanel(Faction.COVENANT), BorderLayout.CENTER);
 
@@ -166,7 +174,6 @@ public class FactionConfigurationPanel extends JPanel {
 
     private JPanel createPlayerListPanel(Faction faction) {
         int nameLabelPadding = 10;
-        int playerSeparationPadding = 15;
 
         JPanel playerListPanel = new JPanel();
         playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
@@ -176,7 +183,7 @@ public class FactionConfigurationPanel extends JPanel {
 
             JPanel playerPanel = new JPanel();
             playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
-            playerPanel.setBorder(new EmptyBorder(0, 0, playerSeparationPadding, 0));
+            playerPanel.setBorder(new EmptyBorder(0, 0, ArmoryDimension.FACTION_PLAYER_PADDING_VERTICAL, 0));
             playerPanel.setBackground(Color.WHITE);
             playerPanel.add(new JLabel("Player " + (playerNumber + 1)));
             playerPanel.add(new Box.Filler(
