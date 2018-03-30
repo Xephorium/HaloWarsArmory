@@ -39,13 +39,9 @@ public class ProfileConfigurationPanel extends JPanel {
 
     public void updateProfileList(ProfileList profileList) {
         if (profileList.isEmpty()) {
-            this.remove(profileAttributePanel);
-            this.add(emptyProfileAttributePanel, BorderLayout.LINE_END);
-            this.repaint();
+            showEmptyProfileAttributePanel();
         } else {
-            this.remove(emptyProfileAttributePanel);
-            this.add(profileAttributePanel, BorderLayout.LINE_END);
-            this.repaint();
+            showPopulatedProfileAttributePanel();
         }
 
         profileBrowsePanel.updateProfileBrowsePanel(profileList);
@@ -67,6 +63,18 @@ public class ProfileConfigurationPanel extends JPanel {
 
 
     /*--- Private Methods ---*/
+
+    private void showPopulatedProfileAttributePanel() {
+        this.remove(emptyProfileAttributePanel);
+        this.add(profileAttributePanel, BorderLayout.LINE_END);
+        this.repaint();
+    }
+
+    private void showEmptyProfileAttributePanel() {
+        this.remove(profileAttributePanel);
+        this.add(emptyProfileAttributePanel, BorderLayout.LINE_END);
+        this.repaint();
+    }
 
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());
