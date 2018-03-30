@@ -35,8 +35,6 @@ public class ArmoryWindow {
 
     /*--- Variables ---*/
 
-    private final int WINDOW_HEIGHT = 500;
-    private final int WINDOW_WIDTH = 665;
     private final String WINDOW_TITLE = "  Halo Wars Armory";
 
     private ArmoryWindowListener listener;
@@ -159,8 +157,10 @@ public class ArmoryWindow {
 
     private void initializeFrameAttributes() {
         frame = new JFrame(WINDOW_TITLE);
-        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        frame.setLocation(DisplayUtility.getWindowStartX(WINDOW_WIDTH), DisplayUtility.getWindowStartY(WINDOW_HEIGHT));
+        frame.setSize(ArmoryDimension.WINDOW_WIDTH, ArmoryDimension.WINDOW_HEIGHT);
+        frame.setLocation(
+                DisplayUtility.getWindowStartX(ArmoryDimension.WINDOW_WIDTH),
+                DisplayUtility.getWindowStartY(ArmoryDimension.WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
     }
