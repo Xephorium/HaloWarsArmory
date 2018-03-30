@@ -3,10 +3,8 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.concurrent.Flow;
 
 public class EmptyProfileAttributePanel extends JPanel {
 
