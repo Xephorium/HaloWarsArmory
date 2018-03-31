@@ -4,10 +4,16 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArmoryRepository {
+
+
+    /*--- Variables ---*/
+
+
 
 
     /*--- Constructor ---*/
@@ -96,4 +102,27 @@ public class ArmoryRepository {
         profileList.addNewProfile(new Profile(-112, "Covenant - Beige", new Color(215, 190, 175), new Color(108, 95, 87), new Color(215, 200, 175), new Color(215, 200, 175), new Color(215, 200, 175)));
         return profileList;
     }
+
+
+    /*--- Private Methods ---*/
+
+    public boolean isValidHaloWarsInstallation(String directory) {
+        File installationDirectory = new File(directory);
+        boolean launcherFound = false;
+        boolean creviceFound = false;
+
+        for (File file : installationDirectory.listFiles()) {
+
+            if (file.getName().equals("xgameFinal.exe")) {
+                launcherFound = true;
+            }
+
+            if (file.getName().equals("crevice.era")) {
+                creviceFound = true;
+            }
+        }
+
+        return launcherFound && creviceFound;
+    }
+
 }

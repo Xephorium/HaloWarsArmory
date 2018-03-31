@@ -54,7 +54,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleDirectorySelection(String directory) {
-        if (true /* Valid Halo Wars Installation */) {
+        if (armoryRepository.isValidHaloWarsInstallation(directory)) {
             armoryWindow.setValidInstallDirectory(directory);
             armoryWindow.displayGameFoundDialog();
         } else {
