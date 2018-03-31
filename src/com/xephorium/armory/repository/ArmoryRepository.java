@@ -55,7 +55,7 @@ public class ArmoryRepository {
         // TODO - absurd, negative primary keys. This is to prevent custom profile
         // TODO - upon override upon Configuration reset.
         ProfileList profileList = new ProfileList();
-        profileList.addNewProfile(createProfile(-50, "Default - Snow & Ice", new Color(139, 195, 235)));
+        profileList.addNewProfile(createProfile(-50, "Default - Snow & Ice", new Color(37, 118, 181)));
         profileList.addNewProfile(createProfile(-51, "Default - Burnt Oak", new Color(136, 97, 24)));
         profileList.addNewProfile(createProfile(-52, "Default - Forest Green", new Color(115, 156, 103)));
         profileList.addNewProfile(createProfile(-53, "Default - Lavender Rain", new Color(165, 114, 215)));
