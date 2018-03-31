@@ -2,6 +2,7 @@ package com.xephorium.armory.ui.resource.image;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class ArmoryImage {
     private static String ICON_INSTALLATION_INVALID_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationInvalidDialog.png";
     private static String ICON_INSTALLATION_UNKNOWN_STYLIZED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationUnknownStylized.png";
     private static String PREVIEW_BACKGROUND_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewLayerMap.png";
-    private static String PREVIEW_HUD_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewLayerHUD.png";
+    private static String PREVIEW_MASK_HUD_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewMaskHUD.png";
 
 
     /*--- Public Image Retrieval Methods ---*/
@@ -37,7 +38,7 @@ public class ArmoryImage {
     public static ImageIcon ICON_INSTALLATION_UNKNOWN = new ImageIcon(ICON_INSTALLATION_UNKNOWN_STYLIZED_PATH, "Installation Unknown");
 
     public static BufferedImage PREVIEW_BACKGROUND = readBufferedImage(PREVIEW_BACKGROUND_PATH);
-    public static BufferedImage PREVIEW_HUD = readBufferedImage(PREVIEW_HUD_PATH);
+    public static BufferedImage PREVIEW_MASK_HUD = readBufferedImage(PREVIEW_MASK_HUD_PATH);
 
 
     /*--- Private Utility Methods  ---*/

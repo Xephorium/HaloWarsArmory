@@ -44,15 +44,58 @@ public class ProfilePreviewPanel extends JPanel {
 
         if (backgroundImage != null) {
             graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
-            graphics.drawImage(rescaleImage(hudImage), 0, 0, null);
+            graphics.drawImage(rescaleImage(tintImage(hudImage, Color.BLUE)), 0, 0, null);
         }
     }
 
 
     /*--- Private Rendering Methods ---*/
 
+    // 1. Get Alpha Image From ArmoryImage
+    // 2. Create BufferedImage of Specified Color
+    // 3. Add Alpha to BufferedImage
+    // 4. Run BufferedImage Through Scale Method
+
     private BufferedImage rescaleImage(BufferedImage bufferedImage) {
         return imageResampler.filter(bufferedImage, null);
+    }
+
+    private BufferedImage tintImage(BufferedImage inputImage, Color color) {
+        return maskBufferedImageWithAlpha(createColoredBufferedImage(inputImage, color), inputImage);
+    }
+
+    private BufferedImage createColoredBufferedImage(BufferedImage inputImage, Color color) {
+        BufferedImage newBufferedImage = new BufferedImage(inputImage.getWidth(), inputImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = newBufferedImage.createGraphics();
+
+        graphics.setPaint(color);
+        graphics.fillRect(0, 0, newBufferedImage.getWidth(), newBufferedImage.getHeight());
+        return newBufferedImage;
+    }
+
+    private BufferedImage maskBufferedImageWithAlpha(BufferedImage inputImage, BufferedImage outputImage) {
+        final int width = inputImage.getWidth();
+        int[] imgData = new int[width];
+        int[] maskData = new int[width];
+
+        for (int y = 0; y < inputImage.getHeight(); y++) {
+
+            // fetch a line of data from each image
+            inputImage.getRGB(0, y, width, 1, imgData, 0, 1);
+            outputImage.getRGB(0, y, width, 1, maskData, 0, 1);
+
+            // apply the mask
+            for (int x = 0; x < width; x++) {
+                int color = imgData[x] & 0x00FFFFFF; // mask away any alpha present
+                int maskColor = (maskData[x] & 0x00FF0000) << 8; // shift red into alpha bits
+                color |= maskColor;
+                imgData[x] = color;
+            }
+
+            // replace the data
+            inputImage.setRGB(0, y, width, 1, imgData, 0, 1);
+        }
+        return inputImage;
     }
 
     /*--- Private Setup Methods ---*/
@@ -63,6 +106,6 @@ public class ProfilePreviewPanel extends JPanel {
 
     private void initializeImages() {
         backgroundImage = ArmoryImage.PREVIEW_BACKGROUND;
-        hudImage = ArmoryImage.PREVIEW_HUD;
+        hudImage = ArmoryImage.PREVIEW_MASK_HUD;
     }
 }
