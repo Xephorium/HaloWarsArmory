@@ -119,8 +119,8 @@ public class Profile {
         UNIT("Units"),
         CORPSE("Corpses"),
         SELECTOR("Selector"),
-        MINIMAP("Minimap"),
-        HUD("HUD");
+        MINIMAP_ICON("Minimap Icon"),
+        PAUSE_MENU("Pause Menu");
 
         private String displayName;
 

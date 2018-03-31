@@ -58,7 +58,7 @@ public class ProfilePreviewPanel extends JPanel {
 
         if (backgroundImage != null) {
             graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
-            graphics.drawImage(rescaleImage(tintImage(hudImage, selectedProfile.getColor(Profile.ColorType.HUD))), 0, 0, null);
+            graphics.drawImage(rescaleImage(tintImage(hudImage, selectedProfile.getColor(Profile.ColorType.PAUSE_MENU))), 0, 0, null);
         }
     }
 
