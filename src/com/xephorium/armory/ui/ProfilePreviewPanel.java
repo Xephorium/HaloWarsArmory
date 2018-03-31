@@ -1,11 +1,13 @@
 package com.xephorium.armory.ui;
 
+import com.mortennobel.imagescaling.ResampleOp;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class ProfilePreviewPanel extends JPanel {
 
@@ -15,8 +17,9 @@ public class ProfilePreviewPanel extends JPanel {
     private static final int PREVIEW_HEIGHT = ArmoryDimension.PREVIEW_PANEL_HEIGHT;
     private static final int PREVIEW_WIDTH = ArmoryDimension.PREVIEW_PANEL_WIDTH;
 
-    private Image backgroundImage;
-    private Image hudImage;
+    ResampleOp imageResampler;
+    private BufferedImage backgroundImage;
+    private BufferedImage hudImage;
 
 
     /*--- Constructor ---*/
@@ -24,6 +27,7 @@ public class ProfilePreviewPanel extends JPanel {
     public ProfilePreviewPanel() {
         super();
 
+        initializeGraphicsUtilities();
         initializeImages();
 
         this.setBackground(Color.WHITE);
@@ -39,16 +43,26 @@ public class ProfilePreviewPanel extends JPanel {
         super.paintComponent(graphics);
 
         if (backgroundImage != null) {
-            graphics.drawImage(backgroundImage, 0, 0, this.getWidth(), PREVIEW_HEIGHT, null);
-            graphics.drawImage(hudImage, 0, 0, this.getWidth(), PREVIEW_HEIGHT, null);
+            graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
+            graphics.drawImage(rescaleImage(hudImage), 0, 0, null);
         }
     }
 
 
-    /*--- Private Methods ---*/
+    /*--- Private Rendering Methods ---*/
+
+    private BufferedImage rescaleImage(BufferedImage bufferedImage) {
+        return imageResampler.filter(bufferedImage, null);
+    }
+
+    /*--- Private Setup Methods ---*/
+
+    private void initializeGraphicsUtilities() {
+        imageResampler = new ResampleOp (PREVIEW_WIDTH, PREVIEW_HEIGHT);
+    }
 
     private void initializeImages() {
-        backgroundImage = ArmoryImage.PREVIEW_BACKGROUND.getImage();
-        hudImage = ArmoryImage.PREVIEW_HUD.getImage();
+        backgroundImage = (BufferedImage) ArmoryImage.PREVIEW_BACKGROUND.getImage();
+        hudImage = (BufferedImage) ArmoryImage.PREVIEW_HUD.getImage();
     }
 }
