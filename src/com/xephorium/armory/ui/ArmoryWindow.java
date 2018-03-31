@@ -180,7 +180,11 @@ public class ArmoryWindow {
                 ArmoryDimension.PANEL_PADDING/2,
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
-        eastPanel.setPreferredSize(new Dimension(ArmoryDimension.PREVIEW_PANEL_WIDTH, 0));
+        eastPanel.setPreferredSize(new Dimension(
+                ArmoryDimension.PREVIEW_PANEL_WIDTH
+                + ArmoryDimension.PANEL_PADDING/2
+                + ArmoryDimension.WINDOW_PADDING_HORIZONTAL,
+                0));
         eastPanel.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
 
         eastPanel.add(profileConfigurationPanel, BorderLayout.CENTER);

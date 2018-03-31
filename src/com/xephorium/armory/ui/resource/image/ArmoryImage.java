@@ -26,4 +26,5 @@ public class ArmoryImage {
     public static ImageIcon ICON_INSTALLATION_INVALID_DIALOG = new ImageIcon(ICON_INSTALLATION_INVALID_DIALOG_PATH, "Installation Invalid");
     public static ImageIcon ICON_INSTALLATION_UNKNOWN = new ImageIcon(ICON_INSTALLATION_UNKNOWN_STYLIZED_PATH, "Installation Unknown");
     public static ImageIcon PREVIEW_BACKGROUND = new ImageIcon(PREVIEW_BACKGROUND_PATH, "Preview Background");
+    public static ImageIcon PREVIEW_HUD = new ImageIcon(PREVIEW_HUD_PATH, "Preview HUD");
 }
