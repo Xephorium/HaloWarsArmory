@@ -15,6 +15,8 @@ public class ProfilePreviewPanel extends JPanel {
 
     /*--- Variables ---*/
 
+    private static final boolean RENDER_PREVIEW = false;
+
     private static final int PREVIEW_HEIGHT = ArmoryDimension.PREVIEW_PANEL_HEIGHT;
     private static final int PREVIEW_WIDTH = ArmoryDimension.PREVIEW_PANEL_WIDTH;
 
@@ -36,12 +38,19 @@ public class ProfilePreviewPanel extends JPanel {
     public ProfilePreviewPanel() {
         super();
 
-        initializeGraphicsUtilities();
-        initializeImages();
+        if (RENDER_PREVIEW) {
+            initializeGraphicsUtilities();
+            initializeImages();
 
-        this.setBackground(Color.WHITE);
-        this.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
-        this.setPreferredSize(new Dimension(0, ArmoryDimension.PREVIEW_PANEL_HEIGHT));
+            this.setBackground(Color.WHITE);
+            this.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
+            this.setPreferredSize(new Dimension(0, ArmoryDimension.PREVIEW_PANEL_HEIGHT));
+        } else {
+            this.setBackground(Color.WHITE);
+            this.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
+            this.setPreferredSize(new Dimension(0, ArmoryDimension.PREVIEW_PANEL_HEIGHT));
+            this.add(createBlankPanel(), BorderLayout.CENTER);
+        }
     }
 
 
@@ -56,9 +65,11 @@ public class ProfilePreviewPanel extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        if (backgroundImage != null) {
-            graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
-            graphics.drawImage(rescaleImage(tintImage(hudImage, selectedProfile.getColor(Profile.ColorType.PAUSE_MENU))), 0, 0, null);
+        if (RENDER_PREVIEW) {
+            if (backgroundImage != null) {
+                graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
+                graphics.drawImage(rescaleImage(tintImage(hudImage, selectedProfile.getColor(Profile.ColorType.PAUSE_MENU))), 0, 0, null);
+            }
         }
     }
 
@@ -121,5 +132,11 @@ public class ProfilePreviewPanel extends JPanel {
     private void initializeImages() {
         backgroundImage = ArmoryImage.PREVIEW_BACKGROUND;
         hudImage = ArmoryImage.PREVIEW_MASK_HUD;
+    }
+
+    private JPanel createBlankPanel() {
+        JPanel emptyPanel = new JPanel();
+        emptyPanel.setBackground(Color.WHITE);
+        return emptyPanel;
     }
 }
