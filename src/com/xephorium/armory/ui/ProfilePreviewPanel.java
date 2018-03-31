@@ -62,7 +62,7 @@ public class ProfilePreviewPanel extends JPanel {
     }
 
     private void initializeImages() {
-        backgroundImage = (BufferedImage) ArmoryImage.PREVIEW_BACKGROUND.getImage();
-        hudImage = (BufferedImage) ArmoryImage.PREVIEW_HUD.getImage();
+        backgroundImage = ArmoryImage.PREVIEW_BACKGROUND;
+        hudImage = ArmoryImage.PREVIEW_HUD;
     }
 }
