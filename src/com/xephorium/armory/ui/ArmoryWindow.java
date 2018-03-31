@@ -117,6 +117,7 @@ public class ArmoryWindow {
     public void setSelectedProfile(Profile profile) {
         profileConfigurationPanel.setSelectedProfile(profile);
         profileConfigurationPanel.setWorkingProfile(profile);
+        profilePreviewPanel.setSelectedProfile(profile);
     }
 
     public void selectNewProfile(Profile profile) {
@@ -126,6 +127,7 @@ public class ArmoryWindow {
 
     public void setWorkingProfile(Profile profile) {
         profileConfigurationPanel.setWorkingProfile(profile);
+        profilePreviewPanel.setSelectedProfile(profile);
     }
 
     public void displayColorChooserDialog(Color initialColor, ColorChooser.ColorChooserListener listener) {

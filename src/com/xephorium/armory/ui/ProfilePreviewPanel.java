@@ -1,6 +1,7 @@
 package com.xephorium.armory.ui;
 
 import com.mortennobel.imagescaling.ResampleOp;
+import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
@@ -17,9 +18,17 @@ public class ProfilePreviewPanel extends JPanel {
     private static final int PREVIEW_HEIGHT = ArmoryDimension.PREVIEW_PANEL_HEIGHT;
     private static final int PREVIEW_WIDTH = ArmoryDimension.PREVIEW_PANEL_WIDTH;
 
-    ResampleOp imageResampler;
+    private ResampleOp imageResampler;
     private BufferedImage backgroundImage;
     private BufferedImage hudImage;
+    private Profile selectedProfile = new Profile(
+            Profile.INITIALIZATION_KEY,
+            "Doesn't Matter",
+            new Color(1,1,1),
+            new Color(1,1,1),
+            new Color(1,1,1),
+            new Color(1,1,1),
+            new Color(37, 118, 181));
 
 
     /*--- Constructor ---*/
@@ -38,13 +47,18 @@ public class ProfilePreviewPanel extends JPanel {
 
     /*--- Public Methods  ---*/
 
+    public void setSelectedProfile(Profile profile) {
+        selectedProfile = profile.cloneProfile();
+        repaint();
+    }
+
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
         if (backgroundImage != null) {
             graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
-            graphics.drawImage(rescaleImage(tintImage(hudImage, new Color(37, 118, 181))), 0, 0, null);
+            graphics.drawImage(rescaleImage(tintImage(hudImage, selectedProfile.getColor(Profile.ColorType.HUD))), 0, 0, null);
         }
     }
 
