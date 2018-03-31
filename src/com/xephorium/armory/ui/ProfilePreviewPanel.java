@@ -44,7 +44,7 @@ public class ProfilePreviewPanel extends JPanel {
 
         if (backgroundImage != null) {
             graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
-            graphics.drawImage(rescaleImage(tintImage(hudImage, Color.BLUE)), 0, 0, null);
+            graphics.drawImage(rescaleImage(tintImage(hudImage, new Color(37, 118, 181))), 0, 0, null);
         }
     }
 
