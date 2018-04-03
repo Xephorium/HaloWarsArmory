@@ -15,14 +15,18 @@ public class ProfilePreviewPanel extends JPanel {
 
     /*--- Variables ---*/
 
-    private static final boolean RENDER_PREVIEW = false;
+    private static final boolean RENDER_PREVIEW = true;
 
     private static final int PREVIEW_HEIGHT = ArmoryDimension.PREVIEW_PANEL_HEIGHT;
     private static final int PREVIEW_WIDTH = ArmoryDimension.PREVIEW_PANEL_WIDTH;
 
     private ResampleOp imageResampler;
-    private BufferedImage backgroundImage;
-    private BufferedImage hudImage;
+
+    private BufferedImage scaledSourceBackgroundImage;
+    private BufferedImage scaledSourceHudImage;
+    private BufferedImage currentPreview = null;
+
+    // TODO - Find More Graceful Solution To Initial Setup
     private Profile selectedProfile = new Profile(
             Profile.INITIALIZATION_KEY,
             "Doesn't Matter",
@@ -58,6 +62,7 @@ public class ProfilePreviewPanel extends JPanel {
 
     public void setSelectedProfile(Profile profile) {
         selectedProfile = profile.cloneProfile();
+        currentPreview = null;
         repaint();
     }
 
@@ -66,20 +71,23 @@ public class ProfilePreviewPanel extends JPanel {
         super.paintComponent(graphics);
 
         if (RENDER_PREVIEW) {
-            if (backgroundImage != null) {
-                graphics.drawImage(rescaleImage(backgroundImage), 0, 0, null);
-                graphics.drawImage(rescaleImage(tintImage(hudImage, selectedProfile.getColor(Profile.ColorType.PAUSE_MENU))), 0, 0, null);
+
+            // Create currentPreviewImage
+            if (currentPreview == null) {
+                currentPreview = new BufferedImage(PREVIEW_WIDTH, PREVIEW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D graphics2D = currentPreview.createGraphics();
+                graphics2D.drawImage(scaledSourceBackgroundImage, 0, 0, null);
+                graphics2D.drawImage(tintImage(scaledSourceHudImage, selectedProfile.getColor(Profile.ColorType.PAUSE_MENU)), 0, 0, null);
+                graphics2D.dispose();
             }
+
+            // Draw currentPreviewImage
+            graphics.drawImage(currentPreview, 0, 0, null);
         }
     }
 
 
     /*--- Private Rendering Methods ---*/
-
-    // 1. Get Alpha Image From ArmoryImage
-    // 2. Create BufferedImage of Specified Color
-    // 3. Add Alpha to BufferedImage
-    // 4. Run BufferedImage Through Scale Method
 
     private BufferedImage rescaleImage(BufferedImage bufferedImage) {
         return imageResampler.filter(bufferedImage, null);
@@ -130,8 +138,8 @@ public class ProfilePreviewPanel extends JPanel {
     }
 
     private void initializeImages() {
-        backgroundImage = ArmoryImage.PREVIEW_BACKGROUND;
-        hudImage = ArmoryImage.PREVIEW_MASK_HUD;
+        scaledSourceBackgroundImage = rescaleImage(ArmoryImage.PREVIEW_BACKGROUND);
+        scaledSourceHudImage = rescaleImage(ArmoryImage.PREVIEW_MASK_HUD);
     }
 
     private JPanel createBlankPanel() {
