@@ -26,15 +26,7 @@ public class ProfilePreviewPanel extends JPanel {
     private BufferedImage scaledSourceHudImage;
     private BufferedImage currentPreview = null;
 
-    // TODO - Find More Graceful Solution To Initial Setup
-    private Profile selectedProfile = new Profile(
-            Profile.INITIALIZATION_KEY,
-            "Doesn't Matter",
-            new Color(1,1,1),
-            new Color(1,1,1),
-            new Color(1,1,1),
-            new Color(1,1,1),
-            new Color(37, 118, 181));
+    private Profile selectedProfile;
 
 
     /*--- Constructor ---*/
@@ -70,10 +62,11 @@ public class ProfilePreviewPanel extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-        if (RENDER_PREVIEW) {
+        if (RENDER_PREVIEW && selectedProfile != null) {
 
-            // Create currentPreviewImage
             if (currentPreview == null) {
+
+                // Recreate currentPreviewImage
                 currentPreview = new BufferedImage(PREVIEW_WIDTH, PREVIEW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D graphics2D = currentPreview.createGraphics();
                 graphics2D.drawImage(scaledSourceBackgroundImage, 0, 0, null);
