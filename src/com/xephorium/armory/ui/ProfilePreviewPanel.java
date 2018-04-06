@@ -22,8 +22,10 @@ public class ProfilePreviewPanel extends JPanel {
 
     private ResampleOp imageResampler;
 
-    private BufferedImage scaledSourceBackgroundImage;
-    private BufferedImage scaledSourceHudImage;
+    private BufferedImage scaledBackgroundImage;
+    private BufferedImage scaledMaskWarthogColor;
+    private BufferedImage scaledMaskWarthogShine;
+    private BufferedImage scaledMaskSelectorColor;
     private BufferedImage currentPreview = null;
 
     private Profile selectedProfile;
@@ -69,8 +71,10 @@ public class ProfilePreviewPanel extends JPanel {
                 // Recreate currentPreviewImage
                 currentPreview = new BufferedImage(PREVIEW_WIDTH, PREVIEW_HEIGHT, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D graphics2D = currentPreview.createGraphics();
-                graphics2D.drawImage(scaledSourceBackgroundImage, 0, 0, null);
-                graphics2D.drawImage(tintImage(scaledSourceHudImage, selectedProfile.getColor(Profile.ColorType.PAUSE_MENU)), 0, 0, null);
+                graphics2D.drawImage(scaledBackgroundImage, 0, 0, null);
+                graphics2D.drawImage(tintImage(scaledMaskWarthogColor, selectedProfile.getColor(Profile.ColorType.UNIT)), 0, 0, null);
+                graphics2D.drawImage(tintImage(scaledMaskWarthogShine, new Color(255, 255, 225)), 0, 0, null);
+                graphics2D.drawImage(tintImage(scaledMaskSelectorColor, selectedProfile.getColor(Profile.ColorType.SELECTOR)), 0, 0, null);
                 graphics2D.dispose();
             }
 
@@ -131,8 +135,10 @@ public class ProfilePreviewPanel extends JPanel {
     }
 
     private void initializeImages() {
-        scaledSourceBackgroundImage = rescaleImage(ArmoryImage.PREVIEW_BACKGROUND);
-        scaledSourceHudImage = rescaleImage(ArmoryImage.PREVIEW_MASK_HUD);
+        scaledBackgroundImage = rescaleImage(ArmoryImage.PREVIEW_BACKGROUND);
+        scaledMaskWarthogColor = rescaleImage(ArmoryImage.PREVIEW_MASK_WARTHOG_COLOR);
+        scaledMaskWarthogShine = rescaleImage(ArmoryImage.PREVIEW_MASK_WARTHOG_SHINE);
+        scaledMaskSelectorColor = rescaleImage(ArmoryImage.PREVIEW_MASK_SELECTOR_COLOR);
     }
 
     private JPanel createBlankPanel() {
