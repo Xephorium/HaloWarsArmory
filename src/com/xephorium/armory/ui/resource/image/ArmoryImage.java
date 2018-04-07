@@ -26,6 +26,7 @@ public class ArmoryImage {
     private static String PREVIEW_MASK_WARTHOG_COLOR_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewMaskWarthogColor.png";
     private static String PREVIEW_MASK_WARTHOG_SHINE_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewMaskWarthogShine.png";
     private static String PREVIEW_MASK_SELECTOR_COLOR_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewMaskSelectorColor.png";
+    private static String PREVIEW_MASK_UNSC_MINIMAP_COLOR_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewMaskUNSCMinimapColor.png";
 
 
     /*--- Public Image Retrieval Methods ---*/
@@ -42,6 +43,7 @@ public class ArmoryImage {
     public static BufferedImage PREVIEW_MASK_WARTHOG_COLOR = readBufferedImage(PREVIEW_MASK_WARTHOG_COLOR_PATH);
     public static BufferedImage PREVIEW_MASK_WARTHOG_SHINE = readBufferedImage(PREVIEW_MASK_WARTHOG_SHINE_PATH);
     public static BufferedImage PREVIEW_MASK_SELECTOR_COLOR = readBufferedImage(PREVIEW_MASK_SELECTOR_COLOR_PATH);
+    public static BufferedImage PREVIEW_MASK_UNSC_MINIMAP_COLOR = readBufferedImage(PREVIEW_MASK_UNSC_MINIMAP_COLOR_PATH);
 
 
     /*--- Private Utility Methods  ---*/
