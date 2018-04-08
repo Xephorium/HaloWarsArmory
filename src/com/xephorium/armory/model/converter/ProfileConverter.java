@@ -1,4 +1,6 @@
-package com.xephorium.armory.model;
+package com.xephorium.armory.model.converter;
+
+import com.xephorium.armory.model.Profile;
 
 import java.awt.*;
 import java.util.regex.Matcher;

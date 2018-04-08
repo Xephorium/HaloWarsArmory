@@ -1,7 +1,7 @@
 package com.xephorium.armory.repository;
 
 import com.xephorium.armory.model.Profile;
-import com.xephorium.armory.model.ProfileConverter;
+import com.xephorium.armory.model.converter.ProfileConverter;
 import com.xephorium.armory.model.ProfileList;
 
 import java.awt.*;
@@ -27,14 +27,12 @@ public class ProfileRepository {
     /*--- Public Methods ---*/
 
     public ProfileList loadCustomPlayerProfileList() {
-        ProfileList profileList = new ProfileList();
+        ProfileList profileList;
 
         if (CUSTOM_PROFILES_FILE.exists()) {
-            System.out.println("Saved Custom Profiles Exist");
-            // TODO - Read Profiles From File
-            // TODO - Write New ProfileList to File (Update primaryKey's)
+            profileList = createNewProfileListFromCustomProfiles();
+            writeProfileListToCustomProfiles(profileList);
         } else {
-            System.out.println("Saved Custom Profiles Do Not Exist");
             return new ProfileList();
         }
 
@@ -43,12 +41,12 @@ public class ProfileRepository {
 
     public boolean saveCustomPlayerProfile(Profile profile) {
         if (CUSTOM_PROFILES_FILE.exists()) {
-            if(!saveProfileToCustomProfileFile(profile))
+            if(!writeProfileToCustomProfiles(profile))
                 return false;
         } else {
-            if(!createCustomProfilesFile())
+            if(!createCustomProfilesSaveFile())
                 return false;
-            if(!saveProfileToCustomProfileFile(profile))
+            if(!writeProfileToCustomProfiles(profile))
                 return false;
         }
 
@@ -139,27 +137,34 @@ public class ProfileRepository {
 
     /*--- Private Methods ---*/
 
-    private static boolean saveProfileToCustomProfileFile(Profile profile) {
-        // Read Current ProfileList
-        ProfileList savedCustomProfiles = readSavedCustomProfileList();
+    private static boolean writeProfileToCustomProfiles(Profile profile) {
+        ProfileList customProfileList = readCustomProfiles();
 
-        // Update Current ProfileList
+        if (customProfileList.containsPrimaryKey(profile.getPrimaryKey())) {
+            customProfileList.updateExistingProfile(profile);
+        } else {
+            customProfileList.addNewProfile(profile);
+        }
 
-        // Write New ProfileList
-//        try {
-//            PrintWriter writer = new PrintWriter(CUSTOM_PROFILES_FILE, "UTF-8");
-//            writer.println("The first line");
-//            writer.println("The second line");
-//            writer.close();
-//        } catch (IOException exception) {
-//            return false;
-//        }
+        return writeProfileListToCustomProfiles(customProfileList);
+    }
+
+    private static boolean writeProfileListToCustomProfiles(ProfileList profileList) {
+        try {
+            PrintWriter writer = new PrintWriter(CUSTOM_PROFILES_FILE, "UTF-8");
+            for (int x = 0; x < profileList.size(); x++) {
+                writer.println(ProfileConverter.getSaveStringFromProfile(profileList.getProfileByIndex(x)));
+            }
+            writer.close();
+        } catch (IOException exception) {
+            return false;
+        }
 
         return true;
     }
 
-    private static ProfileList readSavedCustomProfileList() {
-        ProfileList savedCustomProfileList = new ProfileList();
+    private static ProfileList readCustomProfiles() {
+        ProfileList customProfileList = new ProfileList();
         BufferedReader bufferedReader;
 
         try {
@@ -169,7 +174,7 @@ public class ProfileRepository {
             while (line != null) {
                 Profile profile = ProfileConverter.getProfileFromSaveString(line);
                 if (profile != null)
-                    savedCustomProfileList.addNewProfileAsIs(profile);
+                    customProfileList.addNewProfileAsIs(profile);
                 line = bufferedReader.readLine();
             }
 
@@ -178,10 +183,33 @@ public class ProfileRepository {
             return new ProfileList();
         }
 
-        return savedCustomProfileList;
+        return customProfileList;
     }
 
-    private static boolean createCustomProfilesFile() {
+    private static ProfileList createNewProfileListFromCustomProfiles() {
+        ProfileList customProfileList = new ProfileList();
+        BufferedReader bufferedReader;
+
+        try {
+            bufferedReader = new BufferedReader(new FileReader(CUSTOM_PROFILES_FILE));
+            String line = bufferedReader.readLine();
+
+            while (line != null) {
+                Profile profile = ProfileConverter.getProfileFromSaveString(line);
+                if (profile != null)
+                    customProfileList.addNewProfile(profile);
+                line = bufferedReader.readLine();
+            }
+
+            bufferedReader.close();
+        } catch (IOException exception) {
+            return new ProfileList();
+        }
+
+        return customProfileList;
+    }
+
+    private static boolean createCustomProfilesSaveFile() {
         try {
             CUSTOM_PROFILES_FILE.createNewFile();
         } catch (IOException exception) {

@@ -180,9 +180,7 @@ public class ProfileList {
 
     }
 
-    /*--- Private Methods ---*/
-
-    private boolean containsName(String name) {
+    public boolean containsName(String name) {
         for (int x = 0; x < profileList.size(); x++) {
             if (name.equals(profileList.get(x).getName())) {
                 return true;
@@ -191,7 +189,7 @@ public class ProfileList {
         return false;
     }
 
-    private boolean containsPrimaryKey(int primaryKey) {
+    public boolean containsPrimaryKey(int primaryKey) {
         for (int x = 0; x < profileList.size(); x++) {
             if (primaryKey == profileList.get(x).getPrimaryKey()) {
                 return true;
@@ -199,6 +197,9 @@ public class ProfileList {
         }
         return false;
     }
+
+
+    /*--- Private Methods ---*/
 
     private int generateNewPrimaryKey() {
         int newPrimaryKey = 0;
