@@ -27,6 +27,8 @@ public class ProfilePreviewPanel extends JPanel {
     private BufferedImage scaledMaskWarthogShine;
     private BufferedImage scaledMaskSelectorColor;
     private BufferedImage scaledMaskUNSCMinimapColor;
+    private BufferedImage scaledMaskUNSCPauseColor;
+    private BufferedImage scaledMaskUNSCCorpseColor;
     private BufferedImage currentPreview = null;
 
     private Profile selectedProfile;
@@ -77,6 +79,8 @@ public class ProfilePreviewPanel extends JPanel {
                 graphics2D.drawImage(tintImage(scaledMaskWarthogShine, new Color(255, 255, 225)), 0, 0, null);
                 graphics2D.drawImage(tintImage(scaledMaskSelectorColor, selectedProfile.getColor(Profile.ColorType.SELECTOR)), 0, 0, null);
                 graphics2D.drawImage(tintImage(scaledMaskUNSCMinimapColor, selectedProfile.getColor(Profile.ColorType.MINIMAP_ICON)), 0, 0, null);
+                graphics2D.drawImage(tintImage(scaledMaskUNSCPauseColor, selectedProfile.getColor(Profile.ColorType.PAUSE_MENU)), 0, 0, null);
+                graphics2D.drawImage(tintImage(scaledMaskUNSCCorpseColor, selectedProfile.getColor(Profile.ColorType.CORPSE)), 0, 0, null);
                 graphics2D.dispose();
             }
 
@@ -142,6 +146,8 @@ public class ProfilePreviewPanel extends JPanel {
         scaledMaskWarthogShine = rescaleImage(ArmoryImage.PREVIEW_MASK_WARTHOG_SHINE);
         scaledMaskSelectorColor = rescaleImage(ArmoryImage.PREVIEW_MASK_SELECTOR_COLOR);
         scaledMaskUNSCMinimapColor = rescaleImage(ArmoryImage.PREVIEW_MASK_UNSC_MINIMAP_COLOR);
+        scaledMaskUNSCPauseColor = rescaleImage(ArmoryImage.PREVIEW_MASK_UNSC_PAUSE_COLOR);
+        scaledMaskUNSCCorpseColor = rescaleImage(ArmoryImage.PREVIEW_MASK_UNSC_CORPSE_COLOR);
     }
 
     private JPanel createBlankPanel() {
