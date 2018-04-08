@@ -56,7 +56,7 @@ public class ProfileRepository {
     public void deleteCustomPlayerProfile(int primaryKey) {
 
         if (CUSTOM_PROFILES_FILE.exists()) {
-            // TODO - Delete Profile With Primary Key if Exists
+            deleteProfileFromCustomProfiles(primaryKey);
         }
     }
 
@@ -161,6 +161,16 @@ public class ProfileRepository {
         }
 
         return true;
+    }
+
+    private static boolean deleteProfileFromCustomProfiles(int primaryKey) {
+        ProfileList customProfileList = readCustomProfiles();
+
+        if (customProfileList.containsPrimaryKey(primaryKey)) {
+            customProfileList.delete(primaryKey);
+        }
+
+        return writeProfileListToCustomProfiles(customProfileList);
     }
 
     private static ProfileList readCustomProfiles() {
