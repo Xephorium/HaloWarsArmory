@@ -70,6 +70,11 @@ public class ProfileList {
         profileList.add(0, newProfile);
     }
 
+    public void addNewProfileAsIs(Profile profile) {
+        Profile newProfile = profile.cloneProfile();
+        profileList.add(newProfile);
+    }
+
     public void addAllNewProfiles(ProfileList profileList) {
         ProfileList newProfileList = profileList.clone();
         for (int x = 0; x < newProfileList.size(); x++) {

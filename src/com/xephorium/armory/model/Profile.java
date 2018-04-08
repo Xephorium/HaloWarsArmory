@@ -36,26 +36,26 @@ public class Profile {
         }
     }
 
-    public Profile(String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+    public Profile(String name, Color unitsColor, Color corpseColor, Color selectorColor, Color minimapColor, Color pauseColor) {
         this.primaryKey = INITIALIZATION_KEY;
         this.name = name;
         this.colorList = new ArrayList<>();
-        colorList.add(unitColor);
+        colorList.add(unitsColor);
         colorList.add(corpseColor);
         colorList.add(selectorColor);
         colorList.add(minimapColor);
-        colorList.add(hudColor);
+        colorList.add(pauseColor);
     }
 
-    public Profile(int primaryKey, String name, Color unitColor, Color corpseColor, Color selectorColor, Color minimapColor, Color hudColor) {
+    public Profile(int primaryKey, String name, Color unitsColor, Color corpseColor, Color selectorColor, Color minimapColor, Color pauseColor) {
         this.primaryKey = primaryKey;
         this.name = name;
         this.colorList = new ArrayList<>();
-        colorList.add(unitColor);
+        colorList.add(unitsColor);
         colorList.add(corpseColor);
         colorList.add(selectorColor);
         colorList.add(minimapColor);
-        colorList.add(hudColor);
+        colorList.add(pauseColor);
     }
 
 

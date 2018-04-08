@@ -89,7 +89,6 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         profileList.addDefaultFactionProfiles(profileRepository.getDefaultUNSCPlayerProfiles());
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
-        // TODO - Write Changes to File
     }
 
     @Override
@@ -98,7 +97,6 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         profileList.addDefaultFactionProfiles(profileRepository.getDefaultCovenantPlayerProfiles());
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
-        // TODO - Write Changes to File
     }
 
     @Override
@@ -125,7 +123,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         profileList.addNewProfileTop(newProfile);
         armoryWindow.updateProfileList(profileList);
         armoryWindow.selectNewProfile(profileList.getProfileByIndex(0));
-        // TODO - Write Changes to File
+        profileRepository.saveCustomPlayerProfile(profileList.getProfileByIndex(0));
     }
 
     @Override
@@ -133,12 +131,16 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         // TODO - Prompt For Delete?
         profileList.delete(primaryKey);
         armoryWindow.updateProfileList(profileList);
-        // TODO - Write Changes to File
+
+        if (!profileRepository.isDefaultProfilePrimaryKey(primaryKey)) {
+            profileRepository.deleteCustomPlayerProfile(primaryKey);
+        }
     }
 
     @Override
     public void handleWorkingProfileSaveClick(Profile profile) {
         Profile newProfile = profile.cloneProfile();
+        boolean saveSuccessful = true;
 
         if (StringUtility.isBlank(newProfile.getName())) {
             armoryWindow.displayProfileMustHaveNameDialog();
@@ -152,8 +154,16 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
         profileList.updateExistingProfile(newProfile);
         armoryWindow.updateProfileList(profileList);
-        armoryWindow.displayProfileSavedDialog();
-        // TODO - Write Changes to File
+
+        if (!profileRepository.isDefaultProfilePrimaryKey(profile.getPrimaryKey())) {
+            saveSuccessful = profileRepository.saveCustomPlayerProfile(profile);
+        }
+
+        if (saveSuccessful) {
+            armoryWindow.displayProfileSavedDialog();
+        } else {
+            // TODO - Show Error Saving Dialog
+        }
     }
 
     @Override

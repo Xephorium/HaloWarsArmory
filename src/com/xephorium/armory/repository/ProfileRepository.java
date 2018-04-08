@@ -1,9 +1,11 @@
 package com.xephorium.armory.repository;
 
 import com.xephorium.armory.model.Profile;
+import com.xephorium.armory.model.ProfileConverter;
 import com.xephorium.armory.model.ProfileList;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,9 @@ public class ProfileRepository {
 
 
     /*--- Variables ---*/
+
+    private static final String CUSTOM_PROFILES_FILE_NAME = "CustomProfiles.txt";
+    private static final File CUSTOM_PROFILES_FILE = new File(getCurrentDirectory() + "\\" + CUSTOM_PROFILES_FILE_NAME);
 
 
     /*--- Constructor ---*/
@@ -23,8 +28,38 @@ public class ProfileRepository {
 
     public ProfileList loadCustomPlayerProfileList() {
         ProfileList profileList = new ProfileList();
-        // TODO - Read Custom Profiles From File
+
+        if (CUSTOM_PROFILES_FILE.exists()) {
+            System.out.println("Saved Custom Profiles Exist");
+            // TODO - Read Profiles From File
+            // TODO - Write New ProfileList to File (Update primaryKey's)
+        } else {
+            System.out.println("Saved Custom Profiles Do Not Exist");
+            return new ProfileList();
+        }
+
         return profileList;
+    }
+
+    public boolean saveCustomPlayerProfile(Profile profile) {
+        if (CUSTOM_PROFILES_FILE.exists()) {
+            if(!saveProfileToCustomProfileFile(profile))
+                return false;
+        } else {
+            if(!createCustomProfilesFile())
+                return false;
+            if(!saveProfileToCustomProfileFile(profile))
+                return false;
+        }
+
+        return true;
+    }
+
+    public void deleteCustomPlayerProfile(int primaryKey) {
+
+        if (CUSTOM_PROFILES_FILE.exists()) {
+            // TODO - Delete Profile With Primary Key if Exists
+        }
     }
 
     public List<Integer> loadCustomUNSCPlayerConfiguration() {
@@ -95,5 +130,67 @@ public class ProfileRepository {
         profileList.addNewProfile(new Profile(-111, "Covenant - Yellow", new Color(255, 215, 50), new Color(128, 107, 25), new Color(255, 215, 50), new Color(255, 215, 50), new Color(255, 215, 50)));
         profileList.addNewProfile(new Profile(-112, "Covenant - Beige", new Color(215, 190, 175), new Color(108, 95, 87), new Color(215, 200, 175), new Color(215, 200, 175), new Color(215, 200, 175)));
         return profileList;
+    }
+
+    public boolean isDefaultProfilePrimaryKey(int primaryKey) {
+        return primaryKey < -100 && primaryKey > -113;
+    }
+
+
+    /*--- Private Methods ---*/
+
+    private static boolean saveProfileToCustomProfileFile(Profile profile) {
+        // Read Current ProfileList
+        ProfileList savedCustomProfiles = readSavedCustomProfileList();
+
+        // Update Current ProfileList
+
+        // Write New ProfileList
+//        try {
+//            PrintWriter writer = new PrintWriter(CUSTOM_PROFILES_FILE, "UTF-8");
+//            writer.println("The first line");
+//            writer.println("The second line");
+//            writer.close();
+//        } catch (IOException exception) {
+//            return false;
+//        }
+
+        return true;
+    }
+
+    private static ProfileList readSavedCustomProfileList() {
+        ProfileList savedCustomProfileList = new ProfileList();
+        BufferedReader bufferedReader;
+
+        try {
+            bufferedReader = new BufferedReader(new FileReader(CUSTOM_PROFILES_FILE));
+            String line = bufferedReader.readLine();
+
+            while (line != null) {
+                Profile profile = ProfileConverter.getProfileFromSaveString(line);
+                if (profile != null)
+                    savedCustomProfileList.addNewProfileAsIs(profile);
+                line = bufferedReader.readLine();
+            }
+
+            bufferedReader.close();
+        } catch (IOException exception) {
+            return new ProfileList();
+        }
+
+        return savedCustomProfileList;
+    }
+
+    private static boolean createCustomProfilesFile() {
+        try {
+            CUSTOM_PROFILES_FILE.createNewFile();
+        } catch (IOException exception) {
+            return false;
+        }
+        return true;
+    }
+
+    private static String getCurrentDirectory() {
+        return System.getProperty("user.dir");
     }
 }
