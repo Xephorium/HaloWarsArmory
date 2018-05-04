@@ -85,17 +85,28 @@ public class ProfileList {
     public void addDefaultFactionProfiles(ProfileList defaultFactionProfiles) {
         ProfileList newDefaultFactionProfiles = defaultFactionProfiles.clone();
 
-        // Remove Existing Default Profiles
-        for (int x = 0; x < newDefaultFactionProfiles.size(); x++) {
-            int primaryKey = newDefaultFactionProfiles.getProfileByIndex(x).getPrimaryKey();
-            if (containsPrimaryKey(primaryKey)) {
-                delete(primaryKey);
+        // Append Current Default Profiles to newDefaultFactionProfiles If Not Already There
+        for (Profile profile : this.profileList) {
+            if (profile.getPrimaryKey() < 0) {
+                if (!newDefaultFactionProfiles.containsPrimaryKey(profile.getPrimaryKey())) {
+                    newDefaultFactionProfiles.addNewProfileAsIs(profile.cloneProfile());
+                }
             }
         }
 
-        // Add Default Profiles To Bottom
+        // Remove Default Profiles From this
+        for (Profile profile : newDefaultFactionProfiles.profileList) {
+            if (this.containsPrimaryKey(profile.getPrimaryKey())) {
+                this.delete(profile.getPrimaryKey());
+            }
+        }
+
+        // Sort newDefaultFactionProfiles
+        newDefaultFactionProfiles = sortProfileListByPrimaryKey(newDefaultFactionProfiles);
+
+        // Add newDefaultFactionProfiles To this
         for (int x = 0; x < newDefaultFactionProfiles.size(); x++) {
-            addNewProfile(newDefaultFactionProfiles.getProfileByIndex(x));
+            addNewProfileAsIs(newDefaultFactionProfiles.getProfileByIndex(x).cloneProfile());
         }
     }
 
@@ -207,5 +218,30 @@ public class ProfileList {
             newPrimaryKey++;
         }
         return newPrimaryKey;
+    }
+
+    private ProfileList sortProfileListByPrimaryKey(ProfileList profileList) {
+        ProfileList sortedProfileList = profileList.clone();
+        boolean swapOccurred = true;
+        Profile holder;
+
+        while (swapOccurred) {
+            swapOccurred = false;
+            for(int index = 0; index < sortedProfileList.size() - 1; index++ ) {
+                if (sortedProfileList.getProfileByIndex(index).getPrimaryKey() <
+                        sortedProfileList.getProfileByIndex(index + 1).getPrimaryKey()) {
+                    holder = sortedProfileList.getProfileByIndex(index).cloneProfile();
+                    sortedProfileList.setProfileByIndex(index, sortedProfileList.getProfileByIndex(index + 1).cloneProfile());
+                    sortedProfileList.setProfileByIndex(index + 1, holder.cloneProfile());
+                    swapOccurred = true;
+                }
+            }
+        }
+
+        return sortedProfileList;
+    }
+
+    private void setProfileByIndex(int index, Profile profile) {
+        this.profileList.set(index, profile.cloneProfile());
     }
 }
