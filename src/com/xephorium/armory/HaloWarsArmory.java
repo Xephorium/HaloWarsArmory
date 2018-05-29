@@ -37,8 +37,8 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
         profileList = new ProfileList();
         profileList.addAllNewProfiles(customProfileRepository.loadCustomPlayerProfileList());
-        profileList.addAllNewProfiles(customProfileRepository.getDefaultUNSCPlayerProfiles());
-        profileList.addAllNewProfiles(customProfileRepository.getDefaultCovenantPlayerProfiles());
+        profileList.addAllNewProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
+        profileList.addAllNewProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
 
         unscPlayerConfiguration = customProfileRepository.loadCustomUNSCPlayerConfiguration();
         covenantPlayerConfiguration = customProfileRepository.loadCustomCovenantPlayerConfiguration();
@@ -88,8 +88,8 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleUNSCConfigurationReset() {
-        unscPlayerConfiguration = customProfileRepository.getDefaultUNSCPlayerConfiguration();
-        profileList.addDefaultFactionProfiles(customProfileRepository.getDefaultUNSCPlayerProfiles());
+        unscPlayerConfiguration = gameRepository.getDefaultUNSCPlayerConfiguration();
+        profileList.addDefaultFactionProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
         gameRepository.resetGameProfileConfiguration(Faction.UNSC, unscPlayerConfiguration, profileList);
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
@@ -97,8 +97,8 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleCovenantConfigurationReset() {
-        covenantPlayerConfiguration = customProfileRepository.getDefaultCovenantPlayerConfiguration();
-        profileList.addDefaultFactionProfiles(customProfileRepository.getDefaultCovenantPlayerProfiles());
+        covenantPlayerConfiguration = gameRepository.getDefaultCovenantPlayerConfiguration();
+        profileList.addDefaultFactionProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
         gameRepository.resetGameProfileConfiguration(Faction.COVENANT, covenantPlayerConfiguration, profileList);
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
@@ -137,7 +137,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
         profileList.delete(primaryKey);
         armoryWindow.updateProfileList(profileList);
 
-        if (!customProfileRepository.isDefaultProfilePrimaryKey(primaryKey)) {
+        if (!gameRepository.isDefaultProfilePrimaryKey(primaryKey)) {
             customProfileRepository.deleteCustomPlayerProfile(primaryKey);
         }
     }
@@ -160,7 +160,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
         profileList.updateExistingProfile(newProfile);
         armoryWindow.updateProfileList(profileList);
 
-        if (!customProfileRepository.isDefaultProfilePrimaryKey(profile.getPrimaryKey())) {
+        if (!gameRepository.isDefaultProfilePrimaryKey(profile.getPrimaryKey())) {
             saveSuccessful = customProfileRepository.saveCustomPlayerProfile(profile);
         }
 
