@@ -12,13 +12,13 @@ import com.xephorium.armory.ui.utility.StringUtility;
 import java.awt.*;
 import java.util.List;
 
-public class HaloWarsArmory implements ArmoryWindowListener {
+class HaloWarsArmory implements ArmoryWindowListener {
 
 
     /*--- Variables ---*/
 
-    GameRepository gameRepository;
-    ProfileRepository profileRepository;
+    private GameRepository gameRepository;
+    private ProfileRepository profileRepository;
 
     private ProfileList profileList;
     private List<Integer> unscPlayerConfiguration;
@@ -29,7 +29,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     /*--- Constructor ---*/
 
-    public HaloWarsArmory() {
+    HaloWarsArmory() {
         gameRepository = new GameRepository();
         profileRepository = new ProfileRepository();
         armoryWindow = new ArmoryWindow(this);
@@ -46,6 +46,7 @@ public class HaloWarsArmory implements ArmoryWindowListener {
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
+        armoryWindow.setValidInstallDirectory(gameRepository.loadInstallationDirectory());
     }
 
 
@@ -61,7 +62,8 @@ public class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleDirectorySelection(String directory) {
-        if (gameRepository.isValidHaloWarsInstallation(directory)) {
+        if (GameRepository.isValidHaloWarsInstallation(directory)) {
+            gameRepository.saveInstallationDirectory(directory);
             armoryWindow.setValidInstallDirectory(directory);
             armoryWindow.displayGameFoundDialog();
         } else {

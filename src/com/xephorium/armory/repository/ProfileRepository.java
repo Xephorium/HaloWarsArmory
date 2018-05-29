@@ -18,12 +18,6 @@ public class ProfileRepository {
     private static final File CUSTOM_PROFILES_FILE = new File(getCurrentDirectory() + "\\" + CUSTOM_PROFILES_FILE_NAME);
 
 
-    /*--- Constructor ---*/
-
-    public ProfileRepository() {
-        // TODO - Setup File Read/Write
-    }
-
     /*--- Public Methods ---*/
 
     public ProfileList loadCustomPlayerProfileList() {

@@ -49,9 +49,11 @@ class InstallDirectoryPanel extends JPanel {
     /*--- Public Methods ---*/
 
     public void setValidInstallDirectory(String directory) {
-        directoryTextField.setText(" " + directory);
-        imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_FOUND.getImage());
-        this.repaint();
+        if (directory != null) {
+            directoryTextField.setText(" " + directory);
+            imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_FOUND.getImage());
+            this.repaint();
+        }
     }
 
     public void setInvalidInstallDirectory() {
