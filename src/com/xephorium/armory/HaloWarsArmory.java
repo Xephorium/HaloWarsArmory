@@ -104,12 +104,12 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleUNSCConfigurationSave() {
-        gameRepository.updateGameProfileConfiguration(Faction.UNSC, unscPlayerConfiguration, profileList);
+        gameRepository.updatePlayerColorsFile(Faction.UNSC, unscPlayerConfiguration, profileList);
     }
 
     @Override
     public void handleCovenantConfigurationSave() {
-        gameRepository.updateGameProfileConfiguration(Faction.COVENANT, covenantPlayerConfiguration, profileList);
+        gameRepository.updatePlayerColorsFile(Faction.COVENANT, covenantPlayerConfiguration, profileList);
     }
 
 

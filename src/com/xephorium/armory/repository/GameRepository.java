@@ -15,43 +15,47 @@ public class GameRepository {
 
     /*--- Variables ---*/
 
-    private static final String GAME_PROFILES_FILE_PATH = "overrides\\data\\playercolors.xml";
+    private static final String PLAYER_COLORS_PATH = "overrides\\data\\playercolors.xml";
     private static final String INSTALLATION_FILE_NAME = "InstallationDirectory.txt";
     private static final File INSTALLATION_FILE = new File(getCurrentDirectory() + "\\" + INSTALLATION_FILE_NAME);
 
-    private static final Integer UNSC_PROFILE_START_INDEX = 4;
+    private static final Integer UNSC_PROFILE_START_INDEX = 3;
     private static final Integer UNSC_PROFILE_END_INDEX = 9;
-    private static final Integer COVENANT_PROFILE_START_INDEX = 10;
+    private static final Integer COVENANT_PROFILE_START_INDEX = 9;
     private static final Integer COVENANT_PROFILE_END_INDEX = 15;
 
 
     /*--- Public Methods ---*/
 
-    public void updateGameProfileConfiguration(Faction faction,
-                                               List<Integer> profileConfiguration,
-                                               ProfileList profileList) {
+    public void updatePlayerColorsFile(Faction faction,
+                                       List<Integer> profileConfiguration,
+                                       ProfileList profileList) {
 
-        // Get Configuration File
-        File gameProfileConfigurationFile = getGameProfileConfigurationFile();
-        if (gameProfileConfigurationFile == null) {
-            // TODO - Create Player Colors File
+        // Read Current PlayerColors Contents
+        List<String> playerColorsContents = readPlayerColorsContents();
+        if (playerColorsContents == null) {
             return;
         }
 
-        // Create Saving Profile List
+        // Create Faction-Specific Profile List
         ProfileList factionProfiles = new ProfileList();
         for (Integer primaryKey : profileConfiguration) {
             factionProfiles.addNewProfile(profileList.getProfileByPrimaryKey(primaryKey).cloneProfile());
         }
 
-        // Read Configuration File Contents
+        // Replace Appropriate Lines of PlayerColors
+        for (int x = getFactionStartIndex(faction); x < getFactionEndIndex(faction); x++) {
+            int profileIndex = x - getFactionStartIndex(faction);
+            int colorNumber = x - 3;
+            String saveString = ProfileConverter
+                    .getSaveStringFromProfile(factionProfiles.getProfileByIndex(profileIndex), colorNumber + 1);
+            playerColorsContents.set(x, saveString);
+        }
 
-        // Replace Appropriate Lines
-
-        // Write to Configuration File
+        // Write to PlayerColors
         try {
-            PrintWriter writer = new PrintWriter(gameProfileConfigurationFile, "UTF-8");
-            writer.println(ProfileConverter.getSaveStringFromProfile(factionProfiles.getProfileByIndex(0), 0));
+            PrintWriter writer = new PrintWriter(getGamePlayerColorsFile(), "UTF-8");
+            playerColorsContents.forEach(writer::println);
             writer.close();
         } catch (IOException exception) {
             // Do Nothing
@@ -179,12 +183,39 @@ public class GameRepository {
         }
     }
 
-    private File getGameProfileConfigurationFile() {
+    private List<String> readPlayerColorsContents() {
+        File playerColorsFile = getGamePlayerColorsFile();
+        if (playerColorsFile == null) {
+            // TODO - Create Player Colors File
+            return null;
+        }
+
+        List<String> playerColorsContents = new ArrayList<>();
+        BufferedReader bufferedReader;
+
+        try {
+            bufferedReader = new BufferedReader(new FileReader(playerColorsFile));
+            String line = bufferedReader.readLine();
+
+            while (line != null) {
+                playerColorsContents.add(line);
+                line = bufferedReader.readLine();
+            }
+
+            bufferedReader.close();
+        } catch (IOException exception) {
+            return null;
+        }
+
+        return playerColorsContents;
+    }
+
+    private File getGamePlayerColorsFile() {
         if (!isSavedInstallationDirectoryValid()) {
             return null;
         }
 
-        File gameProfileFile = new File(loadInstallationDirectory() + "\\" + GAME_PROFILES_FILE_PATH);
+        File gameProfileFile = new File(loadInstallationDirectory() + "\\" + PLAYER_COLORS_PATH);
         if (!gameProfileFile.exists()) {
             return null;
         }
