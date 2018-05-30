@@ -3,6 +3,7 @@ package com.xephorium.armory.repository;
 import com.xephorium.armory.model.Faction;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
+import com.xephorium.armory.model.converter.ProfileConverter;
 
 import java.awt.*;
 import java.io.*;
@@ -18,29 +19,43 @@ public class GameRepository {
     private static final String INSTALLATION_FILE_NAME = "InstallationDirectory.txt";
     private static final File INSTALLATION_FILE = new File(getCurrentDirectory() + "\\" + INSTALLATION_FILE_NAME);
 
+    private static final Integer UNSC_PROFILE_START_INDEX = 4;
+    private static final Integer UNSC_PROFILE_END_INDEX = 9;
+    private static final Integer COVENANT_PROFILE_START_INDEX = 10;
+    private static final Integer COVENANT_PROFILE_END_INDEX = 15;
+
 
     /*--- Public Methods ---*/
 
-    public void resetGameProfileConfiguration(Faction faction,
-                                              List<Integer> profileConfiguration,
-                                              ProfileList profileList) {
+    public void updateGameProfileConfiguration(Faction faction,
+                                               List<Integer> profileConfiguration,
+                                               ProfileList profileList) {
+
+        // Get Configuration File
         File gameProfileConfigurationFile = getGameProfileConfigurationFile();
         if (gameProfileConfigurationFile == null) {
             // TODO - Create Player Colors File
             return;
         }
 
-    }
-
-    public void saveGameProfileConfiguration(Faction faction,
-                                             List<Integer> profileConfiguration,
-                                             ProfileList profileList) {
-        File gameProfileConfigurationFile = getGameProfileConfigurationFile();
-        if (gameProfileConfigurationFile == null) {
-            // TODO - Create Player Colors File
-            return;
+        // Create Saving Profile List
+        ProfileList factionProfiles = new ProfileList();
+        for (Integer primaryKey : profileConfiguration) {
+            factionProfiles.addNewProfile(profileList.getProfileByPrimaryKey(primaryKey).cloneProfile());
         }
 
+        // Read Configuration File Contents
+
+        // Replace Appropriate Lines
+
+        // Write to Configuration File
+        try {
+            PrintWriter writer = new PrintWriter(gameProfileConfigurationFile, "UTF-8");
+            writer.println(ProfileConverter.getSaveStringFromProfile(factionProfiles.getProfileByIndex(0), 0));
+            writer.close();
+        } catch (IOException exception) {
+            // Do Nothing
+        }
     }
 
     public String loadInstallationDirectory() {
@@ -147,6 +162,22 @@ public class GameRepository {
 
 
     /*--- Private Methods ---*/
+
+    private Integer getFactionStartIndex(Faction faction) {
+        if (faction == Faction.UNSC) {
+            return UNSC_PROFILE_START_INDEX;
+        } else {
+            return COVENANT_PROFILE_START_INDEX;
+        }
+    }
+
+    private Integer getFactionEndIndex(Faction faction) {
+        if (faction == Faction.UNSC) {
+            return UNSC_PROFILE_END_INDEX;
+        } else {
+            return COVENANT_PROFILE_END_INDEX;
+        }
+    }
 
     private File getGameProfileConfigurationFile() {
         if (!isSavedInstallationDirectoryValid()) {

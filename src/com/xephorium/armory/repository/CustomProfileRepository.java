@@ -95,7 +95,7 @@ public class CustomProfileRepository {
         try {
             PrintWriter writer = new PrintWriter(CUSTOM_PROFILES_FILE, "UTF-8");
             for (int x = 0; x < profileList.size(); x++) {
-                writer.println(ProfileConverter.getSaveStringFromProfile(profileList.getProfileByIndex(x)));
+                writer.println(ProfileConverter.getSaveStringFromProfile(profileList.getProfileByIndex(x), null));
             }
             writer.close();
         } catch (IOException exception) {

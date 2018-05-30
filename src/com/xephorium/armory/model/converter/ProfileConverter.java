@@ -11,41 +11,53 @@ public class ProfileConverter {
 
     /*--- Variables ---*/
 
-    private static final String PRIVATE_KEY_SAVE_LABEL = "primaryKey";
-    private static final String NAME_SAVE_LABEL = "name";
-    private static final String UNITS_SAVE_LABEL = "units";
-    private static final String CORPSES_SAVE_LABEL = "corpses";
-    private static final String SELECTOR_SAVE_LABEL = "selector";
-    private static final String MINIMAP_SAVE_LABEL = "minimap";
-    private static final String PAUSE_SAVE_LABEL = "pause";
-    private static final String BRACE_WRAPPED_DATA = "=\\{[^{]+\\}";
+    private static final String LABEL_PREFIX = "        <color ";
+    private static final String LABEL_SUFFIX = "/>";
+    private static final String LABEL_PRIMARY_KEY = "primaryKey";
+    private static final String LABEL_NUMBER = "num";
+    private static final String LABEL_NAME = "name";
+    private static final String LABEL_UNITS = "objects";
+    private static final String LABEL_CORPSES = "corpse";
+    private static final String LABEL_SELECTOR = "selection";
+    private static final String LABEL_MINIMAP = "minimap";
+    private static final String LABEL_PAUSE = "ui";
+    private static final String FORMAT_COLOR = "=\\\"[^\"]+\\\"";
 
-    private static final Pattern RED_COLOR_PATTERN = Pattern.compile("\\{\\d+,");
-    private static final Pattern GREEN_COLOR_PATTERN = Pattern.compile(" \\d+,");
-    private static final Pattern BLUE_COLOR_PATTERN = Pattern.compile("\\d+\\}");
+    private static final Pattern PATTERN_RED = Pattern.compile("\\\"\\d+ ");
+    private static final Pattern PATTERN_GREEN = Pattern.compile(" \\d+ ");
+    private static final Pattern PATTERN_BLUE = Pattern.compile("\\d+\\\"");
+    private static final Pattern PATTERN_PRIMARY_KEY = Pattern.compile(LABEL_PRIMARY_KEY + FORMAT_COLOR);
+    private static final Pattern PATTERN_NAME = Pattern.compile(LABEL_NAME + FORMAT_COLOR);
+    private static final Pattern PATTERN_UNITS = Pattern.compile(LABEL_UNITS + FORMAT_COLOR);
+    private static final Pattern PATTERN_CORPSES = Pattern.compile(LABEL_CORPSES + FORMAT_COLOR);
+    private static final Pattern PATTERN_SELECTOR = Pattern.compile(LABEL_SELECTOR + FORMAT_COLOR);
+    private static final Pattern PATTERN_MINIMAP = Pattern.compile(LABEL_MINIMAP + FORMAT_COLOR);
+    private static final Pattern PATTERN_PAUSE = Pattern.compile(LABEL_PAUSE + FORMAT_COLOR);
 
-    private static final Pattern PRIMARY_KEY_PATTERN = Pattern.compile(PRIVATE_KEY_SAVE_LABEL + BRACE_WRAPPED_DATA);
-    private static final Pattern NAME_PATTERN = Pattern.compile(NAME_SAVE_LABEL + BRACE_WRAPPED_DATA);
-    private static final Pattern UNITS_PATTERN = Pattern.compile(UNITS_SAVE_LABEL + BRACE_WRAPPED_DATA);
-    private static final Pattern CORPSES_PATTERN = Pattern.compile(CORPSES_SAVE_LABEL + BRACE_WRAPPED_DATA);
-    private static final Pattern SELECTOR_PATTERN = Pattern.compile(SELECTOR_SAVE_LABEL + BRACE_WRAPPED_DATA);
-    private static final Pattern MINIMAP_PATTERN = Pattern.compile(MINIMAP_SAVE_LABEL + BRACE_WRAPPED_DATA);
-    private static final Pattern PAUSE_PATTERN = Pattern.compile(PAUSE_SAVE_LABEL + BRACE_WRAPPED_DATA);
+    private static final String ESCAPED_DOUBLE_QUOTE = "&quot;";
 
 
     /*--- Public Methods ---*/
 
-    public static String getSaveStringFromProfile(Profile profile) {
+    public static String getSaveStringFromProfile(Profile profile, Integer number) {
         if (profile == null)
             return null;
 
-        return PRIVATE_KEY_SAVE_LABEL + "={" + profile.getPrimaryKey() + "} "
-                + NAME_SAVE_LABEL + "={" + profile.getName() + "} "
-                + UNITS_SAVE_LABEL + "={" + getColorStringFromColor(profile.getColor(Profile.ColorType.UNIT)) + "} "
-                + CORPSES_SAVE_LABEL + "={" + getColorStringFromColor(profile.getColor(Profile.ColorType.CORPSE)) + "} "
-                + SELECTOR_SAVE_LABEL + "={" + getColorStringFromColor(profile.getColor(Profile.ColorType.SELECTOR)) + "} "
-                + MINIMAP_SAVE_LABEL + "={" + getColorStringFromColor(profile.getColor(Profile.ColorType.MINIMAP_ICON)) + "} "
-                + PAUSE_SAVE_LABEL + "={" + getColorStringFromColor(profile.getColor(Profile.ColorType.PAUSE_MENU)) + "}";
+        String playerColorsNumber = "";
+        if (number != null) {
+            playerColorsNumber = LABEL_NUMBER + "=\"" + number + "\" ";
+        }
+
+        return LABEL_PREFIX
+                + playerColorsNumber
+                + LABEL_UNITS + "=\"" + getSaveColorStringFromColor(profile.getColor(Profile.ColorType.UNIT)) + "\" "
+                + LABEL_CORPSES + "=\"" + getSaveColorStringFromColor(profile.getColor(Profile.ColorType.CORPSE)) + "\" "
+                + LABEL_SELECTOR + "=\"" + getSaveColorStringFromColor(profile.getColor(Profile.ColorType.SELECTOR)) + "\" "
+                + LABEL_MINIMAP + "=\"" + getSaveColorStringFromColor(profile.getColor(Profile.ColorType.MINIMAP_ICON)) + "\" "
+                + LABEL_PAUSE + "=\"" + getSaveColorStringFromColor(profile.getColor(Profile.ColorType.PAUSE_MENU)) + "\" "
+                + LABEL_NAME + "=\"" + getSaveNameStringFromName(profile.getName()) + "\" "
+                + LABEL_PRIMARY_KEY + "=\"" + profile.getPrimaryKey() + "\" "
+                + LABEL_SUFFIX;
     }
 
     public static Profile getProfileFromSaveString(String saveString) {
@@ -77,95 +89,104 @@ public class ProfileConverter {
     /*--- Private Methods ---*/
 
     private static String getNameFromSaveString(String saveString) {
-        Matcher matcher = NAME_PATTERN.matcher(saveString);
+        Matcher matcher = PATTERN_NAME.matcher(saveString);
         String name = null;
 
         if (matcher.find()) {
-            name = matcher.group(0).substring(NAME_SAVE_LABEL.length() + 2, matcher.group(0).length() - 1);
+            name = matcher.group(0).substring(LABEL_NAME.length() + 2, matcher.group(0).length() - 1);
+            name = name.replaceAll(ESCAPED_DOUBLE_QUOTE, "\"");
         }
 
         return name;
     }
 
     private static Integer getPrimaryKeyFromSaveString(String saveString) {
-        Matcher matcher = PRIMARY_KEY_PATTERN.matcher(saveString);
+        Matcher matcher = PATTERN_PRIMARY_KEY.matcher(saveString);
         Integer primaryKey = null;
 
         if (matcher.find()) {
-            primaryKey = Integer.parseInt(matcher.group(0).substring(PRIVATE_KEY_SAVE_LABEL.length() + 2, matcher.group(0).length() - 1));
+            primaryKey = Integer.parseInt(matcher.group(0).substring(LABEL_PRIMARY_KEY.length() + 2, matcher.group(0).length() - 1));
         }
 
         return primaryKey;
     }
 
     private static Color getUnitsColorFromSaveString(String saveString) {
-        Matcher matcher = UNITS_PATTERN.matcher(saveString);
+        Matcher matcher = PATTERN_UNITS.matcher(saveString);
         Color unitsColor = null;
 
         if (matcher.find()) {
-            String colorString = matcher.group(0).substring(UNITS_SAVE_LABEL.length() + 1, matcher.group(0).length());
-            unitsColor = getColorFromColorString(colorString);
+            String colorString = matcher.group(0).substring(LABEL_UNITS.length() + 1, matcher.group(0).length());
+            unitsColor = getColorFromSaveColorString(colorString);
         }
 
         return unitsColor;
     }
 
     private static Color getCorpseColorFromSaveString(String saveString) {
-        Matcher matcher = CORPSES_PATTERN.matcher(saveString);
+        Matcher matcher = PATTERN_CORPSES.matcher(saveString);
         Color corpsesColor = null;
 
         if (matcher.find()) {
-            String colorString = matcher.group(0).substring(CORPSES_SAVE_LABEL.length() + 1, matcher.group(0).length());
-            corpsesColor = getColorFromColorString(colorString);
+            String colorString = matcher.group(0).substring(LABEL_CORPSES.length() + 1, matcher.group(0).length());
+            corpsesColor = getColorFromSaveColorString(colorString);
         }
 
         return corpsesColor;
     }
 
     private static Color getSelectorColorFromSaveString(String saveString) {
-        Matcher matcher = SELECTOR_PATTERN.matcher(saveString);
+        Matcher matcher = PATTERN_SELECTOR.matcher(saveString);
         Color selectorColor = null;
 
         if (matcher.find()) {
-            String colorString = matcher.group(0).substring(SELECTOR_SAVE_LABEL.length() + 1, matcher.group(0).length());
-            selectorColor = getColorFromColorString(colorString);
+            String colorString = matcher.group(0).substring(LABEL_SELECTOR.length() + 1, matcher.group(0).length());
+            selectorColor = getColorFromSaveColorString(colorString);
         }
 
         return selectorColor;
     }
 
     private static Color getMinimapColorFromSaveString(String saveString) {
-        Matcher matcher = MINIMAP_PATTERN.matcher(saveString);
+        Matcher matcher = PATTERN_MINIMAP.matcher(saveString);
         Color minimapColor = null;
 
         if (matcher.find()) {
-            String colorString = matcher.group(0).substring(MINIMAP_SAVE_LABEL.length() + 1, matcher.group(0).length());
-            minimapColor = getColorFromColorString(colorString);
+            String colorString = matcher.group(0).substring(LABEL_MINIMAP.length() + 1, matcher.group(0).length());
+            minimapColor = getColorFromSaveColorString(colorString);
         }
 
         return minimapColor;
     }
 
     private static Color getPauseColorFromSaveString(String saveString) {
-        Matcher matcher = PAUSE_PATTERN.matcher(saveString);
+        Matcher matcher = PATTERN_PAUSE.matcher(saveString);
         Color pauseColor = null;
 
         if (matcher.find()) {
-            String colorString = matcher.group(0).substring(PAUSE_SAVE_LABEL.length() + 1, matcher.group(0).length());
-            pauseColor = getColorFromColorString(colorString);
+            String colorString = matcher.group(0).substring(LABEL_PAUSE.length() + 1, matcher.group(0).length());
+            pauseColor = getColorFromSaveColorString(colorString);
         }
 
         return pauseColor;
     }
 
-    private static String getColorStringFromColor(Color color) {
+    private static String getSaveNameStringFromName(String name) {
+        if (name == null) {
+            return null;
+        }
+
+        return name.replaceAll("\"", ESCAPED_DOUBLE_QUOTE);
+    }
+
+    private static String getSaveColorStringFromColor(Color color) {
         if (color == null)
             return null;
 
-        return color.getRed() + ", " + color.getGreen() + ", " + color.getBlue();
+        return color.getRed() + " " + color.getGreen() + " " + color.getBlue();
     }
 
-    private static Color getColorFromColorString(String colorString) {
+    private static Color getColorFromSaveColorString(String colorString) {
         if (colorString == null || colorString.isEmpty())
             return null;
 
@@ -173,9 +194,9 @@ public class ProfileConverter {
         Integer greenValue = null;
         Integer blueValue = null;
 
-        Matcher redColorMatcher = RED_COLOR_PATTERN.matcher(colorString);
-        Matcher greenColorMatcher = GREEN_COLOR_PATTERN.matcher(colorString);
-        Matcher blueColorMatcher = BLUE_COLOR_PATTERN.matcher(colorString);
+        Matcher redColorMatcher = PATTERN_RED.matcher(colorString);
+        Matcher greenColorMatcher = PATTERN_GREEN.matcher(colorString);
+        Matcher blueColorMatcher = PATTERN_BLUE.matcher(colorString);
 
         if (redColorMatcher.find()) {
             redValue = Integer.parseInt(redColorMatcher.group(0).substring(1, redColorMatcher.group(0).length() - 1));
