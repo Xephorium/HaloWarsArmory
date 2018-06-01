@@ -1,2 +1,2 @@
 # Armory
-A custom unit color mod for Halo Wars: Definitive Edition
+A custom unit color tool for Halo Wars: Definitive Edition
