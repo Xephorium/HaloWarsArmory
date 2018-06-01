@@ -56,7 +56,7 @@ public class GameRepository {
                         initialProfileList.delete(currentCustomProfile.getPrimaryKey());
 
                     } else if (playerProfile.getName().equals(currentCustomProfile.getName())) {
-                        mergedProfileList.addNewProfileAsIs(playerProfile);
+                        mergedProfileList.addNewProfileAsIs(currentCustomProfile);
                         initialProfileList.delete(currentCustomProfile.getPrimaryKey());
 
                     } else {
