@@ -50,9 +50,13 @@ public class GameRepository {
                     break;
 
                 } else if (playerProfile.equalsColors(currentCustomProfile)) {
-                    if (!(playerProfile.getName().equals(Profile.INITIALIZATION_NAME)
-                            && playerProfile.getPrimaryKey() != Profile.INITIALIZATION_KEY)) {
+                    if (playerProfile.getName().equals(Profile.INITIALIZATION_NAME)
+                            && playerProfile.getPrimaryKey() == Profile.INITIALIZATION_KEY) {
                         mergedProfileList.addNewProfileAsIs(currentCustomProfile);
+                        initialProfileList.delete(currentCustomProfile.getPrimaryKey());
+
+                    } else if (playerProfile.getName().equals(currentCustomProfile.getName())) {
+                        mergedProfileList.addNewProfileAsIs(playerProfile);
                         initialProfileList.delete(currentCustomProfile.getPrimaryKey());
 
                     } else {

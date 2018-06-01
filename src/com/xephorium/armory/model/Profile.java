@@ -115,6 +115,14 @@ public class Profile {
         boolean sameNameAndId = ((Profile) profile).getPrimaryKey() == this.getPrimaryKey()
                 && ((Profile) profile).getName().equals(this.getName());
 
+        return sameNameAndId && this.equalsColors(profile);
+    }
+
+    public boolean equalsColors(Object profile) {
+        if (!(profile instanceof Profile)) {
+            return false;
+        }
+
         boolean sameColors = true;
         for (int x = 0; x < colorList.size(); x++) {
             if (colorList.get(x).getRed() != ((Profile) profile).colorList.get(x).getRed()) {
@@ -126,20 +134,6 @@ public class Profile {
             }
 
             if (colorList.get(x).getBlue() != ((Profile) profile).colorList.get(x).getBlue()) {
-                sameColors = false;
-            }
-        }
-        return sameNameAndId && sameColors;
-    }
-
-    public boolean equalsColors(Object profile) {
-        if (!(profile instanceof Profile)) {
-            return false;
-        }
-
-        boolean sameColors = true;
-        for (int x = 0; x < colorList.size(); x++) {
-            if (colorList.get(x) != ((Profile) profile).colorList.get(x)) {
                 sameColors = false;
             }
         }
