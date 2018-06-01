@@ -4,6 +4,7 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
+import com.xephorium.armory.ui.resource.image.ArmoryImage;
 import com.xephorium.armory.ui.utility.ColorChooser;
 import com.xephorium.armory.ui.utility.DialogFactory;
 import com.xephorium.armory.ui.utility.DirectoryChooser;
@@ -165,6 +166,7 @@ public class ArmoryWindow {
                 DisplayUtility.getWindowStartY(ArmoryDimension.WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
+        frame.setIconImage(ArmoryImage.ICON_APPLICATION_MAIN.getImage());
     }
 
     private void initializeViewClasses() {

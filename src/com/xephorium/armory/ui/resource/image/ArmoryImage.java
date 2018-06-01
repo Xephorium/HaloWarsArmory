@@ -13,6 +13,7 @@ public class ArmoryImage {
 
     private static boolean USE_DETAILED_ICONS = true;
 
+    private static String ICON_APPLICATION_MAIN_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconApplicationMain.png";
     private static String ICON_UNSC_SIMPLE_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFactionUNSCSimple.png";
     private static String ICON_UNSC_DETAILED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFactionUNSCDetailed.png";
     private static String ICON_COVENANT_SIMPLE_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFactionCovenantSimple.png";
@@ -33,6 +34,7 @@ public class ArmoryImage {
 
     /*--- Public Image Retrieval Methods ---*/
 
+    public static ImageIcon ICON_APPLICATION_MAIN = new ImageIcon(ICON_APPLICATION_MAIN_PATH, "Icon Application Main");
     public static ImageIcon ICON_UNSC = new ImageIcon(USE_DETAILED_ICONS ? ICON_UNSC_DETAILED_PATH : ICON_UNSC_SIMPLE_PATH, "UNSC Faction");
     public static ImageIcon ICON_COVENANT = new ImageIcon(USE_DETAILED_ICONS ? ICON_COVENANT_DETAILED_PATH : ICON_COVENANT_SIMPLE_PATH, "Covenant Faction");
     public static ImageIcon ICON_INSTALLATION_FOUND = new ImageIcon(ICON_INSTALLATION_FOUND_STYLIZED_PATH, "Installation Found");
