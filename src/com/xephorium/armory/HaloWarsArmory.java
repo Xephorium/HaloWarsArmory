@@ -40,6 +40,9 @@ class HaloWarsArmory implements ArmoryWindowListener {
         profileList.addAllNewProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
         profileList.addAllNewProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
 
+        profileList = gameRepository.mergeInitialProfilesWithSavedProfiles(profileList);
+        profileList = profileList.sortProfileListByPrimaryKey(profileList);
+
         unscPlayerConfiguration = customProfileRepository.loadCustomUNSCPlayerConfiguration();
         covenantPlayerConfiguration = customProfileRepository.loadCustomCovenantPlayerConfiguration();
 
@@ -104,12 +107,12 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleUNSCConfigurationSave() {
-        gameRepository.updatePlayerColorsFile(Faction.UNSC, unscPlayerConfiguration, profileList);
+        gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList);
     }
 
     @Override
     public void handleCovenantConfigurationSave() {
-        gameRepository.updatePlayerColorsFile(Faction.COVENANT, covenantPlayerConfiguration, profileList);
+        gameRepository.saveFactionProfiles(Faction.COVENANT, covenantPlayerConfiguration, profileList);
     }
 
 

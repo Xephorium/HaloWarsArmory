@@ -27,9 +27,76 @@ public class GameRepository {
 
     /*--- Public Methods ---*/
 
-    public void updatePlayerColorsFile(Faction faction,
-                                       List<Integer> profileConfiguration,
-                                       ProfileList profileList) {
+    public ProfileList mergeInitialProfilesWithSavedProfiles(ProfileList profileList) {
+        ProfileList customProfileList = profileList.clone();
+        ProfileList savedProfileList = new ProfileList();
+
+        // Read Current PlayerColors Contents
+        List<String> playerColorsContents = readPlayerColorsContents();
+        if (playerColorsContents == null) {
+            return null;
+        }
+
+        // Build PlayerColors ProfileList
+        ProfileList playerColorsProfileList = new ProfileList();
+        for (int x = UNSC_PROFILE_START_INDEX; x < COVENANT_PROFILE_END_INDEX; x++) {
+            Profile currentProfile = ProfileConverter.getProfileFromSaveString(playerColorsContents.get(x));
+            playerColorsProfileList.addNewProfileAsIs(currentProfile);
+        }
+
+        // Merge customProfileList and playerColorsProfileList
+        for (int x = 0; x < playerColorsProfileList.size(); x++) {
+
+            Profile playerProfile = playerColorsProfileList.getProfileByIndex(x).cloneProfile();
+            boolean playerColorProfileHandled = false;
+
+            // If playerProfile exists in customProfileList, add to saveProfileList & delete from customProfileList
+            for (int y = 0; y < customProfileList.size(); y++) {
+                Profile currentCustomProfile = customProfileList.getProfileByIndex(y).cloneProfile();
+                if (playerProfile.equals(currentCustomProfile)) {
+                    savedProfileList.addNewProfileAsIs(currentCustomProfile);
+                    customProfileList.delete(currentCustomProfile.getPrimaryKey());
+                    playerColorProfileHandled = true;
+                    break;
+                }
+            }
+
+            if (!playerColorProfileHandled) {
+                for (int y = 0; y < customProfileList.size(); y++) {
+                    Profile currentCustomProfile = customProfileList.getProfileByIndex(y).cloneProfile();
+
+                    // If playerProfile matches colors of customProfile
+                    if (playerProfile.equalsColors(currentCustomProfile)) {
+
+                        // And playerProfile has no name/key, add custom to saveProfileList & delete from customProfileList
+                        if(!(playerProfile.getName().equals(Profile.INITIALIZATION_NAME )
+                            && playerProfile.getPrimaryKey() != Profile.INITIALIZATION_KEY)) {
+                        savedProfileList.addNewProfileAsIs(currentCustomProfile);
+                        customProfileList.delete(currentCustomProfile.getPrimaryKey());
+
+                        // And playerProfile has name/key, add custom to saveProfileList
+                        } else {
+                            savedProfileList.addNewProfileAsIs(playerProfile);
+                        }
+                        playerColorProfileHandled = true;
+                        break;
+
+                    }
+                }
+            }
+
+            if (!playerColorProfileHandled) {
+                savedProfileList.addNewProfile(playerProfile.cloneProfile());
+            }
+        }
+        savedProfileList.addAllNewProfilesAsIs(customProfileList.clone());
+
+        return savedProfileList;
+    }
+
+    public void saveFactionProfiles(Faction faction,
+                                    List<Integer> profileConfiguration,
+                                    ProfileList profileList) {
 
         // Read Current PlayerColors Contents
         List<String> playerColorsContents = readPlayerColorsContents();

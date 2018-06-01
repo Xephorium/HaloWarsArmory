@@ -10,6 +10,7 @@ public class Profile {
     /*--- Variables ---*/
 
     public static final int INITIALIZATION_KEY = -1;
+    public static final String INITIALIZATION_NAME = "New Color Profile";
 
     private int primaryKey;
     private String name;
@@ -20,7 +21,7 @@ public class Profile {
 
     public Profile() {
         this.primaryKey = INITIALIZATION_KEY;
-        this.name = "New Color Profile";
+        this.name = INITIALIZATION_NAME;
         this.colorList = new ArrayList<>();
         for (int x = 0; x < ColorType.values().length; x++) {
             this.colorList.add(Color.WHITE);
@@ -34,6 +35,17 @@ public class Profile {
         for (int x = 0; x < ColorType.values().length; x++) {
             this.colorList.add(Color.WHITE);
         }
+    }
+
+    public Profile(Color unitsColor, Color corpseColor, Color selectorColor, Color minimapColor, Color pauseColor) {
+        this.primaryKey = INITIALIZATION_KEY;
+        this.name = INITIALIZATION_NAME;
+        this.colorList = new ArrayList<>();
+        colorList.add(unitsColor);
+        colorList.add(corpseColor);
+        colorList.add(selectorColor);
+        colorList.add(minimapColor);
+        colorList.add(pauseColor);
     }
 
     public Profile(String name, Color unitsColor, Color corpseColor, Color selectorColor, Color minimapColor, Color pauseColor) {
@@ -105,13 +117,45 @@ public class Profile {
 
         boolean sameColors = true;
         for (int x = 0; x < colorList.size(); x++) {
-            if (colorList.get(x) != ((Profile) profile).colorList.get(x)) {
+            if (colorList.get(x).getRed() != ((Profile) profile).colorList.get(x).getRed()) {
+                sameColors = false;
+            }
+
+            if (colorList.get(x).getGreen() != ((Profile) profile).colorList.get(x).getGreen()) {
+                sameColors = false;
+            }
+
+            if (colorList.get(x).getBlue() != ((Profile) profile).colorList.get(x).getBlue()) {
                 sameColors = false;
             }
         }
         return sameNameAndId && sameColors;
     }
 
+    public boolean equalsColors(Object profile) {
+        if (!(profile instanceof Profile)) {
+            return false;
+        }
+
+        boolean sameColors = true;
+        for (int x = 0; x < colorList.size(); x++) {
+            if (colorList.get(x) != ((Profile) profile).colorList.get(x)) {
+                sameColors = false;
+            }
+        }
+        return sameColors;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + this.getName()
+                + ", PrimaryKey: " + this.getPrimaryKey()
+                + ", Units: " + this.getColor(ColorType.UNIT).toString()
+                + ", Corpses: " + this.getColor(ColorType.CORPSE).toString()
+                + ", Selector: " + this.getColor(ColorType.SELECTOR).toString()
+                + ", Minimap: " + this.getColor(ColorType.MINIMAP_ICON).toString()
+                + ", Pause: " + this.getColor(ColorType.PAUSE_MENU).toString();
+    }
 
     /*--- ColorType Enum ---*/
 

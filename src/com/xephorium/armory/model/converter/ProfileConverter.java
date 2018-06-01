@@ -80,6 +80,12 @@ public class ProfileConverter {
                 && minimapColor != null
                 && pauseColor != null) {
             return new Profile(primaryKey, name, unitsColor, corpseColor, selectorColor, minimapColor, pauseColor);
+        } else if (unitsColor != null
+                && corpseColor != null
+                && selectorColor != null
+                && minimapColor != null
+                && pauseColor != null) {
+            return new Profile(unitsColor, corpseColor, selectorColor, minimapColor, pauseColor);
         } else {
             return null;
         }

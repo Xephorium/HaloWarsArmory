@@ -82,6 +82,13 @@ public class ProfileList {
         }
     }
 
+    public void addAllNewProfilesAsIs(ProfileList profileList) {
+        ProfileList newProfileList = profileList.clone();
+        for (int x = 0; x < newProfileList.size(); x++) {
+            addNewProfileAsIs(newProfileList.getProfileByIndex(x));
+        }
+    }
+
     public void addDefaultFactionProfiles(ProfileList defaultFactionProfiles) {
         ProfileList newDefaultFactionProfiles = defaultFactionProfiles.clone();
 
@@ -209,18 +216,7 @@ public class ProfileList {
         return false;
     }
 
-
-    /*--- Private Methods ---*/
-
-    private int generateNewPrimaryKey() {
-        int newPrimaryKey = 0;
-        while (this.containsPrimaryKey(newPrimaryKey)) {
-            newPrimaryKey++;
-        }
-        return newPrimaryKey;
-    }
-
-    private ProfileList sortProfileListByPrimaryKey(ProfileList profileList) {
+    public ProfileList sortProfileListByPrimaryKey(ProfileList profileList) {
         ProfileList sortedProfileList = profileList.clone();
         boolean swapOccurred = true;
         Profile holder;
@@ -239,6 +235,17 @@ public class ProfileList {
         }
 
         return sortedProfileList;
+    }
+
+
+    /*--- Private Methods ---*/
+
+    private int generateNewPrimaryKey() {
+        int newPrimaryKey = 0;
+        while (this.containsPrimaryKey(newPrimaryKey)) {
+            newPrimaryKey++;
+        }
+        return newPrimaryKey;
     }
 
     private void setProfileByIndex(int index, Profile profile) {
