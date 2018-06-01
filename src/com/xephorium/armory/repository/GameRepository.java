@@ -28,8 +28,8 @@ public class GameRepository {
     /*--- Public Methods ---*/
 
     public ProfileList mergeInitialProfilesWithSavedProfiles(ProfileList profileList) {
-        ProfileList customProfileList = profileList.clone();
-        ProfileList savedProfileList = new ProfileList();
+        ProfileList initialProfileList = profileList.clone();
+        ProfileList mergedProfileList = new ProfileList();
 
         // Read Current PlayerColors Contents
         List<String> playerColorsContents = readPlayerColorsContents();
@@ -44,54 +44,42 @@ public class GameRepository {
             playerColorsProfileList.addNewProfileAsIs(currentProfile);
         }
 
-        // Merge customProfileList and playerColorsProfileList
+        // Merge initialProfileList and playerColorsProfileList
         for (int x = 0; x < playerColorsProfileList.size(); x++) {
-
             Profile playerProfile = playerColorsProfileList.getProfileByIndex(x).cloneProfile();
-            boolean playerColorProfileHandled = false;
+            Boolean playerProfileNotHandled = true;
 
-            // If playerProfile exists in customProfileList, add to saveProfileList & delete from customProfileList
-            for (int y = 0; y < customProfileList.size(); y++) {
-                Profile currentCustomProfile = customProfileList.getProfileByIndex(y).cloneProfile();
+            for (int y = 0; y < initialProfileList.size(); y++) {
+                Profile currentCustomProfile = initialProfileList.getProfileByIndex(y).cloneProfile();
+
                 if (playerProfile.equals(currentCustomProfile)) {
-                    savedProfileList.addNewProfileAsIs(currentCustomProfile);
-                    customProfileList.delete(currentCustomProfile.getPrimaryKey());
-                    playerColorProfileHandled = true;
+                    mergedProfileList.addNewProfileAsIs(currentCustomProfile);
+                    initialProfileList.delete(currentCustomProfile.getPrimaryKey());
+                    playerProfileNotHandled = false;
+                    break;
+
+                } else if (playerProfile.equalsColors(currentCustomProfile)) {
+                    if (!(playerProfile.getName().equals(Profile.INITIALIZATION_NAME)
+                            && playerProfile.getPrimaryKey() != Profile.INITIALIZATION_KEY)) {
+                        mergedProfileList.addNewProfileAsIs(currentCustomProfile);
+                        initialProfileList.delete(currentCustomProfile.getPrimaryKey());
+
+                    } else {
+                        mergedProfileList.addNewProfileAsIs(playerProfile);
+                    }
+                    playerProfileNotHandled = false;
                     break;
                 }
             }
 
-            if (!playerColorProfileHandled) {
-                for (int y = 0; y < customProfileList.size(); y++) {
-                    Profile currentCustomProfile = customProfileList.getProfileByIndex(y).cloneProfile();
-
-                    // If playerProfile matches colors of customProfile
-                    if (playerProfile.equalsColors(currentCustomProfile)) {
-
-                        // And playerProfile has no name/key, add custom to saveProfileList & delete from customProfileList
-                        if(!(playerProfile.getName().equals(Profile.INITIALIZATION_NAME )
-                            && playerProfile.getPrimaryKey() != Profile.INITIALIZATION_KEY)) {
-                        savedProfileList.addNewProfileAsIs(currentCustomProfile);
-                        customProfileList.delete(currentCustomProfile.getPrimaryKey());
-
-                        // And playerProfile has name/key, add custom to saveProfileList
-                        } else {
-                            savedProfileList.addNewProfileAsIs(playerProfile);
-                        }
-                        playerColorProfileHandled = true;
-                        break;
-
-                    }
-                }
-            }
-
-            if (!playerColorProfileHandled) {
-                savedProfileList.addNewProfile(playerProfile.cloneProfile());
+            if(playerProfileNotHandled) {
+                mergedProfileList.addNewProfile(playerProfile.cloneProfile());
             }
         }
-        savedProfileList.addAllNewProfilesAsIs(customProfileList.clone());
+        mergedProfileList.addAllNewProfilesAsIs(initialProfileList.clone());
+        mergedProfileList = mergedProfileList.sortProfileListByPrimaryKey(mergedProfileList);
 
-        return savedProfileList;
+        return mergedProfileList;
     }
 
     public void saveFactionProfiles(Faction faction,

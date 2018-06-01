@@ -39,9 +39,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
         profileList.addAllNewProfiles(customProfileRepository.loadCustomPlayerProfileList());
         profileList.addAllNewProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
         profileList.addAllNewProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
-
         profileList = gameRepository.mergeInitialProfilesWithSavedProfiles(profileList);
-        profileList = profileList.sortProfileListByPrimaryKey(profileList);
 
         unscPlayerConfiguration = customProfileRepository.loadCustomUNSCPlayerConfiguration();
         covenantPlayerConfiguration = customProfileRepository.loadCustomCovenantPlayerConfiguration();
