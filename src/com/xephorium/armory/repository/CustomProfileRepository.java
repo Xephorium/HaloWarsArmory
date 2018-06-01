@@ -54,28 +54,6 @@ public class CustomProfileRepository {
         }
     }
 
-    public List<Integer> loadCustomUNSCPlayerConfiguration() {
-        // TODO - Read Changes From File
-        List<Integer> customUNSCPlayerConfiguration = new ArrayList<>();
-        GameRepository gameRepository = new GameRepository();
-        ProfileList profileList = gameRepository.getDefaultUNSCPlayerProfiles();
-        for (int x = 0; x < 6; x++) {
-            customUNSCPlayerConfiguration.add(profileList.getProfileByIndex(x).getPrimaryKey());
-        }
-        return customUNSCPlayerConfiguration;
-    }
-
-    public List<Integer> loadCustomCovenantPlayerConfiguration() {
-        // TODO - Read Changes From File
-        List<Integer> customCovenantPlayerConfiguration = new ArrayList<>();
-        GameRepository gameRepository = new GameRepository();
-        ProfileList profileList = gameRepository.getDefaultCovenantPlayerProfiles();
-        for (int x = 0; x < 6; x++) {
-            customCovenantPlayerConfiguration.add(profileList.getProfileByIndex(x).getPrimaryKey());
-        }
-        return customCovenantPlayerConfiguration;
-    }
-
 
     /*--- Private Methods ---*/
 

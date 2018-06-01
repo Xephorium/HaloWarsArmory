@@ -29,20 +29,11 @@ public class GameRepository {
 
     public ProfileList mergeInitialProfilesWithSavedProfiles(ProfileList profileList) {
         ProfileList initialProfileList = profileList.clone();
+        ProfileList playerColorsProfileList = new ProfileList();
         ProfileList mergedProfileList = new ProfileList();
 
-        // Read Current PlayerColors Contents
-        List<String> playerColorsContents = readPlayerColorsContents();
-        if (playerColorsContents == null) {
-            return null;
-        }
-
-        // Build PlayerColors ProfileList
-        ProfileList playerColorsProfileList = new ProfileList();
-        for (int x = UNSC_PROFILE_START_INDEX; x < COVENANT_PROFILE_END_INDEX; x++) {
-            Profile currentProfile = ProfileConverter.getProfileFromSaveString(playerColorsContents.get(x));
-            playerColorsProfileList.addNewProfileAsIs(currentProfile);
-        }
+        playerColorsProfileList.addAllNewProfilesAsIs(loadSavedFactionProfileList(Faction.UNSC));
+        playerColorsProfileList.addAllNewProfilesAsIs(loadSavedFactionProfileList(Faction.COVENANT));
 
         // Merge initialProfileList and playerColorsProfileList
         for (int x = 0; x < playerColorsProfileList.size(); x++) {
@@ -165,6 +156,55 @@ public class GameRepository {
         return launcherFound && creviceFound;
     }
 
+    public List<Integer> loadSavedFactionConfiguration(Faction faction, ProfileList profileList) {
+        ProfileList savedFactionProfileList = loadSavedFactionProfileList(faction);
+        if (savedFactionProfileList == null) {
+            return null;
+        }
+
+        List<Integer> savedFactionConfiguration = new ArrayList<>(6);
+        for (int x = 0; x < savedFactionProfileList.size(); x++) {
+            Profile savedFactionProfile = savedFactionProfileList.getProfileByIndex(x);
+            boolean matchFound = false;
+
+            // Check for Exact Match
+            for(int y = 0; y < profileList.size(); y++) {
+                Profile workingFactionProfile = profileList.getProfileByIndex(y);
+                if (savedFactionProfile.equals(workingFactionProfile)) {
+                    savedFactionConfiguration.add(workingFactionProfile.getPrimaryKey());
+                    matchFound = true;
+                    break;
+                }
+            }
+
+            // Check for Color + Name Match
+            if (!matchFound) {
+                for(int y = 0; y < profileList.size(); y++) {
+                    Profile workingFactionProfile = profileList.getProfileByIndex(y);
+                    if (savedFactionProfile.equalsColors(workingFactionProfile)
+                            && savedFactionProfile.getName().equals(workingFactionProfile.getName())) {
+                        savedFactionConfiguration.add(workingFactionProfile.getPrimaryKey());
+                        matchFound = true;
+                        break;
+                    }
+                }
+            }
+
+            // Check for Color Match
+            if (!matchFound) {
+                for(int y = 0; y < profileList.size(); y++) {
+                    Profile workingFactionProfile = profileList.getProfileByIndex(y);
+                    if (savedFactionProfile.equalsColors(workingFactionProfile)) {
+                        savedFactionConfiguration.add(workingFactionProfile.getPrimaryKey());
+                        break;
+                    }
+                }
+            }
+        }
+
+        return savedFactionConfiguration;
+    }
+
     public List<Integer> getDefaultUNSCPlayerConfiguration() {
         List<Integer> unscDefaultProfileKeys = new ArrayList<>();
         ProfileList unscDefaultProfileList = getDefaultUNSCPlayerProfiles();
@@ -236,6 +276,22 @@ public class GameRepository {
         } else {
             return COVENANT_PROFILE_END_INDEX;
         }
+    }
+
+    private ProfileList loadSavedFactionProfileList(Faction faction) {
+        List<String> playerColorsContents = readPlayerColorsContents();
+        if (playerColorsContents == null) {
+            return null;
+        }
+
+        ProfileList savedFactionProfileList = new ProfileList();
+        for (int x = getFactionStartIndex(faction); x < getFactionEndIndex(faction); x++) {
+            Profile currentProfile = ProfileConverter.getProfileFromSaveString(playerColorsContents.get(x));
+            if (currentProfile != null) {
+                savedFactionProfileList.addNewProfileAsIs(currentProfile);
+            }
+        }
+        return savedFactionProfileList;
     }
 
     private List<String> readPlayerColorsContents() {
