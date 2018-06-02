@@ -36,7 +36,7 @@ public class ArmoryWindow {
 
     /*--- Variables ---*/
 
-    private final String WINDOW_TITLE = "  Halo Wars Armory";
+    private final String WINDOW_TITLE = "Halo Wars Armory";
 
     private ArmoryWindowListener listener;
 
@@ -166,7 +166,7 @@ public class ArmoryWindow {
                 DisplayUtility.getWindowStartY(ArmoryDimension.WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setIconImage(ArmoryImage.ICON_APPLICATION_MAIN.getImage());
+        frame.setIconImages(ArmoryImage.ICON_APPLICATION_MAIN_LIST);
     }
 
     private void initializeViewClasses() {
