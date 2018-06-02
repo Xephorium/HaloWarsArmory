@@ -29,10 +29,10 @@ public class ArmoryImage {
     private static String ICON_UNSC_DETAILED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFactionUNSCDetailed.png";
     private static String ICON_COVENANT_SIMPLE_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFactionCovenantSimple.png";
     private static String ICON_COVENANT_DETAILED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFactionCovenantDetailed.png";
-    private static String ICON_INSTALLATION_FOUND_STYLIZED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationFoundStylized.png";
-    private static String ICON_INSTALLATION_FOUND_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationFoundDialog.png";
-    private static String ICON_INSTALLATION_INVALID_STYLIZED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationInvalidStylized.png";
-    private static String ICON_INSTALLATION_INVALID_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationInvalidDialog.png";
+    private static String ICON_FAILURE_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFailureDialog.png";
+    private static String ICON_FAILURE_INSTALLATION_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconFailureInstallation.png";
+    private static String ICON_SUCCESS_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconSuccessDialog.png";
+    private static String ICON_SUCCESS_INSTALLATION_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconSuccessInstallation.png";
     private static String ICON_UNKNOWN_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconUnknownDialog.png";
     private static String ICON_UNKNOWN_INSTALLATION_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconUnknownInstallation.png";
     private static String PREVIEW_BACKGROUND_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewBackground.png";
@@ -50,10 +50,10 @@ public class ArmoryImage {
 
     public static ImageIcon ICON_UNSC = new ImageIcon(USE_DETAILED_ICONS ? ICON_UNSC_DETAILED_PATH : ICON_UNSC_SIMPLE_PATH, "UNSC Faction");
     public static ImageIcon ICON_COVENANT = new ImageIcon(USE_DETAILED_ICONS ? ICON_COVENANT_DETAILED_PATH : ICON_COVENANT_SIMPLE_PATH, "Covenant Faction");
-    public static ImageIcon ICON_INSTALLATION_FOUND = new ImageIcon(ICON_INSTALLATION_FOUND_STYLIZED_PATH, "Installation Found");
-    public static ImageIcon ICON_INSTALLATION_FOUND_DIALOG = new ImageIcon(ICON_INSTALLATION_FOUND_DIALOG_PATH, "Installation Found");
-    public static ImageIcon ICON_INSTALLATION_INVALID = new ImageIcon(ICON_INSTALLATION_INVALID_STYLIZED_PATH, "Installation Invalid");
-    public static ImageIcon ICON_INSTALLATION_INVALID_DIALOG = new ImageIcon(ICON_INSTALLATION_INVALID_DIALOG_PATH, "Installation Invalid");
+    public static ImageIcon ICON_FAILURE_DIALOG = new ImageIcon(ICON_FAILURE_DIALOG_PATH, "Failure");
+    public static ImageIcon ICON_FAILURE_INSTALLATION = new ImageIcon(ICON_FAILURE_INSTALLATION_PATH, "Installation Invalid");
+    public static ImageIcon ICON_SUCCESS_DIALOG = new ImageIcon(ICON_SUCCESS_DIALOG_PATH, "Success");
+    public static ImageIcon ICON_SUCCESS_INSTALLATION = new ImageIcon(ICON_SUCCESS_INSTALLATION_PATH, "Installation Found");
     public static ImageIcon ICON_UNKNOWN_DIALOG = new ImageIcon(ICON_UNKNOWN_DIALOG_PATH, "Unknown");
     public static ImageIcon ICON_UNKNOWN_INSTALLATION = new ImageIcon(ICON_UNKNOWN_INSTALLATION_PATH, "Installation Unknown");
 

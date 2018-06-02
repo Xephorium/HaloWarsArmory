@@ -7,7 +7,7 @@
 UI
 - Add Changes Saved dialog to configuration Save. (DONE)
 - Prompt before Profile delete (DONE)
-- Disable Default Profile Edit
+- Disable Default Profile Edit (DONE)
 
 State
 - Write to PlayerColors on profile edit if profile currently used.

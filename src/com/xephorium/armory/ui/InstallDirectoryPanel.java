@@ -51,14 +51,14 @@ class InstallDirectoryPanel extends JPanel {
     public void setValidInstallDirectory(String directory) {
         if (directory != null) {
             directoryTextField.setText(" " + directory);
-            imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_FOUND.getImage());
+            imageIcon.setImage(ArmoryImage.ICON_SUCCESS_INSTALLATION.getImage());
             this.repaint();
         }
     }
 
     public void setInvalidInstallDirectory() {
         directoryTextField.setText(" Choose Halo Wars installation folder...");
-        imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_INVALID.getImage());
+        imageIcon.setImage(ArmoryImage.ICON_FAILURE_INSTALLATION.getImage());
         this.repaint();
     }
 

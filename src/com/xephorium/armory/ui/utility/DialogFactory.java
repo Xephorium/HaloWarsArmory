@@ -1,6 +1,5 @@
 package com.xephorium.armory.ui.utility;
 
-import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
 import com.xephorium.armory.ui.utility.VerifyActionDialog.VerifyActionListener;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
@@ -22,7 +21,7 @@ public class DialogFactory {
                 "No Halo Wars installation found.",
                 TITLE_LEFT_PADDING + "Game Not Found",
                 JOptionPane.ERROR_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_INVALID_DIALOG);
+                ArmoryImage.ICON_FAILURE_DIALOG);
     }
 
     public static void createGameFoundDialog(JFrame frame) {
@@ -30,7 +29,7 @@ public class DialogFactory {
                 "Installation found!",
                 TITLE_LEFT_PADDING + "Game Found",
                 JOptionPane.INFORMATION_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
+                ArmoryImage.ICON_SUCCESS_DIALOG);
     }
 
     public static void createProfileMustHaveNameDialog(JFrame frame) {
@@ -38,7 +37,7 @@ public class DialogFactory {
                 "Profile must have a name.",
                 TITLE_LEFT_PADDING + "Invalid Name",
                 JOptionPane.ERROR_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_INVALID_DIALOG);
+                ArmoryImage.ICON_FAILURE_DIALOG);
     }
 
     public static void createProblemSavingDialog(JFrame frame) {
@@ -46,7 +45,7 @@ public class DialogFactory {
                 "There was a problem saving.",
                 TITLE_LEFT_PADDING + "Changes Not Saved",
                 JOptionPane.INFORMATION_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_INVALID_DIALOG);
+                ArmoryImage.ICON_FAILURE_DIALOG);
     }
 
     public static void createProfileSavedDialog(JFrame frame) {
@@ -54,15 +53,15 @@ public class DialogFactory {
                 "Your profile has been saved.",
                 TITLE_LEFT_PADDING + "Profile Saved",
                 JOptionPane.INFORMATION_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
+                ArmoryImage.ICON_SUCCESS_DIALOG);
     }
 
     public static void createConfigurationSavedDialog(JFrame frame) {
         JOptionPane.showMessageDialog(frame,
-                "Your colors have been saved.",
+                "Player colors have been saved.",
                 TITLE_LEFT_PADDING + "Configuration Saved",
                 JOptionPane.INFORMATION_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
+                ArmoryImage.ICON_SUCCESS_DIALOG);
     }
 
     public static void createNoChangesToSaveDialog(JFrame frame) {
@@ -70,7 +69,7 @@ public class DialogFactory {
                 "There are no changes to save.",
                 TITLE_LEFT_PADDING + "No Changes to Save",
                 JOptionPane.INFORMATION_MESSAGE,
-                ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
+                ArmoryImage.ICON_SUCCESS_DIALOG);
     }
 
     public static void createDeleteProfileDialog(VerifyActionListener listener, String profileName) {
