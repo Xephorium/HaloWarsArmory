@@ -65,6 +65,16 @@ public class ProfileConfigurationPanel extends JPanel {
         profileAttributePanel.setWorkingProfile(profile);
     }
 
+    public void enableProfileEdit() {
+        profileBrowsePanel.enableProfileEdit();
+        profileAttributePanel.enableProfileEdit();
+    }
+
+    public void disableProfileEdit() {
+        profileBrowsePanel.disableProfileEdit();
+        profileAttributePanel.disableProfileEdit();
+    }
+
 
     /*--- Private Methods ---*/
 

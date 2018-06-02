@@ -76,6 +76,10 @@ public class ArmoryWindow {
         profileConfigurationPanel.updateProfileList(profileList);
     }
 
+    public void displayProblemSavingDialog() {
+        DialogFactory.createProblemSavingDialog(frame);
+    }
+
 
     // Install Directory
 
@@ -110,6 +114,10 @@ public class ArmoryWindow {
         factionConfigurationPanel.updateCovenantPlayerConfiguration(covenantPlayerProfiles);
     }
 
+    public void displayConfigurationSavedDialog() {
+        DialogFactory.createConfigurationSavedDialog(frame);
+    }
+
 
     // Profile Configuration
 
@@ -129,6 +137,14 @@ public class ArmoryWindow {
         profilePreviewPanel.setSelectedProfile(profile);
     }
 
+    public void disableProfileEdit() {
+        profileConfigurationPanel.disableProfileEdit();
+    }
+
+    public void enableProfileEdit() {
+        profileConfigurationPanel.enableProfileEdit();
+    }
+
     public void displayColorChooserDialog(Color initialColor, ColorChooser.ColorChooserListener listener) {
         DialogFactory.createColorChooserDialog(initialColor, listener);
     }
@@ -137,16 +153,8 @@ public class ArmoryWindow {
         DialogFactory.createProfileMustHaveNameDialog(frame);
     }
 
-    public void displayProblemSavingDialog() {
-        DialogFactory.createProblemSavingDialog(frame);
-    }
-
     public void displayProfileSavedDialog() {
         DialogFactory.createProfileSavedDialog(frame);
-    }
-
-    public void displayConfigurationSavedDialog() {
-        DialogFactory.createConfigurationSavedDialog(frame);
     }
 
     public void displayNoChangesToSaveDialog() {

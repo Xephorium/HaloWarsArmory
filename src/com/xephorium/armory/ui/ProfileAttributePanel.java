@@ -21,6 +21,7 @@ public class ProfileAttributePanel extends JPanel {
     private ArmoryWindowListener listener;
     private JTextField profileNameTextField;
     private List<JPanel> profileColorPanels = new ArrayList<>();
+    private JButton saveButton;
     private Profile workingProfile;
 
 
@@ -47,6 +48,16 @@ public class ProfileAttributePanel extends JPanel {
         for (int x = 0; x < profileColorPanels.size(); x++) {
             profileColorPanels.get(x).setBackground(profile.getColor(Profile.ColorType.getFromIndex(x)));
         }
+    }
+
+    public void enableProfileEdit() {
+        profileNameTextField.setEnabled(true);
+        saveButton.setEnabled(true);
+    }
+
+    public void disableProfileEdit() {
+        profileNameTextField.setEnabled(false);
+        saveButton.setEnabled(false);
     }
 
 
@@ -109,7 +120,7 @@ public class ProfileAttributePanel extends JPanel {
     }
 
     private JButton createSaveButton() {
-        JButton saveButton = new JButton("Save");
+        saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,7 +134,9 @@ public class ProfileAttributePanel extends JPanel {
         return new CustomMouseListener(new CustomMouseListener.MouseClickListener() {
             @Override
             public void onMouseClick() {
-                listener.handleWorkingProfileColorClick(getWorkingProfile(), colorType);
+                if (saveButton.isEnabled()) {
+                    listener.handleWorkingProfileColorClick(getWorkingProfile(), colorType);
+                }
             }
         });
     }

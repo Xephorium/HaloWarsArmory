@@ -21,6 +21,7 @@ public class ProfileBrowsePanel extends JPanel {
     private ArmoryWindowListener listener;
     private JScrollPane profileListScrollPane;
     private JList profileListPanel;
+    private JButton profileDeleteButton;
     private ProfileList profileList;
     private boolean browsePanelSetupComplete = false;
     private boolean browsePanelEmptyState = false;
@@ -94,6 +95,14 @@ public class ProfileBrowsePanel extends JPanel {
         });
     }
 
+    public void enableProfileEdit() {
+        profileDeleteButton.setEnabled(true);
+    }
+
+    public void disableProfileEdit() {
+        profileDeleteButton.setEnabled(false);
+    }
+
 
     /*--- Private Methods ---*/
 
@@ -131,7 +140,7 @@ public class ProfileBrowsePanel extends JPanel {
         profileBrowseButtonPanel.setBorder(new EmptyBorder(7, 0, 0, 0));
         profileBrowseButtonPanel.setBackground(Color.WHITE);
 
-        JButton profileDeleteButton = new JButton("Delete");
+        profileDeleteButton = new JButton("Delete");
         profileDeleteButton.setPreferredSize(new Dimension(70, 24));
         profileDeleteButton.addActionListener(new ActionListener() {
             @Override

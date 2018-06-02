@@ -128,6 +128,12 @@ class HaloWarsArmory implements ArmoryWindowListener {
     @Override
     public void handleSelectProfileClick(Profile profile) {
         armoryWindow.setSelectedProfile(profile);
+
+        if (gameRepository.isDefaultProfilePrimaryKey(profile.getPrimaryKey())) {
+            armoryWindow.disableProfileEdit();
+        } else {
+            armoryWindow.enableProfileEdit();
+        }
     }
 
     @Override
