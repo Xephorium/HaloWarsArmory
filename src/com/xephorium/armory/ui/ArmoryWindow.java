@@ -139,8 +139,16 @@ public class ArmoryWindow {
         DialogFactory.createProfileMustHaveNameDialog(frame);
     }
 
+    public void displayProblemSavingDialog() {
+        DialogFactory.createProblemSavingDialog(frame);
+    }
+
     public void displayProfileSavedDialog() {
         DialogFactory.createProfileSavedDialog(frame);
+    }
+
+    public void displayConfigurationSavedDialog() {
+        DialogFactory.createConfigurationSavedDialog(frame);
     }
 
     public void displayNoChangesToSaveDialog() {

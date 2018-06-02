@@ -77,14 +77,14 @@ public class GameRepository {
         return mergedProfileList;
     }
 
-    public void saveFactionProfiles(Faction faction,
+    public boolean saveFactionProfiles(Faction faction,
                                     List<Integer> profileConfiguration,
                                     ProfileList profileList) {
 
         // Read Current PlayerColors Contents
         List<String> playerColorsContents = readPlayerColorsContents();
         if (playerColorsContents == null) {
-            return;
+            return false;
         }
 
         // Create Faction-Specific Profile List
@@ -108,8 +108,10 @@ public class GameRepository {
             playerColorsContents.forEach(writer::println);
             writer.close();
         } catch (IOException exception) {
-            // Do Nothing
+            return false;
         }
+
+        return true;
     }
 
     public String loadInstallationDirectory() {

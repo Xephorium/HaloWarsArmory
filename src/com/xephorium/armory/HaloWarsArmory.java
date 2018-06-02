@@ -105,12 +105,20 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleUNSCConfigurationSave() {
-        gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList);
+        if(gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList)) {
+            armoryWindow.displayConfigurationSavedDialog();
+        } else {
+            armoryWindow.displayProblemSavingDialog();
+        }
     }
 
     @Override
     public void handleCovenantConfigurationSave() {
-        gameRepository.saveFactionProfiles(Faction.COVENANT, covenantPlayerConfiguration, profileList);
+        if (gameRepository.saveFactionProfiles(Faction.COVENANT, covenantPlayerConfiguration, profileList)) {
+            armoryWindow.displayConfigurationSavedDialog();
+        } else {
+            armoryWindow.displayProblemSavingDialog();
+        }
     }
 
 
@@ -166,7 +174,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
         if (saveSuccessful) {
             armoryWindow.displayProfileSavedDialog();
         } else {
-            // TODO - Show Error Saving Dialog
+            armoryWindow.displayProblemSavingDialog();
         }
     }
 
