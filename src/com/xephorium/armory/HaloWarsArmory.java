@@ -9,6 +9,7 @@ import com.xephorium.armory.ui.ArmoryWindow;
 import com.xephorium.armory.ui.ArmoryWindowListener;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
 import com.xephorium.armory.ui.utility.StringUtility;
+import com.xephorium.armory.ui.utility.VerifyActionDialog;
 
 import java.awt.*;
 import java.util.List;
@@ -140,13 +141,23 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleDeleteProfileClick(int primaryKey) {
-        // TODO - Prompt For Delete?
-        profileList.delete(primaryKey);
-        armoryWindow.updateProfileList(profileList);
+        armoryWindow.displayDeleteProfileDialog(new VerifyActionDialog.VerifyActionListener() {
+            @Override
+            public void onVerifyActionSelection() {
+                profileList.delete(primaryKey);
+                armoryWindow.updateProfileList(profileList);
 
-        if (!gameRepository.isDefaultProfilePrimaryKey(primaryKey)) {
-            customProfileRepository.deleteCustomPlayerProfile(primaryKey);
-        }
+                if (!gameRepository.isDefaultProfilePrimaryKey(primaryKey)) {
+                    customProfileRepository.deletePlayerProfile(primaryKey);
+                }
+            }
+
+            @Override
+            public void onCancelActionSelection() {}
+
+            @Override
+            public void onDialogClose() {}
+        }, profileList.getProfileByPrimaryKey(primaryKey).getName());
     }
 
     @Override

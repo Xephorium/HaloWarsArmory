@@ -33,7 +33,8 @@ public class ArmoryImage {
     private static String ICON_INSTALLATION_FOUND_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationFoundDialog.png";
     private static String ICON_INSTALLATION_INVALID_STYLIZED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationInvalidStylized.png";
     private static String ICON_INSTALLATION_INVALID_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationInvalidDialog.png";
-    private static String ICON_INSTALLATION_UNKNOWN_STYLIZED_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconInstallationUnknownStylized.png";
+    private static String ICON_UNKNOWN_DIALOG_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconUnknownDialog.png";
+    private static String ICON_UNKNOWN_INSTALLATION_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\iconUnknownInstallation.png";
     private static String PREVIEW_BACKGROUND_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewBackground.png";
     private static String PREVIEW_MASK_WARTHOG_COLOR_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewMaskWarthogColor.png";
     private static String PREVIEW_MASK_WARTHOG_SHINE_PATH = "src\\com\\xephorium\\armory\\ui\\resource\\image\\previewMaskWarthogShine.png";
@@ -53,7 +54,8 @@ public class ArmoryImage {
     public static ImageIcon ICON_INSTALLATION_FOUND_DIALOG = new ImageIcon(ICON_INSTALLATION_FOUND_DIALOG_PATH, "Installation Found");
     public static ImageIcon ICON_INSTALLATION_INVALID = new ImageIcon(ICON_INSTALLATION_INVALID_STYLIZED_PATH, "Installation Invalid");
     public static ImageIcon ICON_INSTALLATION_INVALID_DIALOG = new ImageIcon(ICON_INSTALLATION_INVALID_DIALOG_PATH, "Installation Invalid");
-    public static ImageIcon ICON_INSTALLATION_UNKNOWN = new ImageIcon(ICON_INSTALLATION_UNKNOWN_STYLIZED_PATH, "Installation Unknown");
+    public static ImageIcon ICON_UNKNOWN_DIALOG = new ImageIcon(ICON_UNKNOWN_DIALOG_PATH, "Unknown");
+    public static ImageIcon ICON_UNKNOWN_INSTALLATION = new ImageIcon(ICON_UNKNOWN_INSTALLATION_PATH, "Installation Unknown");
 
     public static BufferedImage PREVIEW_BACKGROUND = readBufferedImage(PREVIEW_BACKGROUND_PATH);
     public static BufferedImage PREVIEW_MASK_WARTHOG_COLOR = readBufferedImage(PREVIEW_MASK_WARTHOG_COLOR_PATH);

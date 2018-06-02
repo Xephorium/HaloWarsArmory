@@ -31,7 +31,7 @@ class InstallDirectoryPanel extends JPanel {
 
         initializePanelAttributes();
 
-        imageIcon = ArmoryImage.ICON_INSTALLATION_UNKNOWN;
+        imageIcon = ArmoryImage.ICON_UNKNOWN_INSTALLATION;
         directoryTextField = createDirectoryTextField();
 
         setDefaultInstallDirectory();
@@ -64,7 +64,7 @@ class InstallDirectoryPanel extends JPanel {
 
     public void setDefaultInstallDirectory() {
         directoryTextField.setText(" Choose Halo Wars installation folder...");
-        imageIcon.setImage(ArmoryImage.ICON_INSTALLATION_UNKNOWN.getImage());
+        imageIcon.setImage(ArmoryImage.ICON_UNKNOWN_INSTALLATION.getImage());
         this.repaint();
     }
 

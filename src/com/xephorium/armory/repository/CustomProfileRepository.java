@@ -47,7 +47,7 @@ public class CustomProfileRepository {
         return true;
     }
 
-    public void deleteCustomPlayerProfile(int primaryKey) {
+    public void deletePlayerProfile(int primaryKey) {
 
         if (CUSTOM_PROFILES_FILE.exists()) {
             deleteProfileFromCustomProfiles(primaryKey);

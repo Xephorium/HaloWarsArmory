@@ -1,6 +1,8 @@
 package com.xephorium.armory.ui.utility;
 
+import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
+import com.xephorium.armory.ui.utility.VerifyActionDialog.VerifyActionListener;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
 
 import javax.swing.*;
@@ -69,6 +71,13 @@ public class DialogFactory {
                 TITLE_LEFT_PADDING + "No Changes to Save",
                 JOptionPane.INFORMATION_MESSAGE,
                 ArmoryImage.ICON_INSTALLATION_FOUND_DIALOG);
+    }
+
+    public static void createDeleteProfileDialog(VerifyActionListener listener, String profileName) {
+        VerifyActionDialog verifyActionDialog = new VerifyActionDialog(listener,
+                TITLE_LEFT_PADDING + "Delete Profile",
+                "Delete \"" + profileName + "\"?");
+        verifyActionDialog.showDialog();
     }
 
     public static void createColorChooserDialog(Color initialColor, ColorChooserListener listener) {

@@ -5,10 +5,8 @@ import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
-import com.xephorium.armory.ui.utility.ColorChooser;
-import com.xephorium.armory.ui.utility.DialogFactory;
-import com.xephorium.armory.ui.utility.DirectoryChooser;
-import com.xephorium.armory.ui.utility.DisplayUtility;
+import com.xephorium.armory.ui.utility.VerifyActionDialog.VerifyActionListener;
+import com.xephorium.armory.ui.utility.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -153,6 +151,10 @@ public class ArmoryWindow {
 
     public void displayNoChangesToSaveDialog() {
         DialogFactory.createNoChangesToSaveDialog(frame);
+    }
+
+    public void displayDeleteProfileDialog(VerifyActionListener listener, String profileName) {
+        DialogFactory.createDeleteProfileDialog(listener, profileName);
     }
 
 
