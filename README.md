@@ -3,11 +3,11 @@
 
 
 #### Features
+&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; Set Skirmish Colors for UNSC and Covenant Players
+
 &nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; Create & Manage Color Profiles
 
-&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; Realtime Unit Preview
-
-&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; Set Skirmish Colors for UNSC and Covenant Players
+&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; Preview Color Profiles in Realtime
 
 
 #### Screenshots
@@ -17,4 +17,4 @@
 
 
 #### Download
-&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; TBD: Executable link will be make available *here*.
+&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; TBD: Executable link will be made available *here*.
