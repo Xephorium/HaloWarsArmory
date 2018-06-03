@@ -91,6 +91,20 @@ public class FactionConfigurationPanel extends JPanel {
         }
     }
 
+    public void disableConfigurationEdit() {
+        for (int x = 0; x < 6; x++) {
+            unscSelectors.get(x).setEnabled(false);
+            covenantSelectors.get(x).setEnabled(false);
+        }
+    }
+
+    public void enableConfigurationEdit() {
+        for (int x = 0; x < 6; x++) {
+            unscSelectors.get(x).setEnabled(true);
+            covenantSelectors.get(x).setEnabled(true);
+        }
+    }
+
 
     /*--- Private Update Methods ---*/
 

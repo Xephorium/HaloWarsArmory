@@ -37,21 +37,32 @@ class HaloWarsArmory implements ArmoryWindowListener {
         armoryWindow = new ArmoryWindow(this);
 
         ProfileList startupProfileList = createStartupProfileList();
-        profileList = gameRepository.mergeStartupProfileListWithCurrentGameConfiguration(startupProfileList);
 
-        if (profileList.size() > startupProfileList.size()) {
-            ProfileList unsavedProfileList = startupProfileList.getDifference(profileList);
-            customProfileRepository.saveCustomPlayerProfileList(unsavedProfileList);
+        if (gameRepository.isInstallationDirectorySet()) {
+            profileList = gameRepository.mergeStartupProfileListWithCurrentGameConfiguration(startupProfileList);
+
+            if (profileList.size() > startupProfileList.size()) {
+                ProfileList unsavedProfileList = startupProfileList.getDifference(profileList);
+                customProfileRepository.saveCustomPlayerProfileList(unsavedProfileList);
+            }
+
+            unscPlayerConfiguration = gameRepository.loadSavedFactionConfiguration(Faction.UNSC, profileList);
+            covenantPlayerConfiguration = gameRepository.loadSavedFactionConfiguration(Faction.COVENANT, profileList);
+        } else {
+            profileList = startupProfileList;
+            unscPlayerConfiguration = gameRepository.getDefaultUNSCPlayerConfiguration();
+            covenantPlayerConfiguration = gameRepository.getDefaultCovenantPlayerConfiguration();
         }
-
-        unscPlayerConfiguration = gameRepository.loadSavedFactionConfiguration(Faction.UNSC, profileList);
-        covenantPlayerConfiguration = gameRepository.loadSavedFactionConfiguration(Faction.COVENANT, profileList);
 
         armoryWindow.displayWindow();
         armoryWindow.updateProfileList(profileList);
         armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
         armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
         armoryWindow.setValidInstallDirectory(gameRepository.loadInstallationDirectory());
+
+        if (!gameRepository.isInstallationDirectorySet()) {
+            armoryWindow.disableConfigurationEdit();
+        }
     }
 
 
@@ -71,6 +82,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
             gameRepository.saveInstallationDirectory(directory);
             armoryWindow.setValidInstallDirectory(directory);
             armoryWindow.displayGameFoundDialog();
+            armoryWindow.enableConfigurationEdit();
         } else {
             armoryWindow.setInvalidInstallDirectory();
             armoryWindow.displayGameNotFoundDialog();
@@ -92,35 +104,51 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleUNSCConfigurationReset() {
-        unscPlayerConfiguration = gameRepository.getDefaultUNSCPlayerConfiguration();
-        profileList.addDefaultFactionProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
-        armoryWindow.updateProfileList(profileList);
-        armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
+        if (gameRepository.isInstallationDirectorySet()) {
+            unscPlayerConfiguration = gameRepository.getDefaultUNSCPlayerConfiguration();
+            profileList.addDefaultFactionProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
+            armoryWindow.updateProfileList(profileList);
+            armoryWindow.updateUNSCPlayerConfiguration(unscPlayerConfiguration);
+        } else {
+            armoryWindow.displayNoInstallationSetDialog();
+        }
     }
 
     @Override
     public void handleCovenantConfigurationReset() {
-        covenantPlayerConfiguration = gameRepository.getDefaultCovenantPlayerConfiguration();
-        profileList.addDefaultFactionProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
-        armoryWindow.updateProfileList(profileList);
-        armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
+        if (gameRepository.isInstallationDirectorySet()) {
+            covenantPlayerConfiguration = gameRepository.getDefaultCovenantPlayerConfiguration();
+            profileList.addDefaultFactionProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
+            armoryWindow.updateProfileList(profileList);
+            armoryWindow.updateCovenantPlayerConfiguration(covenantPlayerConfiguration);
+        } else {
+            armoryWindow.displayNoInstallationSetDialog();
+        }
     }
 
     @Override
     public void handleUNSCConfigurationSave() {
-        if(gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList)) {
-            armoryWindow.displayConfigurationSavedDialog();
+        if (gameRepository.isInstallationDirectorySet()) {
+            if(gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList)) {
+                armoryWindow.displayConfigurationSavedDialog();
+            } else {
+                armoryWindow.displayProblemSavingDialog();
+            }
         } else {
-            armoryWindow.displayProblemSavingDialog();
+            armoryWindow.displayNoInstallationSetDialog();
         }
     }
 
     @Override
     public void handleCovenantConfigurationSave() {
-        if (gameRepository.saveFactionProfiles(Faction.COVENANT, covenantPlayerConfiguration, profileList)) {
-            armoryWindow.displayConfigurationSavedDialog();
+        if (gameRepository.isInstallationDirectorySet()) {
+            if (gameRepository.saveFactionProfiles(Faction.COVENANT, covenantPlayerConfiguration, profileList)) {
+                armoryWindow.displayConfigurationSavedDialog();
+            } else {
+                armoryWindow.displayProblemSavingDialog();
+            }
         } else {
-            armoryWindow.displayProblemSavingDialog();
+            armoryWindow.displayNoInstallationSetDialog();
         }
     }
 
@@ -140,11 +168,15 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleAddProfileClick() {
-        Profile newProfile = new Profile(profileList.generateNewName());
-        profileList.addNewProfileTop(newProfile);
-        armoryWindow.updateProfileList(profileList);
-        armoryWindow.selectNewProfile(profileList.getProfileByIndex(0));
-        customProfileRepository.saveCustomPlayerProfile(profileList.getProfileByIndex(0));
+        if (gameRepository.isInstallationDirectorySet()) {
+            Profile newProfile = new Profile(profileList.generateNewName());
+            profileList.addNewProfileTop(newProfile);
+            armoryWindow.updateProfileList(profileList);
+            armoryWindow.selectNewProfile(profileList.getProfileByIndex(0));
+            customProfileRepository.saveCustomPlayerProfile(profileList.getProfileByIndex(0));
+        } else {
+            armoryWindow.displayNoInstallationSetDialog();
+        }
     }
 
     @Override
@@ -230,9 +262,14 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     private ProfileList createStartupProfileList() {
         ProfileList savedProfileList = new ProfileList();
-        savedProfileList.addAllNewProfiles(customProfileRepository.loadCustomPlayerProfileList());
+
+        if (gameRepository.isInstallationDirectorySet()) {
+            savedProfileList.addAllNewProfiles(customProfileRepository.loadCustomPlayerProfileList());
+        }
+
         savedProfileList.addAllNewProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
         savedProfileList.addAllNewProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
+
         return savedProfileList;
     }
 }

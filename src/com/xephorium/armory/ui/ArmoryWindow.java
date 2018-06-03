@@ -103,6 +103,10 @@ public class ArmoryWindow {
         installDirectoryPanel.setInvalidInstallDirectory();
     }
 
+    public void displayNoInstallationSetDialog() {
+        DialogFactory.createNoInstallationSetDialog(frame);
+    }
+
 
     // Faction Configuration
 
@@ -135,6 +139,14 @@ public class ArmoryWindow {
     public void setWorkingProfile(Profile profile) {
         profileConfigurationPanel.setWorkingProfile(profile);
         profilePreviewPanel.setSelectedProfile(profile);
+    }
+
+    public void disableConfigurationEdit() {
+        factionConfigurationPanel.disableConfigurationEdit();
+    }
+
+    public void enableConfigurationEdit() {
+        factionConfigurationPanel.enableConfigurationEdit();
     }
 
     public void disableProfileEdit() {

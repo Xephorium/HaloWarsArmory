@@ -91,6 +91,10 @@ public class GameRepository {
         return true;
     }
 
+    public boolean isInstallationDirectorySet() {
+        return loadInstallationDirectory() != null;
+    }
+
     public String loadInstallationDirectory() {
         String installationDirectory = null;
 

@@ -76,6 +76,10 @@ public class ProfileList {
     }
 
     public void addAllNewProfiles(ProfileList profileList) {
+        if (profileList == null || profileList.size() < 1) {
+            return;
+        }
+
         ProfileList newProfileList = profileList.clone();
         for (int x = 0; x < newProfileList.size(); x++) {
             addNewProfile(newProfileList.getProfileByIndex(x));
@@ -83,6 +87,10 @@ public class ProfileList {
     }
 
     public void addAllNewProfilesAsIs(ProfileList profileList) {
+        if (profileList == null || profileList.size() < 1) {
+            return;
+        }
+
         ProfileList newProfileList = profileList.clone();
         for (int x = 0; x < newProfileList.size(); x++) {
             addNewProfileAsIs(newProfileList.getProfileByIndex(x));

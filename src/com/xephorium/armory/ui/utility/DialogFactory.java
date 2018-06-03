@@ -72,6 +72,14 @@ public class DialogFactory {
                 ArmoryImage.ICON_SUCCESS_DIALOG);
     }
 
+    public static void createNoInstallationSetDialog(JFrame frame) {
+        JOptionPane.showMessageDialog(frame,
+                "No game installation set.\nClick 'Browse' to get started.",
+                TITLE_LEFT_PADDING + "No Installation",
+                JOptionPane.INFORMATION_MESSAGE,
+                ArmoryImage.ICON_UNKNOWN_DIALOG);
+    }
+
     public static void createDeleteProfileDialog(VerifyActionListener listener, String profileName) {
         VerifyActionDialog verifyActionDialog = new VerifyActionDialog(listener,
                 TITLE_LEFT_PADDING + "Delete Profile",
