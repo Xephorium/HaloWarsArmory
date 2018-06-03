@@ -1,6 +1,7 @@
 package com.xephorium.armory.ui.utility;
 
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.image.ArmoryImage;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -71,6 +72,7 @@ public class ColorChooser extends JDialog {
         this.setSize(DIALOG_INITIAL_WIDTH, DIALOG_INITIAL_HEIGHT);
         this.setLocation(DisplayUtility.getWindowStartX(DIALOG_INITIAL_WIDTH), DisplayUtility.getWindowStartY(DIALOG_INITIAL_HEIGHT));
         this.addWindowListener(createCloseListener());
+        this.setIconImages(ArmoryImage.ICON_APPLICATION_MAIN_LIST);
     }
 
     private WindowAdapter createCloseListener() {
