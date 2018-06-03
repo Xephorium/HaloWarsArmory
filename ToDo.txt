@@ -11,7 +11,7 @@ UI
 
 State
 - Write to PlayerColors on profile edit if profile currently used. (DONE)
-- Add extra ColorProfile Profiles to CustomProfiles
+- Add extra PlayerColor Profiles to CustomProfiles (DONE)
 
 Input/Output
 - Create PlayerColors if not found.
