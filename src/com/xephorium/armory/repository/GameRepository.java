@@ -27,51 +27,28 @@ public class GameRepository {
 
     /*--- Public Methods ---*/
 
-    public ProfileList mergeInitialProfilesWithSavedProfiles(ProfileList profileList) {
-        ProfileList initialProfileList = profileList.clone();
+    public ProfileList mergeStartupProfileListWithCurrentGameConfiguration(ProfileList profileList) {
+        ProfileList startupProfileList = profileList.clone();
         ProfileList playerColorsProfileList = new ProfileList();
-        ProfileList mergedProfileList = new ProfileList();
+        ProfileList mergedProfileList = startupProfileList.clone();
 
         playerColorsProfileList.addAllNewProfilesAsIs(loadSavedFactionProfileList(Faction.UNSC));
         playerColorsProfileList.addAllNewProfilesAsIs(loadSavedFactionProfileList(Faction.COVENANT));
+        ProfileList playerColorsDifferenceList = playerColorsProfileList.clone();
 
-        // Merge initialProfileList and playerColorsProfileList
-        for (int x = 0; x < playerColorsProfileList.size(); x++) {
-            Profile playerProfile = playerColorsProfileList.getProfileByIndex(x).cloneProfile();
-            Boolean playerProfileNotHandled = true;
+        // Merge startupProfileList and playerColorsProfileList
+        for (int y = 0; y < playerColorsProfileList.size(); y++) {
+            Profile currentPlayerColorsProfile = playerColorsProfileList.getProfileByIndex(y).cloneProfile();
 
-            for (int y = 0; y < initialProfileList.size(); y++) {
-                Profile currentCustomProfile = initialProfileList.getProfileByIndex(y).cloneProfile();
-
-                if (playerProfile.equals(currentCustomProfile)) {
-                    mergedProfileList.addNewProfileAsIs(currentCustomProfile);
-                    initialProfileList.delete(currentCustomProfile.getPrimaryKey());
-                    playerProfileNotHandled = false;
-                    break;
-
-                } else if (playerProfile.equalsColors(currentCustomProfile)) {
-                    if (playerProfile.getName().equals(Profile.INITIALIZATION_NAME)
-                            && playerProfile.getPrimaryKey() == Profile.INITIALIZATION_KEY) {
-                        mergedProfileList.addNewProfileAsIs(currentCustomProfile);
-                        initialProfileList.delete(currentCustomProfile.getPrimaryKey());
-
-                    } else if (playerProfile.getName().equals(currentCustomProfile.getName())) {
-                        mergedProfileList.addNewProfileAsIs(currentCustomProfile);
-                        initialProfileList.delete(currentCustomProfile.getPrimaryKey());
-
-                    } else {
-                        mergedProfileList.addNewProfileAsIs(playerProfile);
-                    }
-                    playerProfileNotHandled = false;
-                    break;
-                }
-            }
-
-            if(playerProfileNotHandled) {
-                mergedProfileList.addNewProfile(playerProfile.cloneProfile());
+            if (startupProfileList.containsProfileByNameAndColors(currentPlayerColorsProfile)
+                    || currentPlayerColorsProfile.getPrimaryKey() < 0) {
+                playerColorsDifferenceList.deleteByNameAndColors(currentPlayerColorsProfile);
             }
         }
-        mergedProfileList.addAllNewProfilesAsIs(initialProfileList.clone());
+
+        if(playerColorsDifferenceList.size() > 0) {
+            mergedProfileList.addAllNewProfiles(playerColorsDifferenceList);
+        }
         mergedProfileList = mergedProfileList.sortProfileListByPrimaryKey(mergedProfileList);
 
         return mergedProfileList;

@@ -36,11 +36,13 @@ class HaloWarsArmory implements ArmoryWindowListener {
         customProfileRepository = new CustomProfileRepository();
         armoryWindow = new ArmoryWindow(this);
 
-        profileList = new ProfileList();
-        profileList.addAllNewProfiles(customProfileRepository.loadCustomPlayerProfileList());
-        profileList.addAllNewProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
-        profileList.addAllNewProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
-        profileList = gameRepository.mergeInitialProfilesWithSavedProfiles(profileList);
+        ProfileList startupProfileList = createStartupProfileList();
+        profileList = gameRepository.mergeStartupProfileListWithCurrentGameConfiguration(startupProfileList);
+
+        if (profileList.size() > startupProfileList.size()) {
+            ProfileList unsavedProfileList = startupProfileList.getDifference(profileList);
+            customProfileRepository.saveCustomPlayerProfileList(unsavedProfileList);
+        }
 
         unscPlayerConfiguration = gameRepository.loadSavedFactionConfiguration(Faction.UNSC, profileList);
         covenantPlayerConfiguration = gameRepository.loadSavedFactionConfiguration(Faction.COVENANT, profileList);
@@ -146,15 +148,15 @@ class HaloWarsArmory implements ArmoryWindowListener {
     }
 
     @Override
-    public void handleDeleteProfileClick(int primaryKey) {
+    public void handleDeleteProfileClick(Profile profile) {
         armoryWindow.displayDeleteProfileDialog(new VerifyActionDialog.VerifyActionListener() {
             @Override
             public void onVerifyActionSelection() {
-                profileList.delete(primaryKey);
+                profileList.deleteByPrimaryKey(profile.getPrimaryKey());
                 armoryWindow.updateProfileList(profileList);
 
-                if (!gameRepository.isDefaultProfilePrimaryKey(primaryKey)) {
-                    customProfileRepository.deletePlayerProfile(primaryKey);
+                if (!gameRepository.isDefaultProfilePrimaryKey(profile.getPrimaryKey())) {
+                    customProfileRepository.deleteCustomPlayerProfile(profile);
                 }
             }
 
@@ -163,7 +165,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
             @Override
             public void onDialogClose() {}
-        }, profileList.getProfileByPrimaryKey(primaryKey).getName());
+        }, profileList.getProfileByPrimaryKey(profile.getPrimaryKey()).getName());
     }
 
     @Override
@@ -221,5 +223,16 @@ class HaloWarsArmory implements ArmoryWindowListener {
                 // Do Nothing
             }
         });
+    }
+
+
+    /*--- Private Utility Methods ---*/
+
+    private ProfileList createStartupProfileList() {
+        ProfileList savedProfileList = new ProfileList();
+        savedProfileList.addAllNewProfiles(customProfileRepository.loadCustomPlayerProfileList());
+        savedProfileList.addAllNewProfiles(gameRepository.getDefaultUNSCPlayerProfiles());
+        savedProfileList.addAllNewProfiles(gameRepository.getDefaultCovenantPlayerProfiles());
+        return savedProfileList;
     }
 }

@@ -104,7 +104,7 @@ public class ProfileList {
         // Remove Default Profiles From this
         for (Profile profile : newDefaultFactionProfiles.profileList) {
             if (this.containsPrimaryKey(profile.getPrimaryKey())) {
-                this.delete(profile.getPrimaryKey());
+                this.deleteByPrimaryKey(profile.getPrimaryKey());
             }
         }
 
@@ -117,10 +117,20 @@ public class ProfileList {
         }
     }
 
-    public void delete(int primaryKey) {
+    public void deleteByPrimaryKey(int primaryKey) {
         if (containsPrimaryKey(primaryKey)) {
             for (int x = 0; x < profileList.size(); x++) {
                 if (primaryKey == profileList.get(x).getPrimaryKey()) {
+                    profileList.remove(x);
+                }
+            }
+        }
+    }
+
+    public void deleteByNameAndColors(Profile profile) {
+        if (containsProfileByNameAndColors(profile)) {
+            for (int x = 0; x < profileList.size(); x++) {
+                if (profile.equalsColors(profileList.get(x)) && profile.getName().equals(profileList.get(x).getName())) {
                     profileList.remove(x);
                 }
             }
@@ -216,6 +226,15 @@ public class ProfileList {
         return false;
     }
 
+    public boolean containsProfileByNameAndColors(Profile profile) {
+        for (Profile currentProfile : profileList) {
+            if (profile.equalsColors(currentProfile) && profile.getName().equals(currentProfile.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ProfileList sortProfileListByPrimaryKey(ProfileList profileList) {
         ProfileList sortedProfileList = profileList.clone();
         boolean swapOccurred = true;
@@ -237,11 +256,21 @@ public class ProfileList {
         return sortedProfileList;
     }
 
+    public ProfileList getDifference(ProfileList otherProfileList) {
+        ProfileList differenceProfileList = otherProfileList.clone();
+        for (int x = 0; x < otherProfileList.size(); x++) {
+            if (this.containsProfileByNameAndColors(otherProfileList.getProfileByIndex(x))) {
+                differenceProfileList.deleteByPrimaryKey(otherProfileList.getProfileByIndex(x).getPrimaryKey());
+            }
+        }
+        return differenceProfileList;
+    }
+
 
     /*--- Private Methods ---*/
 
     private int generateNewPrimaryKey() {
-        int newPrimaryKey = 0;
+        int newPrimaryKey = 1;
         while (this.containsPrimaryKey(newPrimaryKey)) {
             newPrimaryKey++;
         }

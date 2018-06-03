@@ -4,10 +4,7 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.converter.ProfileConverter;
 import com.xephorium.armory.model.ProfileList;
 
-import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CustomProfileRepository {
 
@@ -47,10 +44,28 @@ public class CustomProfileRepository {
         return true;
     }
 
-    public void deletePlayerProfile(int primaryKey) {
-
+    public boolean saveCustomPlayerProfileList(ProfileList profileList) {
+        boolean saveSuccessful = true;
         if (CUSTOM_PROFILES_FILE.exists()) {
-            deleteProfileFromCustomProfiles(primaryKey);
+            for (int x = 0; x < profileList.size(); x++) {
+                if(!writeProfileToCustomProfiles(profileList.getProfileByIndex(x)))
+                    saveSuccessful = false;
+            }
+        } else {
+            if(!createCustomProfilesSaveFile())
+                return false;
+            for (int x = 0; x < profileList.size(); x++) {
+                if(!writeProfileToCustomProfiles(profileList.getProfileByIndex(x)))
+                    saveSuccessful = false;
+            }
+        }
+
+        return saveSuccessful;
+    }
+
+    public void deleteCustomPlayerProfile(Profile profile) {
+        if (CUSTOM_PROFILES_FILE.exists()) {
+            deleteProfileFromCustomProfilesByPrimaryKey(profile);
         }
     }
 
@@ -83,11 +98,21 @@ public class CustomProfileRepository {
         return true;
     }
 
-    private static boolean deleteProfileFromCustomProfiles(int primaryKey) {
+    private static boolean deleteProfileFromCustomProfilesByPrimaryKey(Profile profile) {
         ProfileList customProfileList = readCustomProfiles();
 
-        if (customProfileList.containsPrimaryKey(primaryKey)) {
-            customProfileList.delete(primaryKey);
+        if (customProfileList.containsPrimaryKey(profile.getPrimaryKey())) {
+            customProfileList.deleteByPrimaryKey(profile.getPrimaryKey());
+        }
+
+        return writeProfileListToCustomProfiles(customProfileList);
+    }
+
+    private static boolean deleteProfileFromCustomProfilesByNameAndColors(Profile profile) {
+        ProfileList customProfileList = readCustomProfiles();
+
+        if (customProfileList.containsProfileByNameAndColors(profile)) {
+            customProfileList.deleteByNameAndColors(profile);
         }
 
         return writeProfileListToCustomProfiles(customProfileList);

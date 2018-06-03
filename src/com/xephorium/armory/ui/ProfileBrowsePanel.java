@@ -146,7 +146,8 @@ public class ProfileBrowsePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!browsePanelEmptyState) {
-                    listener.handleDeleteProfileClick(profileList.getProfileByIndex(profileListPanel.getLeadSelectionIndex()).getPrimaryKey());
+                    listener.handleDeleteProfileClick(profileList
+                            .getProfileByIndex(profileListPanel.getLeadSelectionIndex()));
                 }
             }
         });

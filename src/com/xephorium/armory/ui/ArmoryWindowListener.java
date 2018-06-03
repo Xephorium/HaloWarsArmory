@@ -33,7 +33,7 @@ public interface ArmoryWindowListener {
 
     void handleAddProfileClick();
 
-    void handleDeleteProfileClick(int primaryKey);
+    void handleDeleteProfileClick(Profile profile);
 
     void handleWorkingProfileSaveClick(Profile newProfile);
 
