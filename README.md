@@ -1,5 +1,5 @@
 # Halo Wars Armory
-![Lines](src/com/xephorium/armory/ui/resource/image/readmeSmallLines.png)&nbsp; A custom unit color tool for Halo Wars: Definitive Edition &nbsp;![Lines](src/com/xephorium/armory/ui/resource/image/readmeSmallLines.png)
+![Lines](src/com/xephorium/armory/ui/resource/image/readmeSmallLines.png)&nbsp; A custom army color tool for Halo Wars: Definitive Edition &nbsp;![Lines](src/com/xephorium/armory/ui/resource/image/readmeSmallLines.png)
 
 
 #### Features
