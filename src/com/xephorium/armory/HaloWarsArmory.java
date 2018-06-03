@@ -188,6 +188,18 @@ class HaloWarsArmory implements ArmoryWindowListener {
             saveSuccessful = customProfileRepository.saveCustomPlayerProfile(profile);
         }
 
+        if (unscPlayerConfiguration.contains(newProfile.getPrimaryKey())) {
+            if (!gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList)) {
+                saveSuccessful = false;
+            }
+        }
+
+        if (covenantPlayerConfiguration.contains(newProfile.getPrimaryKey())) {
+            if (!gameRepository.saveFactionProfiles(Faction.COVENANT, covenantPlayerConfiguration, profileList)) {
+                saveSuccessful = false;
+            }
+        }
+
         if (saveSuccessful) {
             armoryWindow.displayProfileSavedDialog();
         } else {
