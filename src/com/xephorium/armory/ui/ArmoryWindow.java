@@ -203,7 +203,7 @@ public class ArmoryWindow {
                 DisplayUtility.getWindowStartY(ArmoryDimension.WINDOW_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setIconImages(ArmoryImage.ICON_APPLICATION_MAIN_LIST);
+        frame.setIconImages((new ArmoryImage()).ICON_APPLICATION_MAIN_LIST);
     }
 
     private void initializeViewClasses() {

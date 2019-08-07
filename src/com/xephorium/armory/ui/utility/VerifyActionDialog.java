@@ -13,6 +13,7 @@ public class VerifyActionDialog {
     private VerifyActionListener listener;
     private String title;
     private String message;
+    private ArmoryImage armoryImage;
 
 
     /*--- Constructor ---*/
@@ -21,6 +22,7 @@ public class VerifyActionDialog {
         this.listener = listener;
         this.title = title;
         this.message = message;
+        this.armoryImage = new ArmoryImage();
     }
 
 
@@ -36,7 +38,7 @@ public class VerifyActionDialog {
                 title,
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
-                ArmoryImage.ICON_UNKNOWN_DIALOG,
+                armoryImage.ICON_UNKNOWN_DIALOG,
                 options,
                 options[0]);
         handleAction(userAction);

@@ -76,7 +76,7 @@ public class ColorChooser extends JDialog {
                 DisplayUtility.getWindowStartY(DIALOG_INITIAL_HEIGHT)
         );
         this.addWindowListener(createCloseListener());
-        this.setIconImages(ArmoryImage.ICON_APPLICATION_MAIN_LIST);
+        this.setIconImages((new ArmoryImage()).ICON_APPLICATION_MAIN_LIST);
     }
 
     private WindowAdapter createCloseListener() {

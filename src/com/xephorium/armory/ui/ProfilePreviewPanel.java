@@ -141,13 +141,14 @@ public class ProfilePreviewPanel extends JPanel {
     }
 
     private void initializeImages() {
-        scaledBackgroundImage = rescaleImage(ArmoryImage.PREVIEW_BACKGROUND);
-        scaledMaskWarthogColor = rescaleImage(ArmoryImage.PREVIEW_MASK_WARTHOG_COLOR);
-        scaledMaskWarthogShine = rescaleImage(ArmoryImage.PREVIEW_MASK_WARTHOG_SHINE);
-        scaledMaskSelectorColor = rescaleImage(ArmoryImage.PREVIEW_MASK_SELECTOR_COLOR);
-        scaledMaskUNSCMinimapColor = rescaleImage(ArmoryImage.PREVIEW_MASK_UNSC_MINIMAP_COLOR);
-        scaledMaskUNSCPauseColor = rescaleImage(ArmoryImage.PREVIEW_MASK_UNSC_PAUSE_COLOR);
-        scaledMaskUNSCCorpseColor = rescaleImage(ArmoryImage.PREVIEW_MASK_UNSC_CORPSE_COLOR);
+        ArmoryImage armoryImage = new ArmoryImage();
+        scaledBackgroundImage = rescaleImage(armoryImage.PREVIEW_BACKGROUND);
+        scaledMaskWarthogColor = rescaleImage(armoryImage.PREVIEW_MASK_WARTHOG_COLOR);
+        scaledMaskWarthogShine = rescaleImage(armoryImage.PREVIEW_MASK_WARTHOG_SHINE);
+        scaledMaskSelectorColor = rescaleImage(armoryImage.PREVIEW_MASK_SELECTOR_COLOR);
+        scaledMaskUNSCMinimapColor = rescaleImage(armoryImage.PREVIEW_MASK_UNSC_MINIMAP_COLOR);
+        scaledMaskUNSCPauseColor = rescaleImage(armoryImage.PREVIEW_MASK_UNSC_PAUSE_COLOR);
+        scaledMaskUNSCCorpseColor = rescaleImage(armoryImage.PREVIEW_MASK_UNSC_CORPSE_COLOR);
     }
 
     private JPanel createBlankPanel() {

@@ -19,6 +19,7 @@ class InstallDirectoryPanel extends JPanel {
 
     private ArmoryWindowListener listener;
 
+    private ArmoryImage armoryImage;
     private ImageIcon imageIcon;
     private JTextField directoryTextField;
 
@@ -30,7 +31,8 @@ class InstallDirectoryPanel extends JPanel {
 
         initializePanelAttributes();
 
-        imageIcon = ArmoryImage.ICON_UNKNOWN_INSTALLATION;
+        armoryImage = new ArmoryImage();
+        imageIcon = armoryImage.ICON_UNKNOWN_INSTALLATION;
         directoryTextField = createDirectoryTextField();
 
         setDefaultInstallDirectory();
@@ -50,20 +52,20 @@ class InstallDirectoryPanel extends JPanel {
     public void setValidInstallDirectory(String directory) {
         if (directory != null) {
             directoryTextField.setText(" " + directory);
-            imageIcon.setImage(ArmoryImage.ICON_SUCCESS_INSTALLATION.getImage());
+            imageIcon.setImage(armoryImage.ICON_SUCCESS_INSTALLATION.getImage());
             this.repaint();
         }
     }
 
     public void setInvalidInstallDirectory() {
         directoryTextField.setText(" " + ArmoryContent.INSTALL_DIRECTORY_PREVIEW);
-        imageIcon.setImage(ArmoryImage.ICON_FAILURE_INSTALLATION.getImage());
+        imageIcon.setImage(armoryImage.ICON_FAILURE_INSTALLATION.getImage());
         this.repaint();
     }
 
     public void setDefaultInstallDirectory() {
         directoryTextField.setText(" " + ArmoryContent.INSTALL_DIRECTORY_PREVIEW);
-        imageIcon.setImage(ArmoryImage.ICON_UNKNOWN_INSTALLATION.getImage());
+        imageIcon.setImage(armoryImage.ICON_UNKNOWN_INSTALLATION.getImage());
         this.repaint();
     }
 

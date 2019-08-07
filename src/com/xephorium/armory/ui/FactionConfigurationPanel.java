@@ -7,6 +7,7 @@ import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.content.ArmoryContent;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
+import com.xephorium.armory.ui.resource.image.ArmoryImage;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,9 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_COVENANT;
-import static com.xephorium.armory.ui.resource.image.ArmoryImage.ICON_UNSC;
 
 public class FactionConfigurationPanel extends JPanel {
 
@@ -297,8 +295,13 @@ public class FactionConfigurationPanel extends JPanel {
 
     private JPanel createFactionIconPanel(Faction faction) {
         JPanel iconPanel = new JPanel(new GridLayout(1, 1));
+        ArmoryImage armoryImage = new ArmoryImage();
         iconPanel.setBackground(Color.WHITE);
-        iconPanel.add(new JLabel("", faction == Faction.UNSC ? ICON_UNSC : ICON_COVENANT, JLabel.CENTER));
+        iconPanel.add(new JLabel(
+                "",
+                faction == Faction.UNSC ? armoryImage.ICON_UNSC : armoryImage.ICON_COVENANT,
+                JLabel.CENTER)
+        );
         return iconPanel;
     }
 }
