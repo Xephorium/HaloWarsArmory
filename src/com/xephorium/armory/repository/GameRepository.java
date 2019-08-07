@@ -7,8 +7,6 @@ import com.xephorium.armory.model.converter.ProfileConverter;
 
 import java.awt.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 
@@ -17,7 +15,8 @@ public class GameRepository {
 
     /*--- Variables ---*/
 
-    private static final String PLAYER_COLORS_PATH = "overrides\\data\\playercolors.xml";
+    private static final String PLAYER_COLORS_FILE_NAME = "playercolors.xml";
+    private static final String PLAYER_COLORS_PATH = "overrides\\data";
     private static final String INSTALLATION_FILE_NAME = "InstallationDirectory.txt";
     private static final File INSTALLATION_FILE = new File(getCurrentDirectory() + "\\" + INSTALLATION_FILE_NAME);
 
@@ -93,6 +92,29 @@ public class GameRepository {
         return true;
     }
 
+    public static boolean isValidHaloWarsInstallation(String directory) {
+        File installationDirectory = new File(directory);
+        boolean launcherFound = false;
+        boolean creviceFound = false;
+
+        if (installationDirectory.exists()) {
+            for (File file : installationDirectory.listFiles()) {
+
+                if (file.getName().equals("xgameFinal.exe")) {
+                    launcherFound = true;
+                }
+
+                if (file.getName().equals("crevice.era")) {
+                    creviceFound = true;
+                }
+            }
+        } else {
+            return false;
+        }
+
+        return launcherFound && creviceFound;
+    }
+
     public boolean isInstallationDirectorySet() {
         return loadInstallationDirectory() != null;
     }
@@ -120,23 +142,10 @@ public class GameRepository {
         }
     }
 
-    public static boolean isValidHaloWarsInstallation(String directory) {
-        File installationDirectory = new File(directory);
-        boolean launcherFound = false;
-        boolean creviceFound = false;
-
-        for (File file : installationDirectory.listFiles()) {
-
-            if (file.getName().equals("xgameFinal.exe")) {
-                launcherFound = true;
-            }
-
-            if (file.getName().equals("crevice.era")) {
-                creviceFound = true;
-            }
-        }
-
-        return launcherFound && creviceFound;
+    public static boolean isUserLocalDirectoryFound() {
+        String user = SystemRepository.getUsername();
+        File userLocalDirectory = new File("C:\\Users\\" + user + "\\AppData\\Local");
+        return userLocalDirectory.exists();
     }
 
     public void setupModManifestFile(String directory) {
@@ -159,10 +168,27 @@ public class GameRepository {
         }
     }
 
-    public static boolean isUserLocalDirectoryFound() {
-        String user = SystemRepository.getUsername();
-        File userLocalDirectory = new File("C:\\Users\\" + user + "\\AppData\\Local");
-        return userLocalDirectory.exists();
+    public void setupPlayerColorsFile() {
+
+        // Initialize Directory
+        File playerColorsDirectory = new File(loadInstallationDirectory() + "\\" + PLAYER_COLORS_PATH);
+        if (!playerColorsDirectory.exists()) {
+            try {
+                playerColorsDirectory.mkdirs();
+            } catch (Exception exception) { /* Do Nothing */ }
+        }
+
+        // Initialize File
+        File playerColorsFile = getGamePlayerColorsFile();
+        if (!playerColorsFile.exists()) {
+            try {
+                playerColorsFile.createNewFile();
+                List<String> defaultPlayerColorsContents = getDefaultPlayerColorsContents();
+                PrintWriter writer = new PrintWriter(playerColorsFile, "UTF-8");
+                defaultPlayerColorsContents.forEach(string -> writer.println(string));
+                writer.close();
+            } catch (Exception exception) { /* Do Nothing */ }
+        }
     }
 
     public List<Integer> loadSavedFactionConfiguration(Faction faction, ProfileList profileList) {
@@ -280,8 +306,8 @@ public class GameRepository {
     private List<String> readPlayerColorsContents() {
         File playerColorsFile = getGamePlayerColorsFile();
         if (playerColorsFile == null) {
-            // TODO - Create Player Colors File
-            return null;
+            setupPlayerColorsFile();
+            playerColorsFile = getGamePlayerColorsFile();
         }
 
         List<String> playerColorsContents = new ArrayList<>();
@@ -304,17 +330,30 @@ public class GameRepository {
         return playerColorsContents;
     }
 
+    private List<String> getDefaultPlayerColorsContents() {
+        File defaultPlayerColorsFile = new File("reference\\files\\playercolors.xml");
+        List<String> defaultPlayerColorsContents = new ArrayList<String>();
+        BufferedReader bufferedReader;
+
+        try {
+            bufferedReader = new BufferedReader(new FileReader(defaultPlayerColorsFile));
+            String line = bufferedReader.readLine();
+
+            while (line != null) {
+                defaultPlayerColorsContents.add(line);
+                line = bufferedReader.readLine();
+            }
+
+            bufferedReader.close();
+        } catch (IOException exception) {
+            System.out.println("Exception - " + exception);
+        }
+
+        return defaultPlayerColorsContents;
+    }
+
     private File getGamePlayerColorsFile() {
-        if (!isSavedInstallationDirectoryValid()) {
-            return null;
-        }
-
-        File gameProfileFile = new File(loadInstallationDirectory() + "\\" + PLAYER_COLORS_PATH);
-        if (!gameProfileFile.exists()) {
-            return null;
-        }
-
-        return gameProfileFile;
+        return new File(loadInstallationDirectory() + "\\" + PLAYER_COLORS_PATH + "\\" + PLAYER_COLORS_FILE_NAME);
     }
 
     private boolean isSavedInstallationDirectoryValid() {

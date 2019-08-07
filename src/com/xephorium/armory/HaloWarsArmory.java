@@ -53,6 +53,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
         ProfileList startupProfileList = createStartupProfileList();
 
         if (gameRepository.isInstallationDirectorySet()) {
+            gameRepository.setupPlayerColorsFile();
             profileList = gameRepository.mergeStartupProfileListWithCurrentGameConfiguration(startupProfileList);
 
             if (profileList.size() > startupProfileList.size()) {
@@ -102,6 +103,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
         } else {
             gameRepository.saveInstallationDirectory(directory);
             gameRepository.setupModManifestFile(directory);
+            gameRepository.setupPlayerColorsFile();
             armoryWindow.setValidInstallDirectory(directory);
             armoryWindow.displayGameFoundDialog();
             armoryWindow.enableConfigurationEdit();
