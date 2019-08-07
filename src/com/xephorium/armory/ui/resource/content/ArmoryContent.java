@@ -15,7 +15,7 @@ public class ArmoryContent {
     public static final String FACTION_CONFIGURATION_TAB_UNSC = "UNSC";
 
     public static final String INSTALL_DIRECTORY_BUTTON = "Browse";
-    public static final String INSTALL_DIRECTORY_PREVIEW = "Choose Halo Wars installation folder...";
+    public static final String INSTALL_DIRECTORY_PREVIEW = "Choose Halo Wars folder (ie. C:\\Steam\\steamapps\\common\\HaloWarsDE)";
 
     public static final String PROFILE_ATTRIBUTE_BUTTON_SAVE = "Save";
     public static final String PROFILE_ATTRIBUTE_EMPTY_STATE_BOTTOM = "Available";
@@ -56,7 +56,7 @@ public class ArmoryContent {
     public static final String DIALOG_NO_CHANGES_TO_SAVE_MESSAGE = "There are no changes to save.";
     public static final String DIALOG_NO_CHANGES_TO_SAVE_TITLE = "No Changes to Save";
 
-    public static final String DIALOG_NO_INSTALLATION_SET_MESSAGE = "No game installation set.\nClick 'Browse' to get started.";
+    public static final String DIALOG_NO_INSTALLATION_SET_MESSAGE = "No Halo Wars installation set.\nClick 'Browse' to select.";
     public static final String DIALOG_NO_INSTALLATION_SET_TITLE = "No Installation";
 
     public static final String DIALOG_PROBLEM_SAVING_MESSAGE = "There was a problem saving.";
