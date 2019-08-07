@@ -1,5 +1,6 @@
 package com.xephorium.armory.ui.utility;
 
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
 
 import javax.swing.*;
@@ -26,7 +27,10 @@ public class VerifyActionDialog {
     /*--- Public Methods ---*/
 
     void showDialog() {
-        String[] options = new String[] {"Yes", "Cancel"};
+        String[] options = new String[]{
+                ArmoryContent.DIALOG_VERIFY_ACTION_YES,
+                ArmoryContent.DIALOG_VERIFY_ACTION_CANCEL
+        };
         int userAction = JOptionPane.showOptionDialog(null,
                 message,
                 title,

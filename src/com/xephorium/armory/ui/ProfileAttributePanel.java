@@ -2,6 +2,7 @@ package com.xephorium.armory.ui;
 
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.utility.CustomMouseListener;
 
@@ -75,7 +76,7 @@ public class ProfileAttributePanel extends JPanel {
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(ArmoryDimension.ATTRIBUTE_BOX_WIDTH, 0));
-        this.setBorder(new EmptyBorder(0,15,0,0));
+        this.setBorder(new EmptyBorder(0, 15, 0, 0));
         this.setBackground(Color.WHITE);
     }
 
@@ -84,13 +85,13 @@ public class ProfileAttributePanel extends JPanel {
         profileNameTextField.setBackground(Color.WHITE);
         profileNameTextField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK),
-                new EmptyBorder(3,2,3,2)));
-        profileNameTextField.setText("Profile Name");
+                new EmptyBorder(3, 2, 3, 2)));
+        profileNameTextField.setText(ArmoryContent.PROFILE_ATTRIBUTE_NAME);
     }
 
     private JPanel createColorListPanel() {
         JPanel colorListPanel = new JPanel(new GridLayout(Profile.ColorType.values().length, 1));
-        colorListPanel.setBorder(new EmptyBorder(5,0,5,0));
+        colorListPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
         colorListPanel.setBackground(Color.WHITE);
         for (Profile.ColorType colorType : Profile.ColorType.values()) {
             colorListPanel.add(createColorListItem(colorType));
@@ -120,23 +121,15 @@ public class ProfileAttributePanel extends JPanel {
     }
 
     private JButton createSaveButton() {
-        saveButton = new JButton("Save");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listener.handleWorkingProfileSaveClick(getWorkingProfile());
-            }
-        });
+        saveButton = new JButton(ArmoryContent.PROFILE_ATTRIBUTE_BUTTON_SAVE);
+        saveButton.addActionListener(actionEvent -> listener.handleWorkingProfileSaveClick(getWorkingProfile()));
         return saveButton;
     }
 
     private CustomMouseListener createColorListItemMouseListener(Profile.ColorType colorType) {
-        return new CustomMouseListener(new CustomMouseListener.MouseClickListener() {
-            @Override
-            public void onMouseClick() {
-                if (saveButton.isEnabled()) {
-                    listener.handleWorkingProfileColorClick(getWorkingProfile(), colorType);
-                }
+        return new CustomMouseListener(() -> {
+            if (saveButton.isEnabled()) {
+                listener.handleWorkingProfileColorClick(getWorkingProfile(), colorType);
             }
         });
     }

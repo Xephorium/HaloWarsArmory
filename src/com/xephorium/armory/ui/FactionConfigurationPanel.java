@@ -4,16 +4,15 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.Faction;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class FactionConfigurationPanel extends JPanel {
 
     private List<JComboBox> unscSelectors = new ArrayList<>();
     private List<JComboBox> covenantSelectors = new ArrayList<>();
-    private ProfileList profileList = new ProfileList(new Profile("No Profiles Available"));
+    private ProfileList profileList = new ProfileList(new Profile(ArmoryContent.FACTION_CONFIGURATION_EMPTY_STATE));
     private JButton saveButton;
     private JButton resetButton;
     private boolean selectorSetupComplete = false;
@@ -124,7 +123,7 @@ public class FactionConfigurationPanel extends JPanel {
     private void setEmptyFactionSelectors(List<JComboBox> factionSelectors) {
         for (JComboBox selector : factionSelectors) {
             selector.removeAllItems();
-            selector.addItem("No Profiles Available");
+            selector.addItem(ArmoryContent.FACTION_CONFIGURATION_EMPTY_STATE);
             selector.setSelectedIndex(0);
         }
     }
@@ -135,10 +134,10 @@ public class FactionConfigurationPanel extends JPanel {
     private void initializePanelAttributes() {
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(
-                ArmoryDimension.PANEL_PADDING/2 - 3,
+                ArmoryDimension.PANEL_PADDING / 2 - 3,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL,
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
-                ArmoryDimension.PANEL_PADDING/2 - 2));
+                ArmoryDimension.PANEL_PADDING / 2 - 2));
         this.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
     }
 
@@ -156,12 +155,12 @@ public class FactionConfigurationPanel extends JPanel {
         unscPanel.add(createPlayerListPanel(Faction.UNSC), BorderLayout.NORTH);
         unscPanel.add(createFactionPanel(Faction.UNSC), BorderLayout.CENTER);
 
-        JLabel unscLabel = new JLabel("UNSC");
+        JLabel unscLabel = new JLabel(ArmoryContent.FACTION_CONFIGURATION_TAB_UNSC);
         unscLabel.setFont(ArmoryFont.NORMAL_BOLD);
         unscLabel.setHorizontalAlignment(JLabel.CENTER);
         unscLabel.setBorder(new EmptyBorder(4, 10, 3, 10));
 
-        tabbedPane.addTab("UNSC", unscPanel);
+        tabbedPane.addTab(ArmoryContent.FACTION_CONFIGURATION_TAB_UNSC, unscPanel);
         tabbedPane.setTabComponentAt(0, unscLabel);
 
         JPanel covenantPanel = new JPanel();
@@ -175,12 +174,12 @@ public class FactionConfigurationPanel extends JPanel {
         covenantPanel.add(createPlayerListPanel(Faction.COVENANT), BorderLayout.NORTH);
         covenantPanel.add(createFactionPanel(Faction.COVENANT), BorderLayout.CENTER);
 
-        JLabel covenantLabel = new JLabel("Covenant");
+        JLabel covenantLabel = new JLabel(ArmoryContent.FACTION_CONFIGURATION_TAB_COVENANT);
         covenantLabel.setFont(ArmoryFont.NORMAL_BOLD);
         covenantLabel.setHorizontalAlignment(JLabel.CENTER);
         covenantLabel.setBorder(new EmptyBorder(4, 3, 3, 4));
 
-        tabbedPane.addTab("Covenant", covenantPanel);
+        tabbedPane.addTab(ArmoryContent.FACTION_CONFIGURATION_TAB_COVENANT, covenantPanel);
         tabbedPane.setTabComponentAt(1, covenantLabel);
 
         this.add(tabbedPane, BorderLayout.CENTER);
@@ -199,7 +198,7 @@ public class FactionConfigurationPanel extends JPanel {
             playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.X_AXIS));
             playerPanel.setBorder(new EmptyBorder(0, 0, ArmoryDimension.FACTION_PLAYER_PADDING_VERTICAL, 0));
             playerPanel.setBackground(Color.WHITE);
-            playerPanel.add(new JLabel("Player " + (playerNumber + 1)));
+            playerPanel.add(new JLabel(ArmoryContent.FACTION_CONFIGURATION_LABEL_PLAYER + " " + (playerNumber + 1)));
             playerPanel.add(new Box.Filler(
                     new Dimension(nameLabelPadding, 0),
                     new Dimension(nameLabelPadding, 0),
@@ -222,21 +221,18 @@ public class FactionConfigurationPanel extends JPanel {
     private JComboBox createFactionComboBox(Faction faction, int playerNumber) {
         JComboBox comboBox;
         comboBox = new JComboBox(profileList.getNameList());
-        comboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent event) {
-                if (event.getStateChange() == ItemEvent.SELECTED) {
-                    if (!selectorSetupComplete || selectorEmptyState) {
-                        return;
-                    }
+        comboBox.addItemListener(itemEvent -> {
+            if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
+                if (!selectorSetupComplete || selectorEmptyState) {
+                    return;
+                }
 
-                    if (faction == Faction.UNSC) {
-                        listener.handleUNSCPlayerUpdate(playerNumber,
-                                profileList.getProfileByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
-                    } else {
-                        listener.handleCovenantPlayerUpdate(playerNumber,
-                                profileList.getProfileByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
-                    }
+                if (faction == Faction.UNSC) {
+                    listener.handleUNSCPlayerUpdate(playerNumber,
+                            profileList.getProfileByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
+                } else {
+                    listener.handleCovenantPlayerUpdate(playerNumber,
+                            profileList.getProfileByIndex(comboBox.getSelectedIndex()).getPrimaryKey());
                 }
             }
         });
@@ -266,10 +262,10 @@ public class FactionConfigurationPanel extends JPanel {
         horizontalButtonPanel.setBackground(Color.WHITE);
 
         if (buttonType == ButtonType.SAVE) {
-            saveButton = new JButton("Save");
+            saveButton = new JButton(ArmoryContent.FACTION_CONFIGURATION_BUTTON_SAVE);
             saveButton.addActionListener(getFactionButtonActionListener(buttonType, faction));
         } else {
-            resetButton = new JButton("Reset");
+            resetButton = new JButton(ArmoryContent.FACTION_CONFIGURATION_BUTTON_RESET);
             resetButton.addActionListener(getFactionButtonActionListener(buttonType, faction));
         }
 
@@ -280,22 +276,19 @@ public class FactionConfigurationPanel extends JPanel {
     }
 
     private ActionListener getFactionButtonActionListener(ButtonType buttonType, Faction faction) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (buttonType == ButtonType.RESET) {
-                    if (faction == Faction.UNSC) {
-                        listener.handleUNSCConfigurationReset();
-                    } else {
-                        listener.handleCovenantConfigurationReset();
-                    }
+        return actionEvent -> {
+            if (buttonType == ButtonType.RESET) {
+                if (faction == Faction.UNSC) {
+                    listener.handleUNSCConfigurationReset();
                 } else {
-                    if (!selectorEmptyState) {
-                        if (faction == Faction.UNSC) {
-                            listener.handleUNSCConfigurationSave();
-                        } else {
-                            listener.handleCovenantConfigurationSave();
-                        }
+                    listener.handleCovenantConfigurationReset();
+                }
+            } else {
+                if (!selectorEmptyState) {
+                    if (faction == Faction.UNSC) {
+                        listener.handleUNSCConfigurationSave();
+                    } else {
+                        listener.handleCovenantConfigurationSave();
                     }
                 }
             }

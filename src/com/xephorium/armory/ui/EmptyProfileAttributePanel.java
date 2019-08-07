@@ -1,6 +1,7 @@
 package com.xephorium.armory.ui;
 
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -36,12 +37,12 @@ public class EmptyProfileAttributePanel extends JPanel {
 
         JPanel labelPanel = new JPanel(new BorderLayout());
 
-        JLabel emptyLabelTop = new JLabel("No Profiles");
+        JLabel emptyLabelTop = new JLabel(ArmoryContent.PROFILE_ATTRIBUTE_EMPTY_STATE_TOP);
         emptyLabelTop.setForeground(ArmoryColor.TEXT_DISABLED);
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         topPanel.add(emptyLabelTop);
 
-        JLabel emptyLabelBottom = new JLabel("Available");
+        JLabel emptyLabelBottom = new JLabel(ArmoryContent.PROFILE_ATTRIBUTE_EMPTY_STATE_BOTTOM);
         emptyLabelBottom.setForeground(ArmoryColor.TEXT_DISABLED);
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         bottomPanel.add(emptyLabelBottom);

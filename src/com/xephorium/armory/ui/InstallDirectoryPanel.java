@@ -3,12 +3,11 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 class InstallDirectoryPanel extends JPanel {
@@ -57,13 +56,13 @@ class InstallDirectoryPanel extends JPanel {
     }
 
     public void setInvalidInstallDirectory() {
-        directoryTextField.setText(" Choose Halo Wars installation folder...");
+        directoryTextField.setText(" " + ArmoryContent.INSTALL_DIRECTORY_PREVIEW);
         imageIcon.setImage(ArmoryImage.ICON_FAILURE_INSTALLATION.getImage());
         this.repaint();
     }
 
     public void setDefaultInstallDirectory() {
-        directoryTextField.setText(" Choose Halo Wars installation folder...");
+        directoryTextField.setText(" " + ArmoryContent.INSTALL_DIRECTORY_PREVIEW);
         imageIcon.setImage(ArmoryImage.ICON_UNKNOWN_INSTALLATION.getImage());
         this.repaint();
     }
@@ -76,7 +75,7 @@ class InstallDirectoryPanel extends JPanel {
         this.setBorder(new EmptyBorder(
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL,
-                ArmoryDimension.PANEL_PADDING/2,
+                ArmoryDimension.PANEL_PADDING / 2,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
         this.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
     }
@@ -89,24 +88,14 @@ class InstallDirectoryPanel extends JPanel {
         JTextField textField = new JTextField();
         textField.setEnabled(false);
         textField.setBackground(Color.WHITE);
-        textField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listener.handleBrowseButtonClick();
-            }
-        });
+        textField.addActionListener(actionEvent -> listener.handleBrowseButtonClick());
 
         return textField;
     }
 
     private JButton createBrowseButton() {
-        JButton button = new JButton("Browse");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listener.handleBrowseButtonClick();
-            }
-        });
+        JButton button = new JButton(ArmoryContent.INSTALL_DIRECTORY_BUTTON);
+        button.addActionListener(actionEvent -> listener.handleBrowseButtonClick());
 
         return button;
     }

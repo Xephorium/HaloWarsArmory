@@ -3,6 +3,7 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.font.ArmoryFont;
 
@@ -115,7 +116,7 @@ public class ProfileConfigurationPanel extends JPanel {
     }
 
     private JLabel createProfileConfigurationHeader() {
-        JLabel profileBrowseHeader = new JLabel("Color Profiles");
+        JLabel profileBrowseHeader = new JLabel(ArmoryContent.PROFILE_CONFIGURATION_TITLE);
         profileBrowseHeader.setBorder(new EmptyBorder(0,0,10,0));
         profileBrowseHeader.setFont(ArmoryFont.NORMAL_BOLD);
         return profileBrowseHeader;

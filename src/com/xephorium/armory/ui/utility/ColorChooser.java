@@ -1,6 +1,7 @@
 package com.xephorium.armory.ui.utility;
 
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
 
 import javax.swing.*;
@@ -68,9 +69,12 @@ public class ColorChooser extends JDialog {
     private void initializeDialogAttributes() {
 
         this.setLayout(new BorderLayout());
-        this.setTitle(" Choose A Color");
+        this.setTitle(" " + ArmoryContent.DIALOG_COLOR_CHOOSER_TITLE);
         this.setSize(DIALOG_INITIAL_WIDTH, DIALOG_INITIAL_HEIGHT);
-        this.setLocation(DisplayUtility.getWindowStartX(DIALOG_INITIAL_WIDTH), DisplayUtility.getWindowStartY(DIALOG_INITIAL_HEIGHT));
+        this.setLocation(
+                DisplayUtility.getWindowStartX(DIALOG_INITIAL_WIDTH),
+                DisplayUtility.getWindowStartY(DIALOG_INITIAL_HEIGHT)
+        );
         this.addWindowListener(createCloseListener());
         this.setIconImages(ArmoryImage.ICON_APPLICATION_MAIN_LIST);
     }
@@ -89,47 +93,51 @@ public class ColorChooser extends JDialog {
         javaColorChooserPanel = new JPanel();
 
         javaColorChooser.getSelectionModel().getSelectedColor();
-        javaColorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                redLabel.setText("Red: " + javaColorChooser.getSelectionModel().getSelectedColor().getRed() + ", ");
-                greenLabel.setText("Green: " + javaColorChooser.getSelectionModel().getSelectedColor().getGreen() + ", ");
-                blueLabel.setText("Blue: " + javaColorChooser.getSelectionModel().getSelectedColor().getBlue());
-                previewPanel.setBackground(javaColorChooser.getSelectionModel().getSelectedColor());
-            }
+        javaColorChooser.getSelectionModel().addChangeListener(changeEvent -> {
+            redLabel.setText(ArmoryContent.DIALOG_COLOR_CHOOSER_LABEL_RED + " "
+                    + javaColorChooser.getSelectionModel().getSelectedColor().getRed() + ", ");
+            greenLabel.setText(ArmoryContent.DIALOG_COLOR_CHOOSER_LABEL_GREEN + " "
+                    + javaColorChooser.getSelectionModel().getSelectedColor().getGreen() + ", ");
+            blueLabel.setText(ArmoryContent.DIALOG_COLOR_CHOOSER_LABEL_BLUE + " "
+                    + javaColorChooser.getSelectionModel().getSelectedColor().getBlue());
+            previewPanel.setBackground(javaColorChooser.getSelectionModel().getSelectedColor());
         });
         AbstractColorChooserPanel[] panels = javaColorChooser.getChooserPanels();
         for (AbstractColorChooserPanel javaPanel : panels) {
             if (javaPanel.getDisplayName().equals("HSV")) {
                 javaColorChooserPanel = javaPanel;
-                javaColorChooserPanel.setBorder(new EmptyBorder(DIALOG_VERTICAL_PADDING - 8, DIALOG_HORIZONTAL_PADDING + 1, 0, DIALOG_HORIZONTAL_PADDING));
+                javaColorChooserPanel.setBorder(new EmptyBorder(
+                        DIALOG_VERTICAL_PADDING - 8,
+                        DIALOG_HORIZONTAL_PADDING + 1,
+                        0, DIALOG_HORIZONTAL_PADDING
+                ));
             }
         }
 
         JPanel selectPanel = new JPanel();
-        selectPanel.setLayout(new BoxLayout(selectPanel,BoxLayout.X_AXIS));
+        selectPanel.setLayout(new BoxLayout(selectPanel, BoxLayout.X_AXIS));
         previewPanel = new JPanel();
         previewPanel.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_DARK));
         previewPanel.setBackground(color);
-        selectButton = new JButton("Select");
-        selectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listener.onColorSelection(javaColorChooser.getSelectionModel().getSelectedColor());
-                dispose();
-            }
+        selectButton = new JButton(ArmoryContent.DIALOG_COLOR_CHOOSER_BUTTON);
+        selectButton.addActionListener(actionEvent -> {
+            listener.onColorSelection(javaColorChooser.getSelectionModel().getSelectedColor());
+            dispose();
         });
         previewPanel.setPreferredSize(new Dimension(PREVIEW_PANEL_WIDTH, selectButton.getHeight()));
         selectPanel.add(previewPanel);
-        Dimension dim = new Dimension(10,5);
+        Dimension dim = new Dimension(10, 5);
         selectPanel.add(new Box.Filler(dim, dim, dim));
         selectPanel.add(selectButton);
 
         JPanel redGreenBlueVerticalPanel = new JPanel(new BorderLayout());
         JPanel redGreenBluePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        redLabel = new JLabel("Red: " + javaColorChooser.getSelectionModel().getSelectedColor().getRed() + ", ");
-        greenLabel = new JLabel("Green: " + javaColorChooser.getSelectionModel().getSelectedColor().getGreen() + ", ");
-        blueLabel = new JLabel("Blue: " + javaColorChooser.getSelectionModel().getSelectedColor().getBlue());
+        redLabel = new JLabel(ArmoryContent.DIALOG_COLOR_CHOOSER_LABEL_RED + " "
+                + javaColorChooser.getSelectionModel().getSelectedColor().getRed() + ", ");
+        greenLabel = new JLabel(ArmoryContent.DIALOG_COLOR_CHOOSER_LABEL_GREEN + " "
+                + javaColorChooser.getSelectionModel().getSelectedColor().getGreen() + ", ");
+        blueLabel = new JLabel(ArmoryContent.DIALOG_COLOR_CHOOSER_LABEL_BLUE + " "
+                + javaColorChooser.getSelectionModel().getSelectedColor().getBlue());
         redGreenBluePanel.add(redLabel);
         redGreenBluePanel.add(greenLabel);
         redGreenBluePanel.add(blueLabel);
@@ -137,7 +145,12 @@ public class ColorChooser extends JDialog {
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-        bottomPanel.setBorder(new EmptyBorder(0, DIALOG_HORIZONTAL_PADDING + 3, DIALOG_VERTICAL_PADDING + 2, DIALOG_HORIZONTAL_PADDING));
+        bottomPanel.setBorder(new EmptyBorder(
+                0,
+                DIALOG_HORIZONTAL_PADDING + 3,
+                DIALOG_VERTICAL_PADDING + 2,
+                DIALOG_HORIZONTAL_PADDING)
+        );
         bottomPanel.add(redGreenBlueVerticalPanel);
         bottomPanel.add(Box.createHorizontalGlue());
         bottomPanel.add(selectPanel);

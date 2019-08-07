@@ -3,7 +3,7 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
-import com.xephorium.armory.ui.resource.font.ArmoryFont;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -140,7 +140,7 @@ public class ProfileBrowsePanel extends JPanel {
         profileBrowseButtonPanel.setBorder(new EmptyBorder(7, 0, 0, 0));
         profileBrowseButtonPanel.setBackground(Color.WHITE);
 
-        profileDeleteButton = new JButton("Delete");
+        profileDeleteButton = new JButton(ArmoryContent.PROFILE_BROWSE_BUTTON_DELETE);
         profileDeleteButton.setPreferredSize(new Dimension(70, 24));
         profileDeleteButton.addActionListener(new ActionListener() {
             @Override
@@ -152,7 +152,7 @@ public class ProfileBrowsePanel extends JPanel {
             }
         });
 
-        JButton profileAddButton = new JButton("Add");
+        JButton profileAddButton = new JButton(ArmoryContent.PROFILE_BROWSE_BUTTON_ADD);
         profileAddButton.setPreferredSize(new Dimension(70, 24));
         profileAddButton.addActionListener(new ActionListener() {
             @Override
@@ -173,7 +173,7 @@ public class ProfileBrowsePanel extends JPanel {
 
     private String[] getEmptyStateData() {
         String[] emptyStateData = new String[1];
-        emptyStateData[0] = "No Profiles Available";
+        emptyStateData[0] = ArmoryContent.PROFILE_BROWSE_EMPTY_STATE;
         return emptyStateData;
     }
 

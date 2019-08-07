@@ -3,6 +3,7 @@ package com.xephorium.armory.ui;
 import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.ui.resource.color.ArmoryColor;
+import com.xephorium.armory.ui.resource.content.ArmoryContent;
 import com.xephorium.armory.ui.resource.dimension.ArmoryDimension;
 import com.xephorium.armory.ui.resource.image.ArmoryImage;
 import com.xephorium.armory.ui.utility.VerifyActionDialog.VerifyActionListener;
@@ -33,8 +34,6 @@ public class ArmoryWindow {
 
 
     /*--- Variables ---*/
-
-    private final String WINDOW_TITLE = "Halo Wars Armory";
 
     private ArmoryWindowListener listener;
 
@@ -189,7 +188,7 @@ public class ArmoryWindow {
     }
 
     private void initializeFrameAttributes() {
-        frame = new JFrame(WINDOW_TITLE);
+        frame = new JFrame(" " + ArmoryContent.ARMORY_WINDOW_TITLE);
         frame.setSize(ArmoryDimension.WINDOW_WIDTH, ArmoryDimension.WINDOW_HEIGHT);
         frame.setLocation(
                 DisplayUtility.getWindowStartX(ArmoryDimension.WINDOW_WIDTH),
@@ -210,14 +209,14 @@ public class ArmoryWindow {
     private JPanel createProfilePanels() {
         JPanel eastPanel = new JPanel(new BorderLayout());
         eastPanel.setBorder(new EmptyBorder(
-                ArmoryDimension.PANEL_PADDING/2,
-                ArmoryDimension.PANEL_PADDING/2,
+                ArmoryDimension.PANEL_PADDING / 2,
+                ArmoryDimension.PANEL_PADDING / 2,
                 ArmoryDimension.WINDOW_PADDING_VERTICAL,
                 ArmoryDimension.WINDOW_PADDING_HORIZONTAL));
         eastPanel.setPreferredSize(new Dimension(
                 ArmoryDimension.PREVIEW_PANEL_WIDTH
-                + ArmoryDimension.PANEL_PADDING/2
-                + ArmoryDimension.WINDOW_PADDING_HORIZONTAL,
+                        + ArmoryDimension.PANEL_PADDING / 2
+                        + ArmoryDimension.WINDOW_PADDING_HORIZONTAL,
                 0));
         eastPanel.setBackground(ArmoryColor.WINDOW_BACKGROUND_COLOR);
 
