@@ -94,6 +94,10 @@ public class ArmoryWindow {
         DialogFactory.createUserLocalNotFoundDialog(frame, user);
     }
 
+    public void displayInstallationFallbackDialog() {
+        DialogFactory.createInstallationFallbackDialog(frame);
+    }
+
     public void displayGameNotFoundDialog() {
         DialogFactory.createGameNotFoundDialog(frame);
     }

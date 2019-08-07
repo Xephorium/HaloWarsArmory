@@ -93,12 +93,21 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleDirectorySelection(String directory) {
-        if (!GameRepository.isValidHaloWarsInstallation(directory)) {
+        Boolean isPreviousDirectoryValid = gameRepository.isInstallationDirectorySet() &&
+                GameRepository.isValidHaloWarsInstallation(gameRepository.loadInstallationDirectory());
+
+        if (!GameRepository.isValidHaloWarsInstallation(directory) && !isPreviousDirectoryValid) {
             armoryWindow.setInvalidInstallDirectory();
             armoryWindow.displayGameNotFoundDialog();
 
         } else if (!GameRepository.isUserLocalDirectoryFound()) {
             armoryWindow.displayUserLocalNotFoundDialog(SystemRepository.getUsername());
+
+        } else if (!GameRepository.isValidHaloWarsInstallation(directory)) {
+            gameRepository.setupModManifestFile(directory);
+            gameRepository.setupPlayerColorsFile();
+            armoryWindow.displayInstallationFallbackDialog();
+            armoryWindow.enableConfigurationEdit();
 
         } else {
             gameRepository.saveInstallationDirectory(directory);

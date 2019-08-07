@@ -34,6 +34,14 @@ public class DialogFactory {
                 ArmoryImage.ICON_FAILURE_DIALOG);
     }
 
+    public static void createInstallationFallbackDialog(JFrame frame) {
+        JOptionPane.showMessageDialog(frame,
+                ArmoryContent.DIALOG_INSTALLATION_FALLBACK_MESSAGE,
+                TITLE_LEFT_PADDING + ArmoryContent.DIALOG_INSTALLATION_FALLBACK_TITLE,
+                JOptionPane.INFORMATION_MESSAGE,
+                ArmoryImage.ICON_FAILURE_DIALOG);
+    }
+
     public static void createGameFoundDialog(JFrame frame) {
         JOptionPane.showMessageDialog(frame,
                 ArmoryContent.DIALOG_GAME_FOUND_MESSAGE,

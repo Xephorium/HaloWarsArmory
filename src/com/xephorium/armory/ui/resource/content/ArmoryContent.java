@@ -53,6 +53,9 @@ public class ArmoryContent {
     public static final String DIALOG_GAME_NOT_FOUND_MESSAGE = "No Halo Wars installation found.";
     public static final String DIALOG_GAME_NOT_FOUND_TITLE = "Game Not Found";
 
+    public static final String DIALOG_INSTALLATION_FALLBACK_MESSAGE = "No Halo Wars installation found.\nDefaulting to previous game location.";
+    public static final String DIALOG_INSTALLATION_FALLBACK_TITLE = "Game Not Found";
+
     public static final String DIALOG_NO_CHANGES_TO_SAVE_MESSAGE = "There are no changes to save.";
     public static final String DIALOG_NO_CHANGES_TO_SAVE_TITLE = "No Changes to Save";
 
