@@ -15,7 +15,7 @@ public class ArmoryContent {
     public static final String FACTION_CONFIGURATION_TAB_UNSC = "UNSC";
 
     public static final String INSTALL_DIRECTORY_BUTTON = "Browse";
-    public static final String INSTALL_DIRECTORY_PREVIEW = "Choose Halo Wars folder (ie. C:\\Steam\\steamapps\\common\\HaloWarsDE)";
+    public static final String INSTALL_DIRECTORY_PREVIEW = "Choose Halo Wars Installation (ie. C:\\Steam\\steamapps\\common\\HaloWarsDE)";
 
     public static final String PROFILE_ATTRIBUTE_BUTTON_SAVE = "Save";
     public static final String PROFILE_ATTRIBUTE_EMPTY_STATE_BOTTOM = "Available";
