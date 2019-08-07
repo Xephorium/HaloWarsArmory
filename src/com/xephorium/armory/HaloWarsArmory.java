@@ -5,6 +5,7 @@ import com.xephorium.armory.model.Profile;
 import com.xephorium.armory.model.ProfileList;
 import com.xephorium.armory.repository.GameRepository;
 import com.xephorium.armory.repository.CustomProfileRepository;
+import com.xephorium.armory.repository.SystemRepository;
 import com.xephorium.armory.ui.ArmoryWindow;
 import com.xephorium.armory.ui.ArmoryWindowListener;
 import com.xephorium.armory.ui.utility.ColorChooser.ColorChooserListener;
@@ -91,14 +92,19 @@ class HaloWarsArmory implements ArmoryWindowListener {
 
     @Override
     public void handleDirectorySelection(String directory) {
-        if (GameRepository.isValidHaloWarsInstallation(directory)) {
+        if (!GameRepository.isValidHaloWarsInstallation(directory)) {
+            armoryWindow.setInvalidInstallDirectory();
+            armoryWindow.displayGameNotFoundDialog();
+
+        } else if (!GameRepository.isUserLocalDirectoryFound()) {
+            armoryWindow.displayUserLocalNotFoundDialog(SystemRepository.getUsername());
+
+        } else {
             gameRepository.saveInstallationDirectory(directory);
+            gameRepository.setupModManifestFile(directory);
             armoryWindow.setValidInstallDirectory(directory);
             armoryWindow.displayGameFoundDialog();
             armoryWindow.enableConfigurationEdit();
-        } else {
-            armoryWindow.setInvalidInstallDirectory();
-            armoryWindow.displayGameNotFoundDialog();
         }
     }
 

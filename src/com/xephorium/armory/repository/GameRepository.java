@@ -7,6 +7,8 @@ import com.xephorium.armory.model.converter.ProfileConverter;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class GameRepository {
             }
         }
 
-        if(playerColorsDifferenceList.size() > 0) {
+        if (playerColorsDifferenceList.size() > 0) {
             mergedProfileList.addAllNewProfiles(playerColorsDifferenceList);
         }
         mergedProfileList = mergedProfileList.sortProfileListByPrimaryKey(mergedProfileList);
@@ -55,8 +57,8 @@ public class GameRepository {
     }
 
     public boolean saveFactionProfiles(Faction faction,
-                                    List<Integer> profileConfiguration,
-                                    ProfileList profileList) {
+                                       List<Integer> profileConfiguration,
+                                       ProfileList profileList) {
 
         // Read Current PlayerColors Contents
         List<String> playerColorsContents = readPlayerColorsContents();
@@ -112,16 +114,10 @@ public class GameRepository {
 
     public boolean saveInstallationDirectory(String directory) {
         if (INSTALLATION_FILE.exists()) {
-            if(!writeInstallationDirectoryToSaveFile(directory))
-                return false;
+            return writeInstallationDirectoryToSaveFile(directory);
         } else {
-            if(!createInstallationDirectorySaveFile())
-                return false;
-            if(!writeInstallationDirectoryToSaveFile(directory))
-                return false;
+            return createInstallationDirectorySaveFile() && writeInstallationDirectoryToSaveFile(directory);
         }
-
-        return true;
     }
 
     public static boolean isValidHaloWarsInstallation(String directory) {
@@ -141,6 +137,32 @@ public class GameRepository {
         }
 
         return launcherFound && creviceFound;
+    }
+
+    public void setupModManifestFile(String directory) {
+        String user = SystemRepository.getUsername();
+        File modManifestFolder = new File("C:\\Users\\" + user + "\\AppData\\Local\\Halo\u00A0Wars");
+        File modManifestFile = new File("C:\\Users\\" + user + "\\AppData\\Local\\Halo\u00A0Wars\\ModManifest.txt");
+
+        try {
+            modManifestFolder.mkdir();
+            if (!modManifestFile.exists()) try {
+                modManifestFile.createNewFile();
+                PrintWriter writer = new PrintWriter(modManifestFile, "UTF-8");
+                writer.println(directory + "\\overrides");
+                writer.close();
+            } catch (Exception exception) {
+                // Do Nothing
+            }
+        } catch (Exception exception) {
+            // No Nothing
+        }
+    }
+
+    public static boolean isUserLocalDirectoryFound() {
+        String user = SystemRepository.getUsername();
+        File userLocalDirectory = new File("C:\\Users\\" + user + "\\AppData\\Local");
+        return userLocalDirectory.exists();
     }
 
     public List<Integer> loadSavedFactionConfiguration(Faction faction, ProfileList profileList) {

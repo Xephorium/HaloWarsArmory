@@ -68,6 +68,10 @@ public class ArmoryContent {
     public static final String DIALOG_PROFILE_SAVED_MESSAGE = "Your profile has been saved.";
     public static final String DIALOG_PROFILE_SAVED_TITLE = "Profile Saved";
 
+    public static final String DIALOG_USER_LOCAL_NOT_FOUND_MESSAGE_END = "\\AppData\\Local\' not found.\nCannot setup Mod Manifest file.";
+    public static final String DIALOG_USER_LOCAL_NOT_FOUND_MESSAGE_START = "\'C:\\Users\\";
+    public static final String DIALOG_USER_LOCAL_NOT_FOUND_TITLE = "User Local Not Found";
+
     public static final String DIALOG_VERIFY_ACTION_CANCEL = "Cancel";
     public static final String DIALOG_VERIFY_ACTION_YES = "Yes";
 }

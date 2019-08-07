@@ -25,6 +25,15 @@ public class DialogFactory {
                 ArmoryImage.ICON_FAILURE_DIALOG);
     }
 
+    public static void createUserLocalNotFoundDialog(JFrame frame, String user) {
+        JOptionPane.showMessageDialog(frame,
+                ArmoryContent.DIALOG_USER_LOCAL_NOT_FOUND_MESSAGE_START
+                        + user + ArmoryContent.DIALOG_USER_LOCAL_NOT_FOUND_MESSAGE_END,
+                TITLE_LEFT_PADDING + ArmoryContent.DIALOG_USER_LOCAL_NOT_FOUND_TITLE,
+                JOptionPane.ERROR_MESSAGE,
+                ArmoryImage.ICON_FAILURE_DIALOG);
+    }
+
     public static void createGameFoundDialog(JFrame frame) {
         JOptionPane.showMessageDialog(frame,
                 ArmoryContent.DIALOG_GAME_FOUND_MESSAGE,

@@ -90,6 +90,10 @@ public class ArmoryWindow {
         DialogFactory.createGameFoundDialog(frame);
     }
 
+    public void displayUserLocalNotFoundDialog(String user) {
+        DialogFactory.createUserLocalNotFoundDialog(frame, user);
+    }
+
     public void displayGameNotFoundDialog() {
         DialogFactory.createGameNotFoundDialog(frame);
     }
