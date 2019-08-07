@@ -14,6 +14,19 @@ import com.xephorium.armory.ui.utility.VerifyActionDialog;
 import java.awt.*;
 import java.util.List;
 
+/*
+ * Chris Cruzen                            August 2019
+ * Halo Wars Armory
+ *
+ *   HaloWarsArmory is the state-aware presenter layer
+ * of Halo Wars Armory. Its role is to handle all user
+ * interactions and orchestrate communication between
+ * the view and repository layers. This is the command
+ * center of the application.
+ *
+ */
+
+
 class HaloWarsArmory implements ArmoryWindowListener {
 
 
@@ -129,7 +142,7 @@ class HaloWarsArmory implements ArmoryWindowListener {
     @Override
     public void handleUNSCConfigurationSave() {
         if (gameRepository.isInstallationDirectorySet()) {
-            if(gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList)) {
+            if (gameRepository.saveFactionProfiles(Faction.UNSC, unscPlayerConfiguration, profileList)) {
                 armoryWindow.displayConfigurationSavedDialog();
             } else {
                 armoryWindow.displayProblemSavingDialog();
@@ -193,10 +206,12 @@ class HaloWarsArmory implements ArmoryWindowListener {
             }
 
             @Override
-            public void onCancelActionSelection() {}
+            public void onCancelActionSelection() {
+            }
 
             @Override
-            public void onDialogClose() {}
+            public void onDialogClose() {
+            }
         }, profileList.getProfileByPrimaryKey(profile.getPrimaryKey()).getName());
     }
 
