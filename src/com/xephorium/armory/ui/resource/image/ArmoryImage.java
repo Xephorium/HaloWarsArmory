@@ -14,7 +14,7 @@ import java.util.List;
 public class ArmoryImage {
 
 
-    /*--- Path Constants ---*/
+    /*--- Image Resources ---*/
 
     private boolean USE_DETAILED_ICONS = true;
 
