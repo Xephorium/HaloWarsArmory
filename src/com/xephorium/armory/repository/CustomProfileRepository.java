@@ -32,16 +32,10 @@ public class CustomProfileRepository {
 
     public boolean saveCustomPlayerProfile(Profile profile) {
         if (CUSTOM_PROFILES_FILE.exists()) {
-            if(!writeProfileToCustomProfiles(profile))
-                return false;
+            return writeProfileToCustomProfiles(profile);
         } else {
-            if(!createCustomProfilesSaveFile())
-                return false;
-            if(!writeProfileToCustomProfiles(profile))
-                return false;
+            return createCustomProfilesSaveFile() && writeProfileToCustomProfiles(profile);
         }
-
-        return true;
     }
 
     public boolean saveCustomPlayerProfileList(ProfileList profileList) {
