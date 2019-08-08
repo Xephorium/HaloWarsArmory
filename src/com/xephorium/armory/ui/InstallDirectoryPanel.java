@@ -6,6 +6,7 @@ import com.xephorium.armory.ui.resource.image.ArmoryImage;
 import com.xephorium.armory.ui.resource.content.ArmoryContent;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
@@ -90,6 +91,7 @@ class InstallDirectoryPanel extends JPanel {
         JTextField textField = new JTextField();
         textField.setEnabled(false);
         textField.setBackground(Color.WHITE);
+        textField.setBorder(BorderFactory.createLineBorder(ArmoryColor.WINDOW_BORDER_COLOR_LIGHT));
         textField.addActionListener(actionEvent -> listener.handleBrowseButtonClick());
 
         return textField;
