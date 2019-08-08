@@ -47,6 +47,7 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml
 # *.ipr
+lib
 
 # Sonarlint plugin
 .idea/sonarlint
@@ -65,7 +66,6 @@ fabric.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.zip
