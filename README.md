@@ -19,4 +19,6 @@
 
 
 #### Download
-&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; TBD: Executable link will be made available *here*.
+&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; [v1.0 Executable](https://github.com/Xephorium/HaloWarsArmory/blob/master/release/HaloWarsArmory.exe?raw=true)
+
+&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; [v1.0 Jar](https://github.com/Xephorium/HaloWarsArmory/blob/master/release/HaloWarsArmory.jar?raw=true)
