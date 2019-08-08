@@ -19,4 +19,4 @@
 
 
 #### Download
-&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; [v1.0 Jar](https://github.com/Xephorium/HaloWarsArmory/blob/master/release/HaloWarsArmory.jar?raw=true)
+&nbsp;&nbsp;&nbsp;&nbsp;![Bullet](src/com/xephorium/armory/ui/resource/image/readmeSmallBullet.png)&nbsp; [v1.1 Jar](https://github.com/Xephorium/HaloWarsArmory/blob/master/release/HaloWarsArmory.jar?raw=true)

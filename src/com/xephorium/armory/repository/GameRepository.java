@@ -150,8 +150,8 @@ public class GameRepository {
 
     public void setupModManifestFile(String directory) {
         String user = SystemRepository.getUsername();
-        File modManifestFolder = new File("C:\\Users\\" + user + "\\AppData\\Local\\Halo\u00A0Wars");
-        File modManifestFile = new File("C:\\Users\\" + user + "\\AppData\\Local\\Halo\u00A0Wars\\ModManifest.txt");
+        File modManifestFolder = new File("C:\\Users\\" + user + "\\AppData\\Local\\Halo\u0020Wars");
+        File modManifestFile = new File("C:\\Users\\" + user + "\\AppData\\Local\\Halo\u0020Wars\\ModManifest.txt");
 
         try {
             modManifestFolder.mkdir();
@@ -183,9 +183,8 @@ public class GameRepository {
         if (!playerColorsFile.exists()) {
             try {
                 playerColorsFile.createNewFile();
-                List<String> defaultPlayerColorsContents = getDefaultPlayerColorsContents();
                 PrintWriter writer = new PrintWriter(playerColorsFile, "UTF-8");
-                defaultPlayerColorsContents.forEach(string -> writer.println(string));
+                writer.print(DEFAULT_PLAYER_COLORS_CONTENT);
                 writer.close();
             } catch (Exception exception) { /* Do Nothing */ }
         }
@@ -330,28 +329,6 @@ public class GameRepository {
         return playerColorsContents;
     }
 
-    private List<String> getDefaultPlayerColorsContents() {
-        File defaultPlayerColorsFile = new File("reference\\files\\playercolors.xml");
-        List<String> defaultPlayerColorsContents = new ArrayList<String>();
-        BufferedReader bufferedReader;
-
-        try {
-            bufferedReader = new BufferedReader(new FileReader(defaultPlayerColorsFile));
-            String line = bufferedReader.readLine();
-
-            while (line != null) {
-                defaultPlayerColorsContents.add(line);
-                line = bufferedReader.readLine();
-            }
-
-            bufferedReader.close();
-        } catch (IOException exception) {
-            System.out.println("Exception - " + exception);
-        }
-
-        return defaultPlayerColorsContents;
-    }
-
     private File getGamePlayerColorsFile() {
         return new File(loadInstallationDirectory() + "\\" + PLAYER_COLORS_PATH + "\\" + PLAYER_COLORS_FILE_NAME);
     }
@@ -405,5 +382,74 @@ public class GameRepository {
     private static String getCurrentDirectory() {
         return System.getProperty("user.dir");
     }
+
+
+    /*--- Default Player Colors Content ---*/
+
+    private static final String DEFAULT_PLAYER_COLORS_CONTENT =
+            "<playerColors>\n" +
+            "    <skirmish>\n" +
+            "        <color num=\"0\" objects=\"175 175 175\" corpse=\"88 88 88\" selection=\"175 175 175\" minimap=\"175 175 175\" ui=\"175 175 175\" />\n" +
+            "        <color num=\"1\" objects=\"145 163 85\" corpse=\"35 55 12\" selection=\"69 110 24\" minimap=\"69 110 24\" ui=\"69 110 24\" name=\"UNSC - Olive\" primaryKey=\"-101\" />\n" +
+            "        <color num=\"2\" objects=\"235 165 27\" corpse=\"117 82 14\" selection=\"235 165 27\" minimap=\"235 165 27\" ui=\"235 165 27\" name=\"UNSC - Orange\" primaryKey=\"-102\" />\n" +
+            "        <color num=\"3\" objects=\"82 125 179\" corpse=\"33 55 75\" selection=\"65 110 150\" minimap=\"65 110 150\" ui=\"65 110 150\" name=\"UNSC - Navy Blue\" primaryKey=\"-103\" />\n" +
+            "        <color num=\"4\" objects=\"215 99 68\" corpse=\"100 30 0\" selection=\"200 60 0\" minimap=\"200 60 0\" ui=\"200 60 0\" name=\"UNSC - Tomato Red\" primaryKey=\"-104\" />\n" +
+            "        <color num=\"5\" objects=\"83 83 83\" corpse=\"25 25 15\" selection=\"50 50 30\" minimap=\"50 50 30\" ui=\"50 50 30\" name=\"UNSC - Gunmetal Gray\" primaryKey=\"-105\" />\n" +
+            "        <color num=\"6\" objects=\"185 160 125\" corpse=\"93 50 63\" selection=\"185 160 125\" minimap=\"185 160 125\" ui=\"185 160 125\" name=\"UNSC - Desert Brown\" primaryKey=\"-106\" />\n" +
+            "        <color num=\"7\" objects=\"165 95 245\" corpse=\"83 48 172\" selection=\"165 95 245\" minimap=\"165 95 245\" ui=\"165 95 245\" name=\"Covenant - Violet\" primaryKey=\"-107\" />\n" +
+            "        <color num=\"8\" objects=\"0 175 200\" corpse=\"0 83 100\" selection=\"0 175 200\" minimap=\"0 175 200\" ui=\"0 175 200\" name=\"Covenant - Teal\" primaryKey=\"-108\" />\n" +
+            "        <color num=\"9\" objects=\"210 20 0\" corpse=\"105 10 0\" selection=\"210 20 0\" minimap=\"210 20 0\" ui=\"210 20 0\" name=\"Covenant - Blood Red\" primaryKey=\"-109\" />\n" +
+            "        <color num=\"10\" objects=\"40 50 20\" corpse=\"20 25 10\" selection=\"40 50 20\" minimap=\"40 50 20\" ui=\"40 50 20\" name=\"Covenant - Forest Green\" primaryKey=\"-110\" />\n" +
+            "        <color num=\"11\" objects=\"255 215 50\" corpse=\"128 107 25\" selection=\"255 215 50\" minimap=\"255 215 50\" ui=\"255 215 50\" name=\"Covenant - Yellow\" primaryKey=\"-111\" />\n" +
+            "        <color num=\"12\" objects=\"215 190 175\" corpse=\"108 95 87\" selection=\"215 200 175\" minimap=\"215 200 175\" ui=\"215 200 175\" name=\"Covenant - Beige\" primaryKey=\"-112\" />\n" +
+            "        <color num=\"13\" objects=\"50 10 10\" corpse=\"30 5 5\" selection=\"60 10 10\" minimap=\"60 10 10\" ui=\"40 10 10\" />\n" +
+            "        <color num=\"14\" objects=\"175 175 175\" corpse=\"88 88 88\" selection=\"175 175 175\" minimap=\"175 175 175\" ui=\"175 175 175\" />\n" +
+            "        <color num=\"15\" objects=\"175 175 175\" corpse=\"88 88 88\" selection=\"175 175 175\" minimap=\"175 175 175\" ui=\"175 175 175\" />\n" +
+            "        <friendOrFoeSelf objects=\"66 127 255\" corpse=\"0 40 105\" selection=\"0 80 211\" minimap=\"0 80 211\" ui=\"0 80 211\" />\n" +
+            "        <friendOrFoeAlly objects=\"229 197 18\" corpse=\"115 99 9\" selection=\"229 197 18\" minimap=\"229 197 18\" ui=\"229 197 18\" />\n" +
+            "        <friendOrFoeNeutral objects=\"235 165 27\" corpse=\"117 82 14\" selection=\"235 165 27\" minimap=\"235 165 27\" ui=\"235 165 27\" />\n" +
+            "        <friendOrFoeEnemy objects=\"190 0 0\" corpse=\"95 0 0\" selection=\"190 0 0\" minimap=\"190 0 0\" ui=\"190 0 0\" />`</skirmish>\n" +
+            "    <spc>\n" +
+            "        <color num=\"0\" objects=\"175 175 175\" corpse=\"88 88 88\" selection=\"175 175 175\" minimap=\"175 175 175\" ui=\"175 175 175\" />\n" +
+            "        <color num=\"1\" objects=\"145 163 85\" corpse=\"58 65 20\" selection=\"115 130 40\" minimap=\"115 130 40\" ui=\"115 130 40\" />\n" +
+            "        <color num=\"2\" objects=\"0 30 200\" corpse=\"0 15 100\" selection=\"0 30 200\" minimap=\"0 30 200\" ui=\"0 30 200\" />\n" +
+            "        <color num=\"3\" objects=\"255 215 50\" corpse=\"128 108 25\" selection=\"255 215 50\" minimap=\"255 215 50\" ui=\"255 215 50\" />\n" +
+            "        <color num=\"4\" objects=\"185 160 125\" corpse=\"93 80 63\" selection=\"185 160 125\" minimap=\"185 160 125\" ui=\"185 160 125\" />\n" +
+            "        <color num=\"5\" objects=\"50 50 30\" corpse=\"25 25 15\" selection=\"50 50 30\" minimap=\"50 50 30\" ui=\"50 50 30\" />\n" +
+            "        <color num=\"6\" objects=\"235 165 27\" corpse=\"117 82 14\" selection=\"235 165 27\" minimap=\"235 165 27\" ui=\"235 165 27\" />\n" +
+            "        <color num=\"7\" objects=\"165 95 245\" corpse=\"83 48 123\" selection=\"165 95 245\" minimap=\"165 95 245\" ui=\"165 95 245\" />\n" +
+            "        <color num=\"8\" objects=\"0 175 200\" corpse=\"0 88 100\" selection=\"0 175 200\" minimap=\"0 175 200\" ui=\"0 175 200\" />\n" +
+            "        <color num=\"9\" objects=\"210 20 0\" corpse=\"105 10 0\" selection=\"210 20 0\" minimap=\"210 20 0\" ui=\"210 20 0\" />\n" +
+            "        <color num=\"10\" objects=\"40 50 20\" corpse=\"20 25 10\" selection=\"40 50 20\" minimap=\"40 50 20\" ui=\"40 50 20\" />\n" +
+            "        <color num=\"11\" objects=\"255 215 50\" corpse=\"128 108 25\" selection=\"255 215 50\" minimap=\"255 215 50\" ui=\"255 215 50\" />\n" +
+            "        <color num=\"12\" objects=\"215 190 175\" corpse=\"105 95 88\" selection=\"215 200 175\" minimap=\"215 200 175\" ui=\"215 200 175\" />\n" +
+            "        <color num=\"13\" objects=\"50 10 10\" corpse=\"30 5 5\" selection=\"60 10 10\" minimap=\"60 10 10\" ui=\"40 10 10\" />\n" +
+            "        <color num=\"14\" objects=\"175 175 175\" corpse=\"88 88 88\" selection=\"175 175 175\" minimap=\"175 175 175\" ui=\"175 175 175\" />\n" +
+            "        <color num=\"15\" objects=\"175 175 175\" corpse=\"88 88 88\" selection=\"175 175 175\" minimap=\"175 175 175\" ui=\"175 175 175\" />\n" +
+            "        <friendOrFoeSelf objects=\"66 127 255\" corpse=\"0 40 105\" selection=\"0 80 211\" minimap=\"0 80 211\" ui=\"0 80 211\" />\n" +
+            "        <friendOrFoeAlly objects=\"229 197 18\" corpse=\"115 99 9\" selection=\"229 197 18\" minimap=\"229 197 18\" ui=\"229 197 18\" />\n" +
+            "        <friendOrFoeNeutral objects=\"235 165 27\" corpse=\"117 82 14\" selection=\"235 165 27\" minimap=\"235 165 27\" ui=\"235 165 27\" />\n" +
+            "        <friendOrFoeEnemy objects=\"190 0 0\" corpse=\"95 0 0\" selection=\"190 0 0\" minimap=\"190 0 0\" ui=\"190 0 0\" />`</spc>\n" +
+            "    <civ>\n" +
+            "        <player num=\"0\" color=\"0\" />\n" +
+            "        <player num=\"1\" color=\"1\" />\n" +
+            "        <player num=\"2\" color=\"2\" />\n" +
+            "        <player num=\"3\" color=\"3\" />\n" +
+            "        <player num=\"4\" color=\"4\" />\n" +
+            "        <player num=\"5\" color=\"5\" />\n" +
+            "        <player num=\"6\" color=\"6\" />\n" +
+            "        <player num=\"7\" color=\"13\" />\n" +
+            "        <player num=\"8\" color=\"14\" />UNSC</civ>\n" +
+            "    <civ>\n" +
+            "        <player num=\"0\" color=\"0\" />\n" +
+            "        <player num=\"1\" color=\"7\" />\n" +
+            "        <player num=\"2\" color=\"8\" />\n" +
+            "        <player num=\"3\" color=\"9\" />\n" +
+            "        <player num=\"4\" color=\"10\" />\n" +
+            "        <player num=\"5\" color=\"11\" />\n" +
+            "        <player num=\"6\" color=\"12\" />\n" +
+            "        <player num=\"7\" color=\"13\" />\n" +
+            "        <player num=\"8\" color=\"14\" />Covenant</civ>\n" +
+            "</playerColors>";
 
 }
